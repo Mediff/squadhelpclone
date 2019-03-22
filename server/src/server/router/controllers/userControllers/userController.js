@@ -9,7 +9,9 @@ import ForbiddenError from '../../../utils/errors/forbiddenError';
 export const createUser = async (req, res, next) => {
     try {
         const hash = await bcrypt.hash(req.body.password, saltRounds);
-        const {firstName, lastName, email, role} = req.body;
+        const {firstName, lastName, email, role, displayName} = req.body;
+
+        console.log(req.body);
 
         const payload = {
             role
@@ -24,7 +26,8 @@ export const createUser = async (req, res, next) => {
             email,
             passwordHash: hash,
             role,
-            token
+            token,
+            displayName
         });
 
         res.send(account);
@@ -45,6 +48,7 @@ export const getUsers = async (req, res, next) => {
 
 export const loginUser = async (req, res, next) => {
     const {email, password} = req.body;
+    console.log(email);
     try {
         const user = await Accounts.findOne({
             where: {

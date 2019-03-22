@@ -16,9 +16,9 @@ class Login extends Component {
 
 
     handleSubmit = (event) => {
-        const {email} = this.emailRef.current.value;
-        const {password} = this.emailRef.current.value;
-        this.state.login({email, password});
+        const email = this.emailRef.current.value;
+        const password = this.passwordRef.current.value;
+        this.props.login({email, password});
 
         event.preventDefault();
     };
