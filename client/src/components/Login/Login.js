@@ -4,23 +4,74 @@ import logo from '../../images/logo.png';
 import '@fortawesome/fontawesome-free/css/all.css';
 import connect from 'react-redux/es/connect/connect';
 import {login} from '../../actions/actionCreator';
+import {loginScheme} from '../../utils/validation/validationSchemes';
+import ValidationMessage from '../ValidationMessage/ValidationMessage';
+import InputComponent from '../InputComponent/InputComponent';
 
 class Login extends Component {
 
     constructor(props) {
         super(props);
 
-        this.emailRef = React.createRef();
-        this.passwordRef = React.createRef();
+        this.email = '';
+        this.password = '';
+
+        this.placeholders = ['Email', 'Password'];
+
+        this.state = {
+            invalidEmailMessage: '',
+            invalidPassMessage: ''
+        };
     }
 
+    proceedError = (error) => {
+        switch (error.path) {
+            case 'password':
+                this.setState({
+                    invalidPassMessage: error.message
+                });
+                break;
+            case 'email':
+                this.setState({
+                    invalidEmailMessage: error.message
+                });
+                break;
+        }
+    };
 
-    handleSubmit = (event) => {
-        const email = this.emailRef.current.value;
-        const password = this.passwordRef.current.value;
-        this.props.login({email, password});
+    createFormFields = () => {
+        return Array.from({length: 2}).map((item, i) => {
+            return (
+                <div className={styles.inputFieldContainer}>
+                    <InputComponent placeholder={this.placeholders[i]} ref={this.refs[i]}/>
+                </div>);
+        })
+    };
 
+    emailHandler = (event, value) => {
+        this.email = event.target.value;
+    };
+
+
+    passwordHandler = (event) => {
+        this.password = event.target.value;
+    };
+
+    handleSubmit = async (event) => {
         event.preventDefault();
+        this.setState({
+            invalidPassMessage: '',
+            invalidEmailMessage: ''
+        });
+        try {
+            const email = this.email;
+            const password = this.password;
+            await loginScheme.validate({email, password});
+            this.props.login({email, password});
+        } catch (e) {
+            console.log(e);
+            this.proceedError(e);
+        }
     };
 
     render() {
@@ -36,10 +87,14 @@ class Login extends Component {
                             <h2>LOGIN TO YOUR ACCOUNT</h2>
                         </div>
                         <div className={styles.inputFieldContainer}>
-                            <input className={styles.inputField} placeholder="Email Address" type="text" ref={this.emailRef}/>
+                            <InputComponent className={styles.inputField} placeholder="Email Address" type="text"
+                                   changeHandler={this.emailHandler}/>
+                            <ValidationMessage message={this.state.invalidEmailMessage}/>
                         </div>
                         <div className={styles.inputFieldContainer}>
-                            <input className={styles.inputField} placeholder="Password" type="text" ref={this.passwordRef}/>
+                            <InputComponent className={styles.inputField} placeholder="Password" type="text"
+                                   changeHandler={this.passwordHandler}/>
+                            <ValidationMessage message={this.state.invalidPassMessage}/>
                         </div>
                         <div className={styles.checkPassButtonsContainer}>
                             <div>
