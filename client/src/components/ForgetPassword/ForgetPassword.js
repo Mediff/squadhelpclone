@@ -4,8 +4,8 @@ import styles from './ForgetPassword.module.sass';
 export const ForgetPassword = () => {
     return (
         <div className={styles.checkPassButtonsContainer}>
-            <div>
-                <input type="checkbox" id="remember"/>
+            <div className={styles.checkContainer}>
+                <input className={styles.checkButton} type="checkbox" id="remember"/>
                 <label>Remember me</label>
             </div>
             <div>

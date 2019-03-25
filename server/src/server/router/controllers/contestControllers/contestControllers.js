@@ -4,7 +4,7 @@ export const createContest = async (req, res, next) => {
     try {
         const {title, ventureName, ventureDescribe, customerDescribe, contestCreatorId, combinedContestId, contestTypeId, file, priority} = req.body;
 
-        console.log(contestTypeId);
+        console.log(Object.keys(Contests.rawAttributes));
 
         const contType = await ContestTypes.findOne({
             where: {

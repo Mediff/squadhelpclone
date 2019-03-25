@@ -35,9 +35,11 @@ class Login extends Component {
     createFormFields = () => {
         return Array.from({length: 2}).map((item, i) => {
             return (
-                <div className={styles.inputFieldContainer} key={i}>
-                    <InputComponent placeholder={loginPlaceholders[i]} changeHandler={this.changeHandler(loginInputKeys[i])} />
-                    <ValidationMessage message={this.state[loginInputKeys[i] + 'ErrorMessage']}/>
+                <div className={styles.row}>
+                    <div className={styles.inputFieldContainer} key={i}>
+                        <InputComponent placeholder={loginPlaceholders[i]} changeHandler={this.changeHandler(loginInputKeys[i])} />
+                        <ValidationMessage message={this.state[loginInputKeys[i] + 'ErrorMessage']}/>
+                    </div>
                 </div>
             );
         })
@@ -67,13 +69,23 @@ class Login extends Component {
     render() {
         return (
             <div className={styles.mainContainer}>
-                <div className={styles.signupContainer}>
+                <div className={styles.headerContainer}>
                     <AuthHeader logo={logo} buttonText='Signup'/>
+                </div>
+                <div className={styles.signupContainer}>
                     <form className={styles.formContainer} onSubmit={this.handleSubmit}>
                         <FormHeader headText='LOGIN TO YOUR ACCOUNT' options='login'/>
-                        {this.createFormFields()}
-                        <ForgetPassword/>
-                        <FormSubmitButton buttonText='LOGIN'/>
+                        <div className={styles.inputsContainer}>
+                            {this.createFormFields()}
+                        </div>
+                        <div className={styles.row}>
+                            <ForgetPassword/>
+                        </div>
+                        <div className={styles.row}>
+                            <div className={styles.buttonContainer}>
+                                <FormSubmitButton buttonText='LOGIN'/>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
