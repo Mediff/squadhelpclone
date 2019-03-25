@@ -1,12 +1,13 @@
-
 import React from 'react';
-import styles from "../Login/Login.module.sass";
+import styles from "../InputComponent/InputComponent.module.sass";
+import PropTypes from 'prop-types';
 
-function InputComponent(props){
+export const InputComponent = (props) => <input className={styles.inputField} placeholder={props.placeholder}
+                                                type="text"
+                                                onChange={(event) => props.changeHandler(event)}/>;
 
-    return (
-        <input className={styles.inputField} placeholder={props.placeholder} type="text" onChange={(event) => props.changeHandler(event)}/>
-    );
-}
 
-export default InputComponent;
+InputComponent.propTypes = {
+    placeholder: PropTypes.string,
+    onChange: PropTypes.func
+};

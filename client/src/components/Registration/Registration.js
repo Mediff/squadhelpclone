@@ -1,104 +1,114 @@
-
 import React, {Component} from 'react';
 import styles from './Registration.module.sass';
 import logo from '../../images/logo.png';
 import '@fortawesome/fontawesome-free/css/all.css';
 import connect from 'react-redux/es/connect/connect';
 import {register} from '../../actions/actionCreator';
+import {loginScheme} from '../../utils/validation/validationSchemes';
+import {InputComponent} from '../InputComponent/InputComponent';
+import {ValidationMessage} from '../ValidationMessage/ValidationMessage';
+import {AuthHeader} from '../AuthHeader/AuthHeader';
+import {FormHeader} from "../FormHeader/FormHeader";
+import {registerInputKeys, registerPlaceholders} from "../../utils/constants/constants";
+import {FormSubmitButton} from "../FormSubmitButton/FormSubmitButton";
+import {RoleCheck} from "../RoleCheck/RoleCheck";
 
 class Registration extends Component {
 
     constructor(props) {
         super(props);
-
-        this.emailRef = React.createRef();
-        this.passwordRef = React.createRef();
-        this.passwordConfirmRef = React.createRef();
-        this.displayRef = React.createRef();
-        this.firstNameRef = React.createRef();
-        this.lastNameRef = React.createRef();
-        this.buyerRole = React.createRef();
     }
 
-    handleSubmit = (event) => {
-        const firstName = this.firstNameRef.current.value;
-        const lastName = this.lastNameRef.current.value;
-        const displayName = this.displayRef.current.value;
-        const email = this.emailRef.current.value;
-        const password = this.passwordRef.current.value;
-        const passwordConfirm = this.passwordConfirmRef.current.value;
-        const role = this.buyerRole.current.selected ? 'buyer' : 'creator';
+    state = {
+        emailErrorMessage: '',
+        passwordErrorMessage: '',
+        confirmPasswordErrorMessage: '',
+        displayNameErrorMessage: '',
+        firstNameErrorMessage: '',
+        lastNameErrorMessage: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        displayName: '',
+        firstName: '',
+        lastName: '',
+        role: 'buyer'
+    };
 
-        /*TODO*/
-        //Validation
+    proceedError = (error) => {
+        this.setState({
+            [error.path + 'ErrorMessage']: error.message
+        });
+    };
 
-        this.props.register({firstName, lastName, displayName, email, password, role});
+    changeHandler = (value) => (event) => {
+        this.setState({
+            [value]: event.target.value
+        });
+    };
 
+    radioHandler = (event) => {
+      this.setState({
+          role: event.target.value
+      });
+    };
+
+    handleSubmit = async (event) => {
         event.preventDefault();
+        this.setState({
+            emailErrorMessage: '',
+            passwordErrorMessage: '',
+            confirmPasswordErrorMessage: '',
+            displayNameErrorMessage: '',
+            firstNameErrorMessage: '',
+            lastNameErrorMessage: ''
+        });
+        const {firstName, lastName, displayName, email, password, role} = this.state;
+        console.log(role);
+        try {
+            await loginScheme.validate({firstName, lastName, displayName, email, password});
+            this.props.register({firstName, lastName, displayName, email, password, role});
+        } catch (e) {
+            this.proceedError(e);
+        }
+    };
 
-    }
+    createFormFields = () => {
+        return Array.from({length: 6}).map((item, i) => {
+            return (
+                <div className={styles.inputFieldContainer} key={i}>
+                    <InputComponent placeholder={registerPlaceholders[i]} changeHandler={this.changeHandler(registerInputKeys[i])} />
+                    <div className={styles.inputValidateContainer}>
+                        <ValidationMessage message={this.state[registerInputKeys[i] + 'ErrorMessage']}/>
+                    </div>
+                </div>
+            );
+        })
+    };
 
     render() {
+        const {invalidFirstNameMessage, invalidEmailMessage} = this.state;
+        const invalidFirstLast = invalidFirstNameMessage || this.state.invalidLastNameMessage;
+        const inavlidDisplayEmail = invalidEmailMessage || this.state.invalidDisplayMessage
+        const invalidPassConfirm = this.state.invalidPassMessage || this.state.invalidConfirmMessage;
+
         return (
             <div className={styles.mainContainer}>
                 <div className={styles.registerContainer}>
-                    <div className={styles.headContainer}>
-                        <img src={logo} alt="Company Logo"/>
-                        <div className={styles.registerButton}>Login</div>
-                    </div>
+                    <AuthHeader logo={logo} buttonText='Login'/>
                     <form className={styles.formContainer} onSubmit={this.handleSubmit}>
                         <div className={styles.registerInfoContainer}>
-                            <div className={styles.createAccountTitle}>
-                                <h2>CREATE AN ACCOUNT</h2>
-                            </div>
-                            <div className={styles.createAccountText}>
-                                <h4>We always keep your name and email address private.</h4>
-                            </div>
+                           <FormHeader bottomText='We always keep your name and email address private.' headText='CREATE AN ACCOUNT' options='register'/>
                         </div>
                         <div className={styles.inputContainer}>
-                            <div className={styles.inputFieldContainer}>
-                                <input className={styles.inputField} placeholder="First Name" type="text" ref={this.firstNameRef}/>
-                            </div>
-                            <div className={styles.inputFieldContainer}>
-                                <input className={styles.inputField} placeholder="Last Name" type="text" ref={this.lastNameRef}/>
-                            </div>
-                            <div className={styles.inputFieldContainer}>
-                                <input className={styles.inputField} placeholder="Display Name" type="text" ref={this.displayRef}/>
-                            </div>
-                            <div className={styles.inputFieldContainer}>
-                                <input className={styles.inputField} placeholder="Email Address" type="text" ref={this.emailRef}/>
-                            </div>
-                            <div className={styles.inputFieldContainer}>
-                                <input className={styles.inputField} placeholder="Password" type="text" ref={this.passwordRef} />
-                            </div>
-                            <div className={styles.inputFieldContainer}>
-                                <input className={styles.inputField} placeholder="Password Confirmation" type="text" ref={this.passwordConfirmRef}/>
-                            </div>
+                            {this.createFormFields()}
                         </div>
-                        <div className={styles.radioContainer}>
-                            <div className={styles.radioButtonContainer}>
-                                <div className={styles.radioButtonInput}>
-                                    <input type="radio" value="buyer" name="register" defaultChecked ref={this.buyerRole}/>
-                                </div>
-                                <div className={styles.radioButtonText}>
-                                    <h4>Join As a Buyer</h4>
-                                    <span>I am looking for a Name, Logo or Tagline for my business, brand or product.</span>
-                                </div>
-                            </div>
-                            <div className={styles.radioButtonContainer}>
-                                <div className={styles.radioButtonInput}>
-                                    <input type="radio" value="creator" name = "register"/>
-                                </div>
-                                <div className={styles.radioButtonText}>
-                                    <h4>Join As a Creative</h4>
-                                    <span>I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.</span>
-                                </div>
-                            </div>
-                        </div>
+                        <RoleCheck headerText='Join As a Buyer' bottomText='I am looking for a Name, Logo or Tagline for my business, brand or product.'
+                                   radioName='register' radioValue='buyer' changeHandler={this.radioHandler} isDefault={true}/>
+                        <RoleCheck headerText='Join As a Creative' bottomText='I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.'
+                                   radioName='register' radioValue='creator' changeHandler={this.radioHandler} isDefault={false}/>
                         <div className={styles.buttonsContainer}>
-                            <button className={styles.registerButton} type="submit">
-                                <span>Create Account</span>
-                            </button>
+                            <FormSubmitButton buttonText='Create Account'/>
                         </div>
                     </form>
                 </div>
@@ -109,7 +119,6 @@ class Registration extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        state,
         isFetching: state.userReducers.isFetching,
         error: state.userReducers.error,
         currentUser: state.userReducers.currentUser

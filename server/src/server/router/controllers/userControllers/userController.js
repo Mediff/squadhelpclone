@@ -1,4 +1,3 @@
-
 import bcrypt from 'bcrypt';
 import {Accounts} from '../../../models';
 import jwt from 'jsonwebtoken';
@@ -10,9 +9,6 @@ export const createUser = async (req, res, next) => {
     try {
         const hash = await bcrypt.hash(req.body.password, saltRounds);
         const {firstName, lastName, email, role, displayName} = req.body;
-
-        console.log(req.body);
-
         const payload = {
             role
         };
@@ -29,7 +25,6 @@ export const createUser = async (req, res, next) => {
             token,
             displayName
         });
-
         res.send(account);
 
     } catch (e) {
@@ -48,7 +43,6 @@ export const getUsers = async (req, res, next) => {
 
 export const loginUser = async (req, res, next) => {
     const {email, password} = req.body;
-    console.log(email);
     try {
         const user = await Accounts.findOne({
             where: {
@@ -57,7 +51,7 @@ export const loginUser = async (req, res, next) => {
         });
         if (user) {
             const result = await bcrypt.compare(password, user.passwordHash);
-            result ? res.send(user) : next( new ForbiddenError('Not valid password'));
+            result ? res.send(user) : next(new ForbiddenError('Not valid password'));
         } else {
             next(new NotFoundError('Email not exists'));
         }

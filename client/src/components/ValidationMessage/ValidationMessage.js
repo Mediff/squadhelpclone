@@ -1,10 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './ValidationMessage.module.sass';
 
-function ValidationMessage(props) {
-    return (
-        props.message && <div className={styles.message}>{props.message}</div>
-    );
-}
+export const ValidationMessage = (props) => props.message && <div className={styles.message}>{props.message}</div>;
 
-export default ValidationMessage;
+ValidationMessage.propTypes = {
+    message: PropTypes.string
+};

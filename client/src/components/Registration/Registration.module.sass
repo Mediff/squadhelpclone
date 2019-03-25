@@ -85,9 +85,9 @@
       .inputContainer
         display: flex
         flex-wrap: wrap
-        justify-content: center
-        align-items: center
+        justify-content: flex-start
         margin-bottom: 10px
+        align-content: center
 
         .inputFieldContainer
           display: flex
@@ -95,16 +95,14 @@
           flex-wrap: wrap
           width: 265px
           margin: 2px 20px
+          height: auto
 
-          .inputField
-            width: 265px
-            font-size: 16px
-            height: auto
-            padding: 21px 0 21px 23px
-            border: 2px solid white
-            border-radius: 4px
-            margin-top: 10px
-
+        .inputValidateContainer
+          display: flex
+          align-items: center
+          align-content: center
+          justify-content: center
+          width: 100%
 
       .radioContainer
         display: flex
@@ -113,47 +111,12 @@
         align-items: center
         width: 100%
 
-        .radioButtonContainer
-          display: flex
-          justify-content: center
-          width: 83%
-          border: 1px solid white
-          border-radius: 4px
-          margin: 10px 0
-          padding: 12px 14px
-
-          .radioButtonText
-            color: white
-            width: 100%
-            & > h4
-              margin-left: 10px
-              font-size: 20px
-              font-weight: 500
-
-            & > span
-              margin-left: 10px
-              margin-top: 12px
-              font-size: 12px
-              font-weight: 500
 
       .buttonsContainer
         display: flex
         align-items: center
         justify-content: center
         flex-direction: column
-        width: 585px
+        width: 88%
         margin-top: 10px
 
-        .registerButton
-          width: 572px
-          height: 64px
-          display: flex
-          align-items: center
-          justify-content: center
-          background-color: #28d2d0
-          border-radius: 4px
-          cursor: pointer
-          & > span
-            font-size: 16px
-            font-weight: 600
-            color: white
