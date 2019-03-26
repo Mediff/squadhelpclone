@@ -47,14 +47,8 @@ module.exports = (sequelize, DataTypes) => {
 
     Accounts.associate = (models) => {
         Accounts.hasOne(models.Balances, {foreignKey: 'userId'});
-    };
-
-    Accounts.associate = (models) => {
-        Accounts.hasMany(models.Entries, {foreignKey: 'creatorId'});
-    };
-
-    Accounts.associate = (models) => {
         Accounts.hasMany(models.Contests, {foreignKey: 'contestCreatorId'});
+        Accounts.hasMany(models.Entries, {foreignKey: 'creatorId'});
     };
 
     return Accounts;

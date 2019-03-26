@@ -24,9 +24,6 @@ module.exports = (sequelize, DataTypes) => {
 
     Entries.associate = (models) => {
         Entries.belongsTo(models.Accounts, { foreignKey: 'creatorId'});
-    };
-
-    Entries.associate = (models) => {
         Entries.belongsTo(models.Contests, { foreignKey: 'contestId'});
     };
 

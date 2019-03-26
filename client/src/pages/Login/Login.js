@@ -5,12 +5,12 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import connect from 'react-redux/es/connect/connect';
 import {login} from '../../actions/actionCreator';
 import {loginScheme} from '../../utils/validation/validationSchemes';
-import {ValidationMessage} from '../ValidationMessage/ValidationMessage';
-import {InputComponent} from '../InputComponent/InputComponent';
-import {FormHeader} from '../FormHeader/FormHeader';
-import {FormSubmitButton} from '../FormSubmitButton/FormSubmitButton';
-import {ForgetPassword} from '../ForgetPassword/ForgetPassword';
-import {AuthHeader} from '../AuthHeader/AuthHeader';
+import {ValidationMessage} from '../../components/ValidationMessage/ValidationMessage';
+import {InputComponent} from '../../components/InputComponent/InputComponent';
+import {FormHeader} from '../../components/FormHeader/FormHeader';
+import {FormSubmitButton} from '../../components/FormSubmitButton/FormSubmitButton';
+import {ForgetPassword} from '../../components/ForgetPassword/ForgetPassword';
+import {AuthHeader} from '../../components/AuthHeader/AuthHeader';
 import {loginPlaceholders, loginInputKeys} from '../../utils/constants/constants';
 
 class Login extends Component {
@@ -35,8 +35,8 @@ class Login extends Component {
     createFormFields = () => {
         return Array.from({length: 2}).map((item, i) => {
             return (
-                <div className={styles.row}>
-                    <div className={styles.inputFieldContainer} key={i}>
+                <div className={styles.row} key={i}>
+                    <div className={styles.inputFieldContainer}>
                         <InputComponent placeholder={loginPlaceholders[i]} changeHandler={this.changeHandler(loginInputKeys[i])} />
                         <ValidationMessage message={this.state[loginInputKeys[i] + 'ErrorMessage']}/>
                     </div>

@@ -20,9 +20,6 @@ module.exports = (sequelize, DataTypes) => {
 
     Preferences.associate = (models) => {
         Preferences.belongsTo(models.ContestTypes, { foreignKey: 'contestTypeId' });
-    };
-
-    Preferences.associate = (models) => {
         Preferences.belongsToMany(models.Contests, { through: models.ContestsToPreferences, foreignKey: 'preferenceId'});
     };
 

@@ -12,6 +12,10 @@ module.exports = {
                 type: Sequelize.DECIMAL(10, 2),
                 allowNull: false
             },
+            isActive: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: true
+            },
             createdAt: {
                 type: Sequelize.DATE,
                 defaultValue: Sequelize.NOW

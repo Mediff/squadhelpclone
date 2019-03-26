@@ -5,13 +5,13 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import connect from 'react-redux/es/connect/connect';
 import {register} from '../../actions/actionCreator';
 import {loginScheme} from '../../utils/validation/validationSchemes';
-import {InputComponent} from '../InputComponent/InputComponent';
-import {ValidationMessage} from '../ValidationMessage/ValidationMessage';
-import {AuthHeader} from '../AuthHeader/AuthHeader';
-import {FormHeader} from "../FormHeader/FormHeader";
+import {InputComponent} from '../../components/InputComponent/InputComponent';
+import {ValidationMessage} from '../../components/ValidationMessage/ValidationMessage';
+import {AuthHeader} from '../../components/AuthHeader/AuthHeader';
+import {FormHeader} from "../../components/FormHeader/FormHeader";
 import {registerInputKeys, registerPlaceholders} from "../../utils/constants/constants";
-import {FormSubmitButton} from "../FormSubmitButton/FormSubmitButton";
-import {RoleCheck} from "../RoleCheck/RoleCheck";
+import {FormSubmitButton} from "../../components/FormSubmitButton/FormSubmitButton";
+import {RoleCheck} from "../../components/RoleCheck/RoleCheck";
 
 class Registration extends Component {
 
@@ -87,11 +87,6 @@ class Registration extends Component {
     };
 
     render() {
-        const {invalidFirstNameMessage, invalidEmailMessage} = this.state;
-        const invalidFirstLast = invalidFirstNameMessage || this.state.invalidLastNameMessage;
-        const inavlidDisplayEmail = invalidEmailMessage || this.state.invalidDisplayMessage
-        const invalidPassConfirm = this.state.invalidPassMessage || this.state.invalidConfirmMessage;
-
         return (
             <div className={styles.mainContainer}>
                 <div className={styles.registerContainer}>
@@ -104,9 +99,9 @@ class Registration extends Component {
                             {this.createFormFields()}
                         </div>
                         <RoleCheck headerText='Join As a Buyer' bottomText='I am looking for a Name, Logo or Tagline for my business, brand or product.'
-                                   radioName='register' radioValue='buyer' changeHandler={this.radioHandler} isDefault={true}/>
+                                   radioName='register' radioValue='buyer' changeHandler={this.changeHandler('role')} isDefault={true}/>
                         <RoleCheck headerText='Join As a Creative' bottomText='I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.'
-                                   radioName='register' radioValue='creator' changeHandler={this.radioHandler} isDefault={false}/>
+                                   radioName='register' radioValue='creator' changeHandler={this.changeHandler('role')} isDefault={false}/>
                         <div className={styles.buttonsContainer}>
                             <FormSubmitButton buttonText='Create Account'/>
                         </div>

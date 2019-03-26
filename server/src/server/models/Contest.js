@@ -28,29 +28,19 @@ module.exports = (sequelize, DataTypes) => {
         },
         priority: {
             type: DataTypes.INTEGER
-        }
+        },
+
 
     });
 
     Contests.associate = (models) => {
         Contests.belongsTo(models.CombinedContests, { foreignKey: 'combinedContestId'});
-    };
-
-    Contests.associate = (models) => {
         Contests.belongsTo(models.ContestTypes, { foreignKey: 'contestTypeId'});
-    };
-
-    Contests.associate = (models) => {
         Contests.belongsTo(models.Accounts, { foreignKey: 'contestCreatorId' });
-    };
-
-    Contests.associate = (models) => {
         Contests.hasMany(models.Entries, { foreignKey: 'contestId', sourceKey: 'id' });
-    };
-
-    Contests.associate = (models) => {
         Contests.belongsToMany(models.Preferences, { through: models.ContestsToPreferences, foreignKey: 'contestId'});
     };
+
 
     return Contests;
 };
