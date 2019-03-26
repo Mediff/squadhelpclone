@@ -2,6 +2,8 @@
 import NotFoundError from './notFoundError';
 import ValidationError from './validationError';
 import BadRequestError from './badRequestError';
+import ForbiddenError from './forbiddenError';
+import UnAuthorizedError from './unAuthorizedError';
 
 export const errorValidator = (error) => {
 
@@ -17,6 +19,8 @@ export const errorValidator = (error) => {
                 return new BadRequestError(error.message);
             case 'SyntaxError':
                 return new BadRequestError('Syntax error in passed data');
+            case 'JsonWebTokenError':
+                return new UnAuthorizedError('Token not valid');
         }
     }
     return error;

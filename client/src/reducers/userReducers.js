@@ -5,6 +5,7 @@ const initialState = {
   currentUser: null,
   isFetching: false,
   error: null,
+  isAuth: true
 };
 
 export default function (state = initialState, action) {
@@ -39,6 +40,12 @@ export default function (state = initialState, action) {
         ...state,
         error: action.error,
         isFetching: false,
+      };
+    }
+    case ACTION.IS_AUTH: {
+      return {
+        ...state,
+        isAuth: false
       };
     }
     default: {

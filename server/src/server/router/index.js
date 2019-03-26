@@ -18,5 +18,6 @@ router.get('/contests/type/:typeId', getContestsByType);
 router.get('/contests/prefs/:prefId', getContestsByPrefs);
 router.post('/contests', createContest);
 
+router.get('/test', validateToken);
 module.exports = router;
 

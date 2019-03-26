@@ -3,7 +3,7 @@ import ACTION from '../actions/actiontsTypes';
 import {setToken} from '../utils/auth/auth';
 
 import {
-  login, register,
+  login, register, sendTest
 } from '../api/rest/restContoller';
 
 export function* loginSaga({payload}) {
@@ -25,5 +25,13 @@ export function* registerSaga({ payload }) {
     yield put({ type: ACTION.REG_RESPONSE, payload: data });
   } catch (e) {
     yield put({ type: ACTION.REG_RESPONSE, error: e });
+  }
+}
+
+export function * sendTestSaga({payload}) {
+  try{
+    yield sendTest();
+  } catch(e){
+
   }
 }

@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
 import connect from 'react-redux/es/connect/connect';
-import {login} from "../../actions/actionCreator";
+import {test} from "../../actions/actionCreator";
 import {Link} from 'react-router-dom';
 
 class Main extends Component {
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        this.props.test();
     }
 
     render() {
@@ -27,7 +31,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    login: (user) => dispatch(login(user))
+    test: () => dispatch(test())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

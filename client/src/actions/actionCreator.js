@@ -10,3 +10,6 @@ export const register = (user) => ({
   payload: user
 });
 
+export const test = () => ({
+    type: ACTION.TEST
+});

@@ -7,4 +7,6 @@ export default {
     REG_RESPONSE: 'REG_RESPONSE',
     REG_REQUEST: 'REG_REQUEST',
     REG_ERROR: 'REG_ERROR',
+    IS_AUTH: 'IS_AUTH',
+    TEST: 'TEST'
 };

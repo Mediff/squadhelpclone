@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Provider} from 'react-redux';
 import config from './config';
 import App from '../App';
-import {Router, Route, Switch} from 'react-router-dom';
 
 class Store extends Component {
     constructor(props) {
