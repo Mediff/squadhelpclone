@@ -9,9 +9,11 @@ export const FormHeader = (props) => {
                 <h2>{props.headText}</h2>
             </div>
             {
-                props.options === 'register' && <div className={styles.createAccountText}>
-                    <h4>{props.bottomText}</h4>
-                </div>
+                props.options === 'register' && (
+                    <div className={styles.createAccountText}>
+                        <h4>{props.bottomText}</h4>
+                    </div>
+                )
             }
         </div>
     )

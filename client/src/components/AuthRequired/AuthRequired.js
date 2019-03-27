@@ -1,19 +1,22 @@
+import React, {Component} from 'react';
+import connect from 'react-redux/es/connect/connect';
+import {getUser} from '../../actions/actionCreator';
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 export const AuthRequired = (ComposedComponent) => {
 
     class RequireAuth extends Component {
 
-        componentWillMount() {
-            if(!this.props.isAuth) {
+        componentDidMount() {
+            if (!this.props.currentUser) {
+                this.props.getUser();
                 this.props.history.push('/login');
             }
         }
 
         componentDidUpdate(prevProps, prevState) {
-            if(!this.props.isAuth) {
+            if (!this.props.currentUser) {
+                this.props.getUser();
                 this.props.history.push('/login');
             }
         }
@@ -23,9 +26,14 @@ export const AuthRequired = (ComposedComponent) => {
         }
     }
 
-    function mapStateToProps(state) {
-        return  {isAuth: state.userReducers.isAuth};
-    }
+    const mapStateToProps = (state) => {
+        return {currentUser: state.userReducers.currentUser};
+    };
 
-    return connect(mapStateToProps)(RequireAuth);
+    const mapDispatchToProps = (dispatch) => ({
+        getUser: () => dispatch(getUser())
+    });
+
+    return connect(mapStateToProps, mapDispatchToProps)(RequireAuth);
 };
+

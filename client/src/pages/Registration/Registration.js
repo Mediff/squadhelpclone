@@ -15,10 +15,6 @@ import {RoleCheck} from "../../components/RoleCheck/RoleCheck";
 
 class Registration extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     state = {
         emailErrorMessage: '',
         passwordErrorMessage: '',
@@ -35,6 +31,11 @@ class Registration extends Component {
         role: 'buyer'
     };
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+       if(this.props.currentUser){
+           this.props.history.push('/');
+       }
+    }
     proceedError = (error) => {
         this.setState({
             [error.path + 'ErrorMessage']: error.message
@@ -45,12 +46,6 @@ class Registration extends Component {
         this.setState({
             [value]: event.target.value
         });
-    };
-
-    radioHandler = (event) => {
-      this.setState({
-          role: event.target.value
-      });
     };
 
     handleSubmit = async (event) => {
@@ -64,10 +59,10 @@ class Registration extends Component {
             lastNameErrorMessage: ''
         });
         const {firstName, lastName, displayName, email, password, role} = this.state;
-        console.log(role);
         try {
             await loginScheme.validate({firstName, lastName, displayName, email, password});
             this.props.register({firstName, lastName, displayName, email, password, role});
+
         } catch (e) {
             this.proceedError(e);
         }

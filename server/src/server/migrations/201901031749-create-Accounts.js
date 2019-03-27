@@ -36,9 +36,6 @@ module.exports = {
                 type: Sequelize.ENUM('buyer', 'creator'),
                 allowNull: false
             },
-            token: {
-                type: Sequelize.TEXT
-            },
             createdAt: {
                 type: Sequelize.DATE,
                 defaultValue: Sequelize.NOW

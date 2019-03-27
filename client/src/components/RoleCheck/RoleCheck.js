@@ -7,7 +7,11 @@ export const RoleCheck = (props) => {
     return (
         <div className={styles.radioButtonContainer}>
             <div className={styles.radioButtonInput}>
-                <input type="radio" value={props.radioValue} name={props.radioName} onChange={(event)=> props.changeHandler(event)} defaultChecked={props.isDefault}/>
+                <input type="radio"
+                       value={props.radioValue}
+                       name={props.radioName}
+                       onChange={(event)=> props.changeHandler(event)}
+                       defaultChecked={props.isDefault}/>
             </div>
             <div className={styles.radioButtonText}>
                 <h4>{props.headerText}</h4>

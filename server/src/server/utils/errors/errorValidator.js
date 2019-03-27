@@ -9,8 +9,8 @@ export const errorValidator = (error) => {
 
     console.log(error);
 
-    if(error.name){
-        switch(error.name){
+    if(error.name) {
+        switch(error.name) {
             case 'ValidationError':
                 return new ValidationError(error.message);
             case 'CastError':
@@ -20,6 +20,7 @@ export const errorValidator = (error) => {
             case 'SyntaxError':
                 return new BadRequestError('Syntax error in passed data');
             case 'JsonWebTokenError':
+            case 'TokenExpiredError':
                 return new UnAuthorizedError('Token not valid');
         }
     }

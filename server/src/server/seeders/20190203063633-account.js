@@ -10,7 +10,6 @@ module.exports = {
                 passwordHash: '111111',
                 profilePicture: 'justinPicture',
                 role: 'buyer',
-                token: '1111',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
@@ -21,7 +20,6 @@ module.exports = {
                 passwordHash: '111111',
                 profilePicture: 'justinPicture',
                 role: 'buyer',
-                token: '1111',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
@@ -32,7 +30,6 @@ module.exports = {
                 passwordHash: '111111',
                 profilePicture: 'justinPicture',
                 role: 'buyer',
-                token: '1111',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
@@ -43,7 +40,6 @@ module.exports = {
                 passwordHash: '111111',
                 profilePicture: 'justinPicture',
                 role: 'buyer',
-                token: '1111',
                 createdAt: new Date(),
                 updatedAt: new Date()
             }], {});

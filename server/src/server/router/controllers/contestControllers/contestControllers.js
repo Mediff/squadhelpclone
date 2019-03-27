@@ -1,14 +1,6 @@
 import {Accounts, Contests, ContestTypes, CombinedContests, ContestsToPreferences, Preferences} from '../../../models';
 import {consoleLogSequelizeModelAccessors} from '../../../utils/helpers/helpers';
 
-/*
-const getArrayOfValues = (value, collection) => {
-    const array = [];
-    for (let item of collection) {
-        array.push(item[value]);
-    }
-};*/
-
 export const createContest = async (req, res, next) => {
     try {
         const {title, ventureName, ventureDescribe, customerDescribe, contestCreatorId, combinedContestId, contestTypeId, file, priority, prize} = req.body;
@@ -32,14 +24,14 @@ export const createContest = async (req, res, next) => {
             priority
         });
         const preferences = JSON.parse(req.body.preferences);
-        for (let pref of preferences) {
+        /*for (let pref of preferences) {
             const preference = await Preferences.findOne({
                 where: {
                     id: pref
                 }
             });
             preference.addContests(contest);
-        }
+        }*/
         const combinedContest = await CombinedContests.findOne({
             where: {
                 id: id
@@ -177,7 +169,8 @@ export const getContestsByPrefs = async (req, res, next) => {
         }
         const combinedContests = await CombinedContests.findAll({
                 include: [{
-                    model: Contests, where: {
+                    model: Contests,
+                    where: {
                         id: array
                     }
                 }],

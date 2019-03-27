@@ -1,11 +1,9 @@
 import axios from 'axios';
 import { restURL } from '../baseURL';
-import { getToken } from '../../utils/auth/auth';
+import { getToken } from '../../utils/localStorage/localStorage';
+
+axios.defaults.headers.common['Authorization'] = getToken();
 
 export const login = (user) => axios.post(`${restURL}/login`, user);
 export const register = (user) => axios.post(`${restURL}/register`, user);
-export const sendTest = () => axios.get(`${restURL}/test`, {
-    'headers': {
-        'x-access-token': getToken()
-    }
-});
+export const getUser = () => axios.get(`${restURL}/user/`);

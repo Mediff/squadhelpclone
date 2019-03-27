@@ -39,10 +39,6 @@ module.exports = (sequelize, DataTypes) => {
                 isIn: [['buyer', 'creator']]
             }
         },
-        token: {
-            type: DataTypes.TEXT
-        },
-
     });
 
     Accounts.associate = (models) => {

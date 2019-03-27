@@ -15,10 +15,6 @@ import {loginPlaceholders, loginInputKeys} from '../../utils/constants/constants
 
 class Login extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     state = {
         emailErrorMessage: '',
         passwordErrorMessage: '',
@@ -32,18 +28,17 @@ class Login extends Component {
         });
     };
 
-    createFormFields = () => {
-        return Array.from({length: 2}).map((item, i) => {
-            return (
-                <div className={styles.row} key={i}>
-                    <div className={styles.inputFieldContainer}>
-                        <InputComponent placeholder={loginPlaceholders[i]} changeHandler={this.changeHandler(loginInputKeys[i])} />
-                        <ValidationMessage message={this.state[loginInputKeys[i] + 'ErrorMessage']}/>
-                    </div>
+    createFormFields = () =>
+        Array.from({length: 2}).map((item, i) =>
+            <div className={styles.row} key={i}>
+                <div className={styles.inputFieldContainer}>
+                    <InputComponent placeholder={loginPlaceholders[i]}
+                                    changeHandler={this.changeHandler(loginInputKeys[i])}/>
+                    <ValidationMessage message={this.state[loginInputKeys[i] + 'ErrorMessage']}/>
                 </div>
-            );
-        })
-    };
+            </div>
+        );
+
 
     changeHandler = (value) => (event) => {
         this.setState({
