@@ -15,7 +15,7 @@ export default {
                 clearToken();
             }
 
-            return Promise.reject(error);
+            return Promise.rejgect(error);
         });
     },
 };
