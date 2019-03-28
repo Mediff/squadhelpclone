@@ -10,8 +10,9 @@ export function* loginSaga({payload}) {
     yield put({type: ACTION.LOGIN_REQUEST});
     try {
         const {data} = yield login(payload);
-        setToken(data);
-        yield put({type: ACTION.LOGIN_RESPONSE, payload: data});
+        const {account, token} = data;
+        setToken(token);
+        yield put({type: ACTION.LOGIN_RESPONSE, payload: account});
     } catch (e) {
         yield put({type: ACTION.LOGIN_ERROR, error: e});
     }
@@ -21,14 +22,15 @@ export function* registerSaga({payload}) {
     yield put({type: ACTION.REG_REQUEST});
     try {
         const {data} = yield register(payload);
-        setToken(data);
-        yield put({type: ACTION.REG_RESPONSE, payload: data});
+        const {account, token} = data;
+        setToken(token);
+        yield put({type: ACTION.REG_RESPONSE, payload: account});
     } catch (e) {
         yield put({type: ACTION.REG_RESPONSE, error: e});
     }
 }
 
-export function* getUserSaga({payload}) {
+export function* getUserSaga() {
     try {
         const {data} = yield getUser();
         yield put({type: ACTION.GET_USER_RESPONSE, payload: data});

@@ -12,7 +12,7 @@ class Dashboard extends Component {
             <div>
                 <Header/>
                 <div className={styles.userContainer}>
-                    <UserInfo user={this.props.currentUser}/>
+                    {this.props.currentUser && <UserInfo user={this.props.currentUser}/>}
                 </div>
             </div>
         );

@@ -10,14 +10,14 @@ export const AuthRequired = (ComposedComponent) => {
         componentDidMount() {
             if (!this.props.currentUser) {
                 this.props.getUser();
-                this.props.history.push('/login');
+                //this.props.history.push('/login');
             }
         }
 
         componentDidUpdate(prevProps, prevState) {
             if (!this.props.currentUser) {
                 this.props.getUser();
-                this.props.history.push('/login');
+                //this.props.history.push('/login');
             }
         }
 
