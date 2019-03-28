@@ -1,8 +1,7 @@
 
 const models = require('../models/index');
+const uuidV4 = require('uuid/v4');
 const Accounts = models.Accounts;
-const ContestTypes = models.ContestTypes;
-const CombinedContests = models.CombinedContests;
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
@@ -17,32 +16,7 @@ module.exports = {
                 email: "justin2@bieber.com"
             }
         });
-        const logo = await ContestTypes.findOne({
-            where: {
-                name: "Logo Contest"
-            }
-        });
-        const tagline = await ContestTypes.findOne({
-            where: {
-                name: "Tagline Contest"
-            }
-        });
-        const name = await ContestTypes.findOne({
-            where: {
-                name: "Name Contest"
-            }
-        });
 
-        const contest1 = await CombinedContests.findOne({
-            where: {
-                id: 1
-            }
-        });
-        const contest2 = await CombinedContests.findOne({
-            where: {
-                id: 2
-            }
-        });
 
 
         return queryInterface.bulkInsert('Contests', [
@@ -54,8 +28,10 @@ module.exports = {
                 file: 'filePath',
                 priority: 1,
                 contestCreatorId: user1.id,
-                contestTypeId: logo.id,
-                combinedContestId: contest1.id,
+                winnerId: user2.id,
+                type: 'logo',
+                styles: ['funny', 'youthful'],
+                contestGroup: uuidV4(),
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
@@ -67,8 +43,10 @@ module.exports = {
                 file: 'filePath',
                 priority: 1,
                 contestCreatorId: user1.id,
-                contestTypeId: name.id,
-                combinedContestId: contest1.id,
+                winnerId: user2.id,
+                type: 'name',
+                styles: ['any', 'playful'],
+                contestGroup: uuidV4(),
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
@@ -80,8 +58,10 @@ module.exports = {
                 file: 'filePath',
                 priority: 1,
                 contestCreatorId: user2.id,
-                contestTypeId: tagline.id,
-                combinedContestId: contest2.id,
+                winnerId: user2.id,
+                type: 'tagline',
+                styles: ['professional', 'youth'],
+                contestGroup: uuidV4(),
                 createdAt: new Date(),
                 updatedAt: new Date()
             }

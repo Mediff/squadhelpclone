@@ -4,16 +4,12 @@ import {Header} from '../Header/Header';
 
 class Main extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
     }
 
     render() {
         return (
-           <Header/>
+           <Header user={this.props.currentUser}/>
         );
     }
 

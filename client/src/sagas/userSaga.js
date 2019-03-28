@@ -9,10 +9,13 @@ import {
 export function* loginSaga({payload}) {
     yield put({type: ACTION.LOGIN_REQUEST});
     try {
-        const {data} = yield login(payload);
+        const {user, history} = payload;
+        const {data} = yield login(user);
         const {account, token} = data;
         setToken(token);
         yield put({type: ACTION.LOGIN_RESPONSE, payload: account});
+        history.push('/');
+
     } catch (e) {
         yield put({type: ACTION.LOGIN_ERROR, error: e});
     }
@@ -21,10 +24,12 @@ export function* loginSaga({payload}) {
 export function* registerSaga({payload}) {
     yield put({type: ACTION.REG_REQUEST});
     try {
-        const {data} = yield register(payload);
+        const {user, history} = payload;
+        const {data} = yield register(user);
         const {account, token} = data;
         setToken(token);
         yield put({type: ACTION.REG_RESPONSE, payload: account});
+        history.push('/');
     } catch (e) {
         yield put({type: ACTION.REG_RESPONSE, error: e});
     }

@@ -1,5 +1,7 @@
 'use strict';
 
+const uuidV4 = require('uuid/v4');
+
 module.exports = (sequelize, DataTypes) => {
     const Contests = sequelize.define('Contests', {
         id: {
@@ -23,22 +25,34 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: false
         },
+        contestGroup: {
+            type: DataTypes.UUID,
+            defaultValue: uuidV4()
+        },
         file: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: true
         },
         priority: {
             type: DataTypes.INTEGER
         },
-
+        type: {
+            type: DataTypes.ENUM('logo', 'tagline', 'name'),
+            allowNull: false,
+            validate: {
+                isIn: [['logo', 'tagline', 'name']]
+            }
+        },
+        styles: {
+            type: DataTypes.ARRAY(DataTypes.TEXT)
+        }
 
     });
 
     Contests.associate = (models) => {
-        Contests.belongsTo(models.CombinedContests, { foreignKey: 'combinedContestId'});
-        Contests.belongsTo(models.ContestTypes, { foreignKey: 'contestTypeId'});
-        Contests.belongsTo(models.Accounts, { foreignKey: 'contestCreatorId' });
-        Contests.hasMany(models.Entries, { foreignKey: 'contestId', sourceKey: 'id' });
-        Contests.belongsToMany(models.Preferences, { through: models.ContestsToPreferences, foreignKey: 'contestId'});
+        Contests.belongsTo(models.Accounts, { foreignKey: 'contestCreatorId', as: 'Creator' });
+        Contests.belongsTo(models.Accounts, { foreignKey: 'winnerId', as: 'Winner' });
+        Contests.hasMany(models.Entries, { foreignKey: 'contestId' });
     };
 
 

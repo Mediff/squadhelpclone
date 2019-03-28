@@ -7,6 +7,7 @@ import {Router, Route, Switch} from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import {AuthRequired} from './components/AuthRequired/AuthRequired';
 
+
 const history = createHistory();
 
 const App = () => {

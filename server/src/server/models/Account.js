@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        displayName: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -23,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 isEmail: true
             }
+        },
+        balance: {
+            type: DataTypes.INTEGER,
+            allowNull: true
         },
         passwordHash: {
             type: DataTypes.STRING,
@@ -38,12 +46,12 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 isIn: [['buyer', 'creator']]
             }
-        },
+        }
     });
 
     Accounts.associate = (models) => {
-        Accounts.hasOne(models.Balances, {foreignKey: 'userId'});
-        Accounts.hasMany(models.Contests, {foreignKey: 'contestCreatorId'});
+        Accounts.hasMany(models.Contests, {foreignKey: 'contestCreatorId', as: 'Creator'});
+        Accounts.hasMany(models.Contests, {foreignKey: 'winnerId', as: 'Winner'});
         Accounts.hasMany(models.Entries, {foreignKey: 'creatorId'});
     };
 

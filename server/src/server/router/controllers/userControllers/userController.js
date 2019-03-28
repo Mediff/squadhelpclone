@@ -12,13 +12,16 @@ export const createUser = async (req, res, next) => {
         const {firstName, lastName, email, role, displayName} = req.body;
 
         const account = await Accounts.create({
-            firstName,
-            lastName,
-            email,
-            passwordHash: hash,
-            role,
-            displayName
-        });
+                firstName,
+                lastName,
+                email,
+                passwordHash: hash,
+                role,
+                displayName
+            }, {
+                attributes: ['id', 'firstName', 'lastName', 'email', 'profilePicture', 'role']
+            }
+        );
 
         const payload = {
             id: account.id
@@ -40,10 +43,11 @@ export const loginUser = async (req, res, next) => {
         const account = await Accounts.findOne({
             where: {
                 email
-            }
+            },
+            attributes: ['id', 'firstName', 'lastName', 'email', 'profilePicture', 'role']
         });
-        if (user) {
-            const result = await bcrypt.compare(password, user.passwordHash);
+        if (account) {
+            const result = await bcrypt.compare(password, account.passwordHash);
             const payload = {
                 id: account.id
             };
@@ -59,16 +63,16 @@ export const loginUser = async (req, res, next) => {
     }
 };
 
-export const getUserById = async(req, res, next) => {
-    try{
+export const getUserById = async (req, res, next) => {
+    try {
         const user = await Accounts.findOne({
-            where : {
+            where: {
                 id: req.decoded.id
             },
             attributes: ['id', 'firstName', 'lastName', 'email', 'profilePicture', 'role']
         });
         res.send(user);
-    } catch(e){
+    } catch (e) {
         next(e);
     }
 };

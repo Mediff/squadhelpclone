@@ -10,6 +10,8 @@ module.exports = {
                 passwordHash: '111111',
                 profilePicture: 'justinPicture',
                 role: 'buyer',
+                balance : 0,
+                displayName: 'JuB',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
@@ -20,6 +22,8 @@ module.exports = {
                 passwordHash: '111111',
                 profilePicture: 'justinPicture',
                 role: 'buyer',
+                balance : 0,
+                displayName: 'JuB2',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
@@ -30,6 +34,8 @@ module.exports = {
                 passwordHash: '111111',
                 profilePicture: 'justinPicture',
                 role: 'buyer',
+                balance : 0,
+                displayName: 'JuB3',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
@@ -40,6 +46,8 @@ module.exports = {
                 passwordHash: '111111',
                 profilePicture: 'justinPicture',
                 role: 'buyer',
+                balance : 0,
+                displayName: 'JuB4',
                 createdAt: new Date(),
                 updatedAt: new Date()
             }], {});

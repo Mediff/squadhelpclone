@@ -1,6 +1,5 @@
 
 import axios from 'axios';
-import ACTION from '../../actions/actiontsTypes';
 import {clearToken} from '../localStorage/localStorage';
 
 export default {

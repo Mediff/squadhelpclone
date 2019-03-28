@@ -13,3 +13,7 @@ export const register = (user) => ({
 export const getUser = () => ({
     type: ACTION.GET_USER
 });
+
+export const getUserContests = () => ({
+    type: ACTION.GET_USER_CONTESTS
+});

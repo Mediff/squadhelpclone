@@ -16,6 +16,10 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false
             },
+            displayName: {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
             email: {
                 type: Sequelize.STRING,
                 allowNull: false,
@@ -35,6 +39,9 @@ module.exports = {
             role: {
                 type: Sequelize.ENUM('buyer', 'creator'),
                 allowNull: false
+            },
+            balance: {
+                type: Sequelize.INTEGER
             },
             createdAt: {
                 type: Sequelize.DATE,

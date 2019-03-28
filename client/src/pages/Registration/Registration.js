@@ -31,11 +31,6 @@ class Registration extends Component {
         role: 'buyer'
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-       if(this.props.currentUser){
-           this.props.history.push('/');
-       }
-    }
     proceedError = (error) => {
         this.setState({
             [error.path + 'ErrorMessage']: error.message
@@ -61,7 +56,7 @@ class Registration extends Component {
         const {firstName, lastName, displayName, email, password, role} = this.state;
         try {
             await loginScheme.validate({firstName, lastName, displayName, email, password});
-            this.props.register({firstName, lastName, displayName, email, password, role});
+            this.props.register({user:{firstName, lastName, displayName, email, password, role}, history: this.props.history});
 
         } catch (e) {
             this.proceedError(e);

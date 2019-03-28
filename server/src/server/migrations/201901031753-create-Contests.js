@@ -1,4 +1,6 @@
 'use strict';
+const uuidV4 = require('uuid/v4');
+
 module.exports = {
     up: (queryInterface, Sequelize) => {
         return queryInterface.createTable('Contests', {
@@ -32,29 +34,31 @@ module.exports = {
                     key: 'id'
                 }
             },
-            contestTypeId: {
+            winnerId: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
+                allowNull: true,
                 onDelete: 'CASCADE',
                 references: {
-                    model: 'ContestTypes',
+                    model: 'Accounts',
                     key: 'id'
                 }
             },
-            combinedContestId: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
-                onDelete: 'CASCADE',
-                references: {
-                    model: 'CombinedContests',
-                    key: 'id'
-                }
+            contestGroup: {
+                type: Sequelize.UUID,
+                defaultValue: uuidV4()
             },
             file: {
                 type: Sequelize.STRING
             },
             priority: {
                 type: Sequelize.INTEGER
+            },
+            type: {
+                type: Sequelize.ENUM('logo', 'tagline', 'name'),
+                allowNull: false
+            },
+            styles: {
+                type: Sequelize.ARRAY(Sequelize.TEXT)
             },
             createdAt: {
                 type: Sequelize.DATE,

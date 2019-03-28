@@ -22,12 +22,6 @@ class Login extends Component {
         password: ''
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.currentUser){
-            this.props.history.push('/');
-        }
-    }
-
     proceedError = (error) => {
         this.setState({
             [error.path + 'ErrorMessage']: error.message
@@ -61,7 +55,7 @@ class Login extends Component {
         try {
             const {email, password} = this.state;
             await loginScheme.validate({email, password});
-            this.props.login({email, password});
+            this.props.login({user:{email, password}, history: this.props.history});
         } catch (e) {
             this.proceedError(e);
         }

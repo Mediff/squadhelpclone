@@ -4,12 +4,21 @@
   justify-content: flex-start
   align-items: center
 
-  .userProfilePicture
-    width: 50px
-    height: 50px
-    border-radius: 50%
+  .imageContainer
+    padding-left: 15px
+    padding-right: 15px
+
+    .userProfilePicture
+      width: 50px
+      height: 50px
+      border-radius: 50%
 
   .userDataContainer
     display: flex
     flex-direction: column
-    align-items: center
+    align-items: flex-start
+    font-family: 'Montserrat', sans-serif
+    & > h4
+      font-size: 20px
+    & > h5
+      margin-top: 8px
