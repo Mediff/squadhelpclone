@@ -85,11 +85,13 @@ class Registration extends Component {
         return (
             <div className={styles.mainContainer}>
                 <div className={styles.registerContainer}>
-                    <AuthHeader logo={logo} buttonText='Login'/>
+                    {/*<AuthHeader logo={logo} buttonText='Login'/>*/}
                     <form className={styles.formContainer} onSubmit={this.handleSubmit}>
-                        <div className={styles.registerInfoContainer}>
-                           <FormHeader bottomText='We always keep your name and email address private.' headText='CREATE AN ACCOUNT' options='register'/>
-                        </div>
+                        {/* <div className={styles.registerInfoContainer}>
+                          <FormHeader bottomText='We always keep your name and email address private.'
+                          headText='CREATE AN ACCOUNT' options='register'/>
+
+                        </div>*/}
                         <div className={styles.inputContainer}>
                             {this.createFormFields()}
                         </div>

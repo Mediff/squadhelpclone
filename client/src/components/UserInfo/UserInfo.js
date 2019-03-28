@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './UserInfo.module.sass';
 
 export const UserInfo = (props) => {
+    const {firstName, email} = props.user;
     return (
         <div className={styles.userInfoContainer}>
             <img
@@ -11,12 +12,9 @@ export const UserInfo = (props) => {
                 alt="User picture"
                 className={styles.userProfilePicture}/>
             <div className={styles.userDataContainer}>
-                <h4>{props.firstName}</h4>
-                <h5>{props.email} </h5>
+                <h4>{firstName}</h4>
+                <h5>{email}</h5>
             </div>
         </div>
     );
-};
-
-UserInfo.propTypes = {
 };

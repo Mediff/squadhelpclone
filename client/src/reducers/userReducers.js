@@ -4,10 +4,12 @@ import ACTION from '../actions/actiontsTypes';
 const initialState = {
     currentUser: null,
     isFetching: false,
-    error: null
+    error: null,
+    tokenFailed: false
 };
 
 export default function (state = initialState, action) {
+    console.log(action.payload);
     switch (action.type) {
         case ACTION.LOGIN_RESPONSE: {
             return {
@@ -34,12 +36,17 @@ export default function (state = initialState, action) {
             };
         }
         case ACTION.LOGIN_ERROR:
-        case ACTION.REG_ERROR:
-        case ACTION.GET_USER_ERROR: {
+        case ACTION.REG_ERROR: {
             return {
                 ...state,
                 error: action.error,
                 isFetching: false,
+            };
+        }
+        case ACTION.GET_USER_ERROR: {
+            return {
+                ...state,
+                tokenFailed: true
             };
         }
         case ACTION.GET_USER_RESPONSE: {

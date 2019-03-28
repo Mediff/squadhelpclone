@@ -21,13 +21,12 @@ export const createUser = async (req, res, next) => {
         });
 
         const payload = {
-            userId: account.id
+            id: account.id
         };
-        jwt.sign(payload, secretToken, {
+        const token = await jwt.sign(payload, secretToken, {
             expiresIn: '24h'
         });
-
-        res.send(account);
+        res.send({account, token});
 
     } catch (e) {
         next(e);
@@ -38,14 +37,20 @@ export const createUser = async (req, res, next) => {
 export const loginUser = async (req, res, next) => {
     const {email, password} = req.body;
     try {
-        const user = await Accounts.findOne({
+        const account = await Accounts.findOne({
             where: {
                 email
             }
         });
         if (user) {
             const result = await bcrypt.compare(password, user.passwordHash);
-            result ? res.send(user) : next(new ForbiddenError('Not valid password'));
+            const payload = {
+                id: account.id
+            };
+            const token = await jwt.sign(payload, secretToken, {
+                expiresIn: '24h'
+            });
+            result ? res.send({account, token}) : next(new ForbiddenError('Not valid password'));
         } else {
             next(new NotFoundError('Email not exists'));
         }
@@ -60,7 +65,7 @@ export const getUserById = async(req, res, next) => {
             where : {
                 id: req.decoded.id
             },
-            attributes: ['id', 'firstName', 'lastName', 'displayName', 'email', 'profilePicture', 'role']
+            attributes: ['id', 'firstName', 'lastName', 'email', 'profilePicture', 'role']
         });
         res.send(user);
     } catch(e){
