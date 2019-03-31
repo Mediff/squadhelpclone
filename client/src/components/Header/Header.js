@@ -1,15 +1,13 @@
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './Header.module.sass';
-import HeaderTop from '../HeaderTop/HeaderTop';
-import {HeaderBottom} from "../HeaderBottom/HeaderBottom";
+import {HeaderTop} from './HeaderTop/HeaderTop';
+import {HeaderBottom} from "./HeaderBottom/HeaderBottom";
 import logo from '../../images/logoMainPage.jpg';
 
-export const Header = (props) => {
+export const Header = ({user}) => {
     return (
         <header>
-            <HeaderTop user={props.user}/>
+            <HeaderTop user={user}/>
             <HeaderBottom logo={logo}/>
         </header>
     );

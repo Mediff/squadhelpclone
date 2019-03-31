@@ -4,14 +4,16 @@ import logo from '../../images/logo.png';
 import '@fortawesome/fontawesome-free/css/all.css';
 import connect from 'react-redux/es/connect/connect';
 import {register} from '../../actions/actionCreator';
-import {loginScheme} from '../../utils/validation/validationSchemes';
-import {InputComponent} from '../../components/InputComponent/InputComponent';
-import {ValidationMessage} from '../../components/ValidationMessage/ValidationMessage';
-import {AuthHeader} from '../../components/AuthHeader/AuthHeader';
-import {FormHeader} from "../../components/FormHeader/FormHeader";
-import {registerInputKeys, registerPlaceholders} from "../../utils/constants/constants";
-import {FormSubmitButton} from "../../components/FormSubmitButton/FormSubmitButton";
-import {RoleCheck} from "../../components/RoleCheck/RoleCheck";
+import {registerScheme} from '../../utils/validation/validationSchemes';
+import {InputComponent} from '../../components/AuthForms/InputComponent/InputComponent';
+import {ValidationMessage} from '../../components/AuthForms/ValidationMessage/ValidationMessage';
+import {AuthHeader} from '../../components/AuthForms/AuthHeader/AuthHeader';
+import {FormHeader} from "../../components/AuthForms/FormHeader/FormHeader";
+import {registerInputKeys, registerPlaceholders, registerRadioBottomText, registerRadioHeadText,
+    registerRadioValues} from "../../utils/constants/constants";
+import {FormSubmitButton} from "../../components/AuthForms/FormSubmitButton/FormSubmitButton";
+import {RoleCheck} from "../../components/AuthForms/RoleCheck/RoleCheck";
+import {formHeaderOptions, validationMessageOptions} from "../../utils/constants/options";
 
 class Registration extends Component {
 
@@ -43,6 +45,10 @@ class Registration extends Component {
         });
     };
 
+    buttonRedirectHandler = () => {
+        this.props.history.push('/login');
+    };
+
     handleSubmit = async (event) => {
         event.preventDefault();
         this.setState({
@@ -53,47 +59,66 @@ class Registration extends Component {
             firstNameErrorMessage: '',
             lastNameErrorMessage: ''
         });
-        const {firstName, lastName, displayName, email, password, role} = this.state;
+        const {firstName, lastName, displayName, email, password, role, confirmPassword} = this.state;
         try {
-            await loginScheme.validate({firstName, lastName, displayName, email, password});
-            this.props.register({user:{firstName, lastName, displayName, email, password, role}, history: this.props.history});
+            await registerScheme.validate({firstName, lastName, displayName, email, password, confirmPassword}, {abortEarly: false});
+            this.props.register({
+                user: {firstName, lastName, displayName, email, password, role},
+                history: this.props.history
+            });
 
         } catch (e) {
-            this.proceedError(e);
+            e.inner.forEach(error => this.proceedError(error));
         }
     };
 
-    createFormFields = () => {
-        return Array.from({length: 6}).map((item, i) => {
-            return (
-                <div className={styles.inputFieldContainer} key={i}>
-                    <InputComponent placeholder={registerPlaceholders[i]} changeHandler={this.changeHandler(registerInputKeys[i])} />
-                    <div className={styles.inputValidateContainer}>
-                        <ValidationMessage message={this.state[registerInputKeys[i] + 'ErrorMessage']}/>
-                    </div>
+    createFormFields = () =>
+        registerInputKeys.map((item, i) =>
+            <div className={styles.inputFieldContainer} key={i}>
+                <InputComponent placeholder={registerPlaceholders[i]}
+                                changeHandler={this.changeHandler(item)}/>
+                <div className={styles.inputValidateContainer}>
+                    <ValidationMessage message={this.state[item + 'ErrorMessage']}
+                                       type={validationMessageOptions.FrontError}/>
                 </div>
-            );
-        })
-    };
+            </div>
+        );
+
+    createFormRadioButtons = () =>
+        registerRadioValues.map((item, i) =>
+            <div className={styles.radioButton} key={i}>
+                <RoleCheck headerText={registerRadioHeadText[i]}
+                           bottomText={registerRadioBottomText[i]}
+                           radioName='register' radioValue={item}
+                           changeHandler={this.changeHandler(item)}
+                           isDefault={i === 0}/>
+            </div>
+        );
+
 
     render() {
         return (
             <div className={styles.mainContainer}>
+                <div className={styles.headerContainer}>
+                    <AuthHeader logo={logo} buttonText='Login' clickHandler={this.buttonRedirectHandler}/>
+                </div>
                 <div className={styles.registerContainer}>
-                    {/*<AuthHeader logo={logo} buttonText='Login'/>*/}
                     <form className={styles.formContainer} onSubmit={this.handleSubmit}>
-                        {/* <div className={styles.registerInfoContainer}>
-                          <FormHeader bottomText='We always keep your name and email address private.'
-                          headText='CREATE AN ACCOUNT' options='register'/>
-
-                        </div>*/}
+                        <div className={styles.registerInfoContainer}>
+                            <FormHeader bottomText='We always keep your name and email address private.'
+                                        headText='CREATE AN ACCOUNT' type={formHeaderOptions.FormHeaderRegister}/>
+                        </div>
+                        <div className={styles.validationMessageContainer}>
+                            {this.props.error &&
+                            <ValidationMessage type={validationMessageOptions.ServerError}
+                                               message={this.props.error}/>}
+                        </div>
                         <div className={styles.inputContainer}>
                             {this.createFormFields()}
                         </div>
-                        <RoleCheck headerText='Join As a Buyer' bottomText='I am looking for a Name, Logo or Tagline for my business, brand or product.'
-                                   radioName='register' radioValue='buyer' changeHandler={this.changeHandler('role')} isDefault={true}/>
-                        <RoleCheck headerText='Join As a Creative' bottomText='I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.'
-                                   radioName='register' radioValue='creator' changeHandler={this.changeHandler('role')} isDefault={false}/>
+                        <div className={styles.radioContainer}>
+                            {this.createFormRadioButtons()}
+                        </div>
                         <div className={styles.buttonsContainer}>
                             <FormSubmitButton buttonText='Create Account'/>
                         </div>

@@ -5,13 +5,14 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import connect from 'react-redux/es/connect/connect';
 import {login} from '../../actions/actionCreator';
 import {loginScheme} from '../../utils/validation/validationSchemes';
-import {ValidationMessage} from '../../components/ValidationMessage/ValidationMessage';
-import {InputComponent} from '../../components/InputComponent/InputComponent';
-import {FormHeader} from '../../components/FormHeader/FormHeader';
-import {FormSubmitButton} from '../../components/FormSubmitButton/FormSubmitButton';
-import {ForgetPassword} from '../../components/ForgetPassword/ForgetPassword';
-import {AuthHeader} from '../../components/AuthHeader/AuthHeader';
+import {ValidationMessage} from '../../components/AuthForms/ValidationMessage/ValidationMessage';
+import {InputComponent} from '../../components/AuthForms/InputComponent/InputComponent';
+import {FormHeader} from '../../components/AuthForms/FormHeader/FormHeader';
+import {FormSubmitButton} from '../../components/AuthForms/FormSubmitButton/FormSubmitButton';
+import {ForgetPassword} from '../../components/AuthForms/ForgetPassword/ForgetPassword';
+import {AuthHeader} from '../../components/AuthForms/AuthHeader/AuthHeader';
 import {loginPlaceholders, loginInputKeys} from '../../utils/constants/constants';
+import {validationMessageOptions, formHeaderOptions} from '../../utils/constants/options';
 
 class Login extends Component {
 
@@ -29,12 +30,13 @@ class Login extends Component {
     };
 
     createFormFields = () =>
-        Array.from({length: 2}).map((item, i) =>
+        loginInputKeys.map((item, i) =>
             <div className={styles.row} key={i}>
                 <div className={styles.inputFieldContainer}>
                     <InputComponent placeholder={loginPlaceholders[i]}
                                     changeHandler={this.changeHandler(loginInputKeys[i])}/>
-                    <ValidationMessage message={this.state[loginInputKeys[i] + 'ErrorMessage']}/>
+                    <ValidationMessage type={validationMessageOptions.FrontError}
+                                       message={this.state[loginInputKeys[i] + 'ErrorMessage']}/>
                 </div>
             </div>
         );
@@ -46,6 +48,10 @@ class Login extends Component {
         });
     };
 
+    buttonRedirectHandler = () => {
+        this.props.history.push('/register');
+    };
+
     handleSubmit = async (event) => {
         event.preventDefault();
         this.setState({
@@ -54,10 +60,10 @@ class Login extends Component {
         });
         try {
             const {email, password} = this.state;
-            await loginScheme.validate({email, password});
+            await loginScheme.validate({email, password}, {abortEarly: false});
             this.props.login({user:{email, password}, history: this.props.history});
         } catch (e) {
-            this.proceedError(e);
+            e.inner.forEach(error => this.proceedError(error));
         }
     };
 
@@ -65,11 +71,15 @@ class Login extends Component {
         return (
             <div className={styles.mainContainer}>
                 <div className={styles.headerContainer}>
-                    <AuthHeader logo={logo} buttonText='Signup'/>
+                    <AuthHeader logo={logo} clickHandler = {this.buttonRedirectHandler} buttonText='Signup'/>
                 </div>
                 <div className={styles.signupContainer}>
                     <form className={styles.formContainer} onSubmit={this.handleSubmit}>
-                        <FormHeader headText='LOGIN TO YOUR ACCOUNT' options='login'/>
+                        <FormHeader headText='LOGIN TO YOUR ACCOUNT' type={formHeaderOptions.FormHeaderLogin}/>
+                        <div className={styles.validationMessageContainer}>
+                            {this.props.error && <ValidationMessage type={validationMessageOptions.ServerError}
+                                                                    message={this.props.error}/>}
+                        </div>
                         <div className={styles.inputsContainer}>
                             {this.createFormFields()}
                         </div>

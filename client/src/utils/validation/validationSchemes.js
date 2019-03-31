@@ -1,35 +1,28 @@
-const yup = require('yup');
+const {object, string, ref} = require('yup');
 
-export const loginScheme = yup.object().shape({
-    email: yup
-        .string()
+export const loginScheme = object({
+    email: string()
         .required('Email required')
         .email('Not valid email'),
-    password: yup
-        .string()
+    password: string()
         .required('Password required')
 });
 
-export const registerScheme = yup.object().shape({
-    firstName: yup
-        .string()
+export const registerScheme = object({
+    firstName: string()
         .required('First name required'),
-    lastName: yup
-        .string()
+    lastName: string()
         .required('Last name required'),
-    displayName: yup
-        .string()
+    displayName: string()
         .required('Display Name required'),
-    email: yup
-        .string()
+    email: string()
         .required('Email required')
         .email('Not valid email'),
-    password: yup
-        .string()
+    password: string()
         .required('Password required')
         .min(6, 'Password must contain at least 6 symbols'),
-    passwordConfirm: yup
-        .string()
-        .oneOf([yup.ref('password'), null], 'Passwords dont match')
+    confirmPassword: string()
+        .oneOf([ref('password'), null], 'Passwords dont match')
+        .required('Password confirm is required')
 
 });

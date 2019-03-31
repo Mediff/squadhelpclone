@@ -1,13 +1,12 @@
+
 import React from 'react';
-import styles from './Contests.module.sass';
 import PropTypes from 'prop-types';
-import {ContestCard} from "../ContestCard/ContestCard";
+import {ContestCard} from "./ContestCard/ContestCard";
 
-export const Contests = (props) => {
-
+export const Contests = ({contests}) => {
     return (
         <div>
-            {props.contests.map((contest) =>
+            {contests.map((contest) =>
                 <ContestCard contest={contest} key={contest.id}/>
             )}
         </div>

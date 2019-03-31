@@ -5,7 +5,7 @@ import Registration from './pages/Registration/Registration';
 import Dashboard from './pages/Dashboard/Dashboard';
 import {Router, Route, Switch} from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
-import {AuthRequired} from './components/AuthRequired/AuthRequired';
+import {AuthRequired} from './components/HOCs/AuthRequired/AuthRequired';
 
 
 const history = createHistory();

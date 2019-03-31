@@ -17,7 +17,7 @@ export function* loginSaga({payload}) {
         history.push('/');
 
     } catch (e) {
-        yield put({type: ACTION.LOGIN_ERROR, error: e});
+        yield put({type: ACTION.LOGIN_ERROR, error: e.response.data});
     }
 }
 
@@ -31,7 +31,7 @@ export function* registerSaga({payload}) {
         yield put({type: ACTION.REG_RESPONSE, payload: account});
         history.push('/');
     } catch (e) {
-        yield put({type: ACTION.REG_RESPONSE, error: e});
+        yield put({type: ACTION.REG_ERROR, error: e.response.data});
     }
 }
 
@@ -40,6 +40,6 @@ export function* getUserSaga() {
         const {data} = yield getUser();
         yield put({type: ACTION.GET_USER_RESPONSE, payload: data});
     } catch (e) {
-        yield put({type: ACTION.GET_USER_ERROR, error: e});
+        yield put({type: ACTION.GET_USER_ERROR, error: e.response.data});
     }
 }

@@ -22,6 +22,8 @@ export const errorValidator = (error) => {
             case 'JsonWebTokenError':
             case 'TokenExpiredError':
                 return new UnAuthorizedError('Token not valid');
+            case 'SequelizeUniqueConstraintError':
+                return new ValidationError('Email already taken');
         }
     }
     return error;
