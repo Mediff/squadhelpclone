@@ -11,16 +11,43 @@ class ContestType extends Component {
         this.props.getContestTypes();
     }
 
-    getCombinedTypes = () => {
+    combineTypes = (first, second) => {
+        return [{
+            id: [first.id, second.id],
+            image: [first.image, second.image],
+            imageHover: [first.imageHover, second.imageHover],
+            name: `${first.name} + ${second.name}`
+        }];
+    };
 
+
+
+    getCombinedTypes = () => {
+        const result = [];
+        for (let i = 0; i < this.props.contestTypes.length - 1; i++) {
+            for (let j = i + 1; j < this.props.contestTypes.length; j++) {
+                result.push(this.combineTypes(this.props.contestTypes[i], this.props.contestTypes[j]));
+            }
+        }
+        result.push();
+        return result;
     };
 
     render() {
+        let combinedResult;
+        if (this.props.contestTypes) {
+            combinedResult = this.getCombinedTypes();
+        }
         return (
             <div className={styles.mainContainer}>
                 {this.props.contestTypes && <ContestTypeCards contestTypes={this.props.contestTypes}
-                                            titleText={contestTypesTitleText[0]} subText={contestTypesSubText[0]}/>}
+                                                              titleText={contestTypesTitleText[0]}
+                                                              subText={contestTypesSubText[0]}/>}
+                {combinedResult && <ContestTypeCards contestTypes={combinedResult}
+                                                     titleText={contestTypesTitleText[1]}
+                                                     subText={contestTypesSubText[1]} />}
             </div>
+
         );
     }
 }

@@ -23,6 +23,6 @@ export const contestTypesDescription = ['Get up and running with the perfect nam
     'Connect deeply with your target audience with an on-target tagline '];
 
 export const contestTypesSubText = ['Pick from our most popular categories, launch a contest and begin receiving ' +
-'submissions right away'];
+'submissions right away', 'Launch multiple contests and pay a discounted bundle price'];
 
-export const contestTypesTitleText = ['Our Most Popular Categories'];
+export const contestTypesTitleText = ['Our Most Popular Categories', 'Save With Our Bundle Packages'];

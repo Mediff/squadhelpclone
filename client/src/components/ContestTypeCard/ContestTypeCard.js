@@ -24,6 +24,7 @@ export class ContestTypeCard extends Component {
             `${imagesURL}/${this.props.imageHover}`;
     };
 
+
     render() {
         return (
             <div className={styles.mainContainer}
