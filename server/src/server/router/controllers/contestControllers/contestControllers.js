@@ -144,7 +144,7 @@ export const getUserContests = async (req, res, next) => {
         consoleLogSequelizeModelAccessors(Entries);
         const userContests = await Contests.findAll({
             where: {
-                contestCreatorId: 1
+                contestCreatorId: 2
             },
             include: [{
                 model: Accounts,
@@ -158,7 +158,6 @@ export const getUserContests = async (req, res, next) => {
                 model: Entries
             }]
         });
-        console.log(userContests);
         res.send(userContests);
     } catch (e) {
         next(e);

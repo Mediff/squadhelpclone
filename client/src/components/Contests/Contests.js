@@ -1,13 +1,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ContestCard} from "./ContestCard/ContestCard";
+import {ContestCard} from './ContestCard/ContestCard';
+import styles from './Contests.module.sass';
 
 export const Contests = ({contests}) => {
     return (
-        <div>
+        <div className={styles.mainContainer}>
             {contests.map((contest) =>
-                <ContestCard contest={contest} key={contest.id}/>
+                <div className={styles.contestContainer} key={contest.id}>
+                    <ContestCard contest={contest}/>
+                </div>
             )}
         </div>
     );

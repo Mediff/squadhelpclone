@@ -17,3 +17,16 @@ export const getUser = () => ({
 export const getUserContests = () => ({
     type: ACTION.GET_USER_CONTESTS
 });
+
+export const getUserActiveContests = () => ({
+    type: ACTION.GET_USER_ACTIVE_CONTESTS
+});
+
+export const getUserCompletedContests = () => ({
+    type: ACTION.GET_USER_COMPLETED_CONTESTS
+});
+
+export const getContestTypes = () => ({
+    type: ACTION.GET_CONTEST_TYPES
+});
+

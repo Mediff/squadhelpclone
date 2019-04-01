@@ -1,10 +1,10 @@
-
 import ACTION from '../actions/actiontsTypes';
 
 const initialState = {
     userContests: null,
     isFetching: false,
-    error: null
+    error: null,
+    getActive: true
 };
 
 export default function (state = initialState, action) {
@@ -14,7 +14,8 @@ export default function (state = initialState, action) {
                 ...state,
                 isFetching: false,
                 error: null,
-                userContests: action.payload
+                userContests: action.payload,
+                getActive: true
             }
         }
         case ACTION.GET_USER_CONTESTS_REQUEST: {
@@ -31,6 +32,18 @@ export default function (state = initialState, action) {
                 isFetching: false,
                 error: action.error,
                 userContests: null
+            }
+        }
+        case ACTION.GET_USER_ACTIVE_CONTESTS: {
+            return {
+                ...state,
+                getActive: true
+            }
+        }
+        case ACTION.GET_USER_COMPLETED_CONTESTS: {
+            return {
+                ...state,
+                getActive: false
             }
         }
         default: {

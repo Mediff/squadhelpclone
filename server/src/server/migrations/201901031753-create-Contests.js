@@ -43,6 +43,15 @@ module.exports = {
                     key: 'id'
                 }
             },
+            contestTypeId: {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+                onDelete: 'CASCADE',
+                references: {
+                    model: 'ContestTypes',
+                    key: 'id'
+                }
+            },
             contestGroup: {
                 type: Sequelize.UUID,
                 defaultValue: uuidV4()
@@ -51,6 +60,9 @@ module.exports = {
                 type: Sequelize.STRING
             },
             priority: {
+                type: Sequelize.INTEGER
+            },
+            prize: {
                 type: Sequelize.INTEGER
             },
             type: {

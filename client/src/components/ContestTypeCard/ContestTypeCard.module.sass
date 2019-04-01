@@ -1,11 +1,18 @@
 
 .mainContainer
+  font-family: 'Montserrat', sans-serif
   display: flex
   flex-direction: column
-  justify-content: center
+  justify-content: flex-start
   align-items: center
   cursor: pointer
   padding: 0 15px
+  max-width: 230px
+  height: 350px
+  background-color: white
+  color: #333
+  &:hover
+    box-shadow: 0 3px 7px rgba(0,0,0,0.5)
 
   .cardImage
     height: 48px
@@ -14,7 +21,7 @@
 
   .contestName
     font-size: 17px
-    font-weight: 700
+    font-weight: 500
     margin: 10px 0
 
   hr
@@ -24,3 +31,7 @@
 
   .contestDescription
     margin-bottom: 10px
+    text-align: center
+    font-size: 13px
+    line-height: 20px
+    opacity: 0.9

@@ -1,46 +1,51 @@
 
-.cardContainer
-  font-family: 'Montserrat', sans-serif
-  padding: 15px
-  height: 70px
-  width: 200px
-  background-color: white
+.mainContainer
   display: flex
-  box-shadow: 0px 7px 22px -8px rgba(0,0,0,0.75)
+  flex-direction: column
 
-  .cardEntryContainer
+  .cardContainer
+    font-family: 'Montserrat', sans-serif
+    padding: 15px
+    height: 70px
+    width: 200px
+    background-color: white
     display: flex
-    flex-direction: column
-    justify-content: center
-    align-content: center
-    align-items: center
-    border-right: 2px solid #f3f4f4
-    width: 55%
+    box-shadow: 0 7px 22px -8px rgba(0,0,0,0.75)
 
-    .entryContainer
+    .cardEntryContainer
       display: flex
-      flex-direction: row
+      flex-direction: column
       justify-content: center
       align-content: center
-      height: 80%
-      & > i
-        padding-right: 10px
-      & > span
-        font-size: 18px
-        color: #465a89
+      align-items: center
+      border-right: 2px solid #f3f4f4
+      width: 55%
 
-    .entryText
-      padding-top: 8px
-      font-size: 15px
-      color: #8c8e92
+      .entryContainer
+        display: flex
+        flex-direction: row
+        justify-content: center
+        align-items: center
+        height: 100%
+        & > img
+          height: 25px
+          margin-right: 10px
+        & > span
+          font-size: 20px
+          color: #465a89
 
-  .cardDaysLeftContainer
-    display: flex
-    flex-direction: column
-    justify-content: center
-    align-content: center
-    align-items: center
-    width: 45%
+      .entryText
+        padding-top: 8px
+        font-size: 15px
+        color: #8c8e92
+
+    .cardDaysLeftContainer
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-content: center
+      align-items: center
+      width: 45%
 
     .daysLeftContainer
       display: flex
@@ -56,3 +61,14 @@
       padding-top: 8px
       font-size: 15px
       color: #8c8e92
+
+  .cardBottomContainer
+    display: flex
+    justify-content: center
+    align-content: center
+    height: 30px
+    background-color: #AAAAAA
+    padding: 10px 5px
+    font-size: 12px
+    & > i
+      margin-right: 10px

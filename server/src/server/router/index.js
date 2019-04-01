@@ -3,6 +3,7 @@ import express from 'express';
 import {createUser, getUserById, loginUser} from './controllers/userControllers/userController';
 import {createContest, getContests, getActiveContests, getContestById,
     getContestsByType, getContestsByStyle, getUserContests} from "./controllers/contestControllers/contestControllers";
+import {getContestTypes} from './controllers/contestTypeControllers/contestTypesController';
 import {validateToken} from './controllers/auth/authControllers';
 import {validateUser} from '../utils/validation/userValidation';
 
@@ -19,6 +20,8 @@ router.get('/contests/style/', getContestsByStyle);
 router.get('/contests/type/:type', getContestsByType);
 router.get('/contests/:id', getContestById);
 router.post('/contests', createContest);
+
+router.get('/types', validateToken, getContestTypes);
 
 router.get('/user', validateToken, getUserById);
 module.exports = router;
