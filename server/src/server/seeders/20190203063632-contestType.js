@@ -4,7 +4,7 @@ module.exports = {
         return queryInterface.bulkInsert('ContestTypes', [
             {
                 name: 'Logo',
-                image: 'logo.png',
+                image: 'logoContest.png',
                 imageHover: 'logoContestHover.png',
                 createdAt: new Date(),
                 updatedAt: new Date()
