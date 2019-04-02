@@ -4,6 +4,7 @@ import connect from 'react-redux/es/connect/connect';
 import {getContestTypes} from "../../actions/actionCreator";
 import {ContestTypeCards} from '../../components/ContestTypeCards/ContestTypeCards';
 import {contestTypesSubText, contestTypesTitleText} from '../../utils/constants/constants';
+import {getCombinedTypes} from '../../utils/helpers/helpers';
 
 class ContestType extends Component {
 
@@ -11,32 +12,10 @@ class ContestType extends Component {
         this.props.getContestTypes();
     }
 
-    combineTypes = (first, second) => {
-        return [{
-            id: [first.id, second.id],
-            image: [first.image, second.image],
-            imageHover: [first.imageHover, second.imageHover],
-            name: `${first.name} + ${second.name}`
-        }];
-    };
-
-
-
-    getCombinedTypes = () => {
-        const result = [];
-        for (let i = 0; i < this.props.contestTypes.length - 1; i++) {
-            for (let j = i + 1; j < this.props.contestTypes.length; j++) {
-                result.push(this.combineTypes(this.props.contestTypes[i], this.props.contestTypes[j]));
-            }
-        }
-        result.push();
-        return result;
-    };
-
     render() {
         let combinedResult;
         if (this.props.contestTypes) {
-            combinedResult = this.getCombinedTypes();
+            combinedResult = getCombinedTypes(this.props.contestTypes);
         }
         return (
             <div className={styles.mainContainer}>

@@ -19,11 +19,22 @@ export class ContestTypeCard extends Component {
         });
     };
 
-    setImage = () => {
-        return this.state.isHover? `${imagesURL}/${this.props.image}`:
-            `${imagesURL}/${this.props.imageHover}`;
+    setImage = (image, hoverImage) => {
+        return this.state.isHover? `${imagesURL}/${image}`:
+            `${imagesURL}/${hoverImage}`;
     };
 
+    renderImages = () => {
+        if(Array.isArray(this.props.image)) {
+            return this.props.image.map((image, index) => {
+               return <img className={styles.cardImage} src={this.setImage(image, this.props.imageHover[index])}
+                           alt='Contest'/>
+            });
+        }
+        return  <img className={styles.cardImage} src={this.setImage(this.props.image, this.props.imageHover)}
+                     alt='Contest'/>
+
+    };
 
     renderImages = () => {
         if(Array.isArray(this.props.image)){
@@ -40,7 +51,9 @@ export class ContestTypeCard extends Component {
             <div className={styles.mainContainer}
                  onMouseEnter={() => this.mouseHoverHandler()}
                  onMouseLeave={() => this.mouseHoverHandler()}>
-                {this.renderImages()}
+                <div className={styles.imageContainer}>
+                    {this.renderImages()}
+                </div>
                 <div className={styles.contestName}>
                     {this.props.title}
                 </div>
