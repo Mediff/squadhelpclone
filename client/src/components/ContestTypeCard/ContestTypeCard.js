@@ -25,12 +25,22 @@ export class ContestTypeCard extends Component {
     };
 
 
+    renderImages = () => {
+        if(Array.isArray(this.props.image)){
+            return this.props.image.map( item =>{
+               return  <img className={styles.cardImage} src={this.setImage()} alt='Contest'/>
+            });
+        }
+        return <img className={styles.cardImage} src={this.setImage()} alt='Contest'/>;
+
+    };
+
     render() {
         return (
             <div className={styles.mainContainer}
                  onMouseEnter={() => this.mouseHoverHandler()}
                  onMouseLeave={() => this.mouseHoverHandler()}>
-                <img className={styles.cardImage} src={this.setImage()} alt='Contest'/>
+                {this.renderImages()}
                 <div className={styles.contestName}>
                     {this.props.title}
                 </div>
