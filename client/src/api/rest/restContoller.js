@@ -9,3 +9,6 @@ export const register = (user) => axios.post(`${restURL}/register`, user);
 export const getUser = () => axios.get(`${restURL}/user`);
 export const getUserContests = () => axios.get(`${restURL}/contests/user`);
 export const getContestTypes = () => axios.get(`${restURL}/types`);
+export const getIndustries = () => axios.get(`${restURL}/types/industries`);
+export const getStyles = (id) => axios.get(`${restURL}/types/styles/` + id);
+export const getNameTypes = () => axios.get(`${restURL}/types/nametypes`);

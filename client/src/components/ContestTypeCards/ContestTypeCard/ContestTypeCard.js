@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styles from './ContestTypeCard.module.sass';
-import {imagesURL} from '../../api/baseURL';
-import {contestTypeOptions} from '../../utils/constants/options';
+import {imagesURL} from '../../../api/baseURL';
+import {contestTypeOptions} from '../../../utils/constants/options';
 import connect from 'react-redux/es/connect/connect';
-import {setContestTypes} from '../../actions/actionCreator';
+import {setContestTypes} from '../../../actions/actionCreator';
 
 class ContestTypeCard extends Component {
 

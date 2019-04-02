@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ContestTypeCards.module.sass';
-import ContestTypeCard from '../ContestTypeCard/ContestTypeCard';
+import ContestTypeCard from './ContestTypeCard/ContestTypeCard';
 import {contestTypesDescription} from '../../utils/constants/constants';
 import {contestTypeOptions} from '../../utils/constants/options';
 
