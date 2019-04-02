@@ -13,3 +13,10 @@ export const contestTypeOptions = {
     FavoriteTypes: 'FavoriteTypes',
     CombinedTypes: 'CombinedTypes'
 };
+
+export const inputTypeOptions = {
+    InputTextBox: 'InputTextBox',
+    InputTextField: 'InputTextField',
+    InputSelect: 'InputSelect',
+    InputCheckboxes: 'InputCheckboxes'
+};

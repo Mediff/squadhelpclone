@@ -1,3 +1,4 @@
+import {inputTypeOptions} from '../constants/options';
 
 export const loginPlaceholders = ['Email', 'Password'];
 
@@ -27,3 +28,15 @@ export const contestTypesSubText = ['Pick from our most popular categories, laun
 'submissions right away', 'Launch multiple contests and pay a discounted bundle price'];
 
 export const contestTypesTitleText = ['Our Most Popular Categories', 'Save With Our Bundle Packages'];
+
+export const createContestNameHeaders = ['Enter title of your contest', 'What type of Name are you looking for?',
+    'Select a category that best describes your business', 'What does your company / business do?',
+    'Tell us about your customers', 'Select styles which describes your contest'];
+
+export const createContestNamePlaceholders = ['Select name for your contest', 'Select type of name',
+    'Select your industry', 'e.g. We are an online lifestyle brand that provides stylish and high quality apparel ' +
+    'to the expert eco-conscious shopper.', 'Share any relevant information such as their demographics, ' +
+    'interests, aspirations etc'];
+
+export const createContestNameInputs = [inputTypeOptions.InputTextField, inputTypeOptions.InputSelect,
+    inputTypeOptions.InputSelect, inputTypeOptions.InputTextBox, inputTypeOptions.InputTextBox, inputTypeOptions.InputCheckboxes];
