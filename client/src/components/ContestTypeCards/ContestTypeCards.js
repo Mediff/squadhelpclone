@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import styles from './ContestTypeCards.module.sass';
 import {ContestTypeCard} from '../ContestTypeCard/ContestTypeCard';
 import {contestTypesDescription} from '../../utils/constants/constants';
+import {contestTypeOptions} from '../../utils/constants/options';
 
-export const ContestTypeCards = ({contestTypes, titleText, subText}) => {
+export const ContestTypeCards = ({contestTypes, titleText, subText, options}) => {
+
+    const mainStyle = options === contestTypeOptions.FavoriteTypes ? styles.mainContainer : styles.secondaryContainer;
+
     return (
-        <div className={styles.mainContainer}>
+        <div className={mainStyle}>
             <div className={styles.titleText}>
                 {titleText}
             </div>
@@ -16,9 +20,10 @@ export const ContestTypeCards = ({contestTypes, titleText, subText}) => {
             <hr className={styles.separator}/>
             <div className={styles.cardsContainer}>
                 {contestTypes.map((contestType, index) =>
-                    <div className={styles.contestCard}  key={contestType.id}>
+                    <div className={styles.contestCard} key={contestType.id}>
                         <ContestTypeCard image={contestType.image} imageHover={contestType.imageHover}
-                                         title={contestType.name} description={contestTypesDescription[index]}/>
+                                         title={contestType.name} description={contestTypesDescription[index]}
+                                         options={options}/>
                     </div>
                 )}
             </div>

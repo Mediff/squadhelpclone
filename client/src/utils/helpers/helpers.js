@@ -13,7 +13,8 @@ const combineTypesInArray = (item, value) => {
         id: [...item.id, value.id],
         image: [...item.image, value.image],
         imageHover: [...item.imageHover, value.imageHover],
-        name: `${item.name} + ${value.name}`
+        name: `${item.name} + ${value.name}`,
+        description: 'Establish your entire brand identity and save with this bundle.'
     }
 };
 

@@ -5,6 +5,7 @@ import {getContestTypes} from "../../actions/actionCreator";
 import {ContestTypeCards} from '../../components/ContestTypeCards/ContestTypeCards';
 import {contestTypesSubText, contestTypesTitleText} from '../../utils/constants/constants';
 import {getCombinedTypes} from '../../utils/helpers/helpers';
+import {contestTypeOptions} from '../../utils/constants/options';
 
 class ContestType extends Component {
 
@@ -21,10 +22,12 @@ class ContestType extends Component {
             <div className={styles.mainContainer}>
                 {this.props.contestTypes && <ContestTypeCards contestTypes={this.props.contestTypes}
                                                               titleText={contestTypesTitleText[0]}
-                                                              subText={contestTypesSubText[0]}/>}
+                                                              subText={contestTypesSubText[0]}
+                                                              options={contestTypeOptions.FavoriteTypes}/>}
                 {combinedResult && <ContestTypeCards contestTypes={combinedResult}
                                                      titleText={contestTypesTitleText[1]}
-                                                     subText={contestTypesSubText[1]} />}
+                                                     subText={contestTypesSubText[1]}
+                                                     options={contestTypeOptions.CombinedTypes}/>}
             </div>
 
         );

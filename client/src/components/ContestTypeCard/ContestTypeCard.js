@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styles from './ContestTypeCard.module.sass';
 import {imagesURL} from '../../api/baseURL';
+import {contestTypeOptions} from '../../utils/constants/options';
 
 export class ContestTypeCard extends Component {
 
@@ -20,35 +21,28 @@ export class ContestTypeCard extends Component {
     };
 
     setImage = (image, hoverImage) => {
-        return this.state.isHover? `${imagesURL}/${image}`:
+        return this.state.isHover ? `${imagesURL}/${image}` :
             `${imagesURL}/${hoverImage}`;
     };
 
     renderImages = () => {
-        if(Array.isArray(this.props.image)) {
+        if (Array.isArray(this.props.image)) {
             return this.props.image.map((image, index) => {
-               return <img className={styles.cardImage} src={this.setImage(image, this.props.imageHover[index])}
-                           alt='Contest'/>
+                return <img className={styles.cardImage} src={this.setImage(image, this.props.imageHover[index])}
+                            key={index} alt='Contest'/>
             });
         }
-        return  <img className={styles.cardImage} src={this.setImage(this.props.image, this.props.imageHover)}
-                     alt='Contest'/>
-
-    };
-
-    renderImages = () => {
-        if(Array.isArray(this.props.image)){
-            return this.props.image.map( item =>{
-               return  <img className={styles.cardImage} src={this.setImage()} alt='Contest'/>
-            });
-        }
-        return <img className={styles.cardImage} src={this.setImage()} alt='Contest'/>;
+        return <img className={styles.cardImage} src={this.setImage(this.props.image, this.props.imageHover)}
+                    alt='Contest'/>
 
     };
 
     render() {
+        const mainStyle = this.props.options === contestTypeOptions.FavoriteTypes ? styles.mainContainer:
+            styles.secondaryContainer;
+
         return (
-            <div className={styles.mainContainer}
+            <div className={mainStyle}
                  onMouseEnter={() => this.mouseHoverHandler()}
                  onMouseLeave={() => this.mouseHoverHandler()}>
                 <div className={styles.imageContainer}>
@@ -68,7 +62,10 @@ export class ContestTypeCard extends Component {
 ContestTypeCard.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
-    image: PropTypes.string,
+    image: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+    ]),
     hoverImage: PropTypes.string
 };
 

@@ -5,6 +5,11 @@ export const validationMessageOptions = {
 };
 
 export const formHeaderOptions = {
-  FormHeaderRegister: 'FormHeaderRegister',
-  FormHeaderLogin: 'FormHeaderLogin'
+    FormHeaderRegister: 'FormHeaderRegister',
+    FormHeaderLogin: 'FormHeaderLogin'
+};
+
+export const contestTypeOptions = {
+    FavoriteTypes: 'FavoriteTypes',
+    CombinedTypes: 'CombinedTypes'
 };

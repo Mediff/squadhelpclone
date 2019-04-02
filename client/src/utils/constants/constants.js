@@ -20,7 +20,8 @@ export const sideNavText = ['Active contests', 'Completed contests', 'Account'];
 
 export const contestTypesDescription = ['Get up and running with the perfect name. ',
     'Kickstart your venture with a unique, memorable logo ',
-    'Connect deeply with your target audience with an on-target tagline '];
+    'Connect deeply with your target audience with an on-target tagline ',
+    'Establish your entire brand identity and save with this bundle.'];
 
 export const contestTypesSubText = ['Pick from our most popular categories, launch a contest and begin receiving ' +
 'submissions right away', 'Launch multiple contests and pay a discounted bundle price'];
