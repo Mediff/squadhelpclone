@@ -10,7 +10,7 @@ export const CreateContestTextInput = ({header, placeholder}) => {
             <div className={styles.header}>
                 {header}
             </div>
-            <input type='text' placeholder={placeholder}/>
+            <input className={styles.input} type='text' placeholder={placeholder}/>
         </div>
     );
 };
