@@ -3,15 +3,19 @@ import PropTypes from 'prop-types';
 import styles from './ContestTypeCard.module.sass';
 import {imagesURL} from '../../api/baseURL';
 import {contestTypeOptions} from '../../utils/constants/options';
+import connect from 'react-redux/es/connect/connect';
+import {setContestTypes} from '../../actions/actionCreator';
 
-export class ContestTypeCard extends Component {
-
-    constructor(props) {
-        super(props);
-    }
+class ContestTypeCard extends Component {
 
     state = {
         isHover: true
+    };
+
+    clickHandler = () => {
+        const {id} = this.props;
+        this.props.setContestTypes(id);
+        this.props.history.push('/createcontest');
     };
 
     mouseHoverHandler = () => {
@@ -38,13 +42,13 @@ export class ContestTypeCard extends Component {
     };
 
     render() {
-        const mainStyle = this.props.options === contestTypeOptions.FavoriteTypes ? styles.mainContainer:
+        const mainStyle = this.props.options === contestTypeOptions.FavoriteTypes ? styles.mainContainer :
             styles.secondaryContainer;
 
         return (
             <div className={mainStyle}
                  onMouseEnter={() => this.mouseHoverHandler()}
-                 onMouseLeave={() => this.mouseHoverHandler()}>
+                 onMouseLeave={() => this.mouseHoverHandler()} onClick={()=>{this.clickHandler()}}>
                 <div className={styles.imageContainer}>
                     {this.renderImages()}
                 </div>
@@ -66,6 +70,22 @@ ContestTypeCard.propTypes = {
         PropTypes.string,
         PropTypes.array
     ]),
-    hoverImage: PropTypes.string
+    hoverImage: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+    ]),
 };
+
+const mapStateToProps = (state) => {
+    return {
+
+    };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    setContestTypes: (id) => dispatch(setContestTypes(id))
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContestTypeCard);
 

@@ -52,6 +52,15 @@ module.exports = {
                     key: 'id'
                 }
             },
+            industryId: {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+                onDelete: 'CASCADE',
+                references: {
+                    model: 'Industries',
+                    key: 'id'
+                }
+            },
             contestGroup: {
                 type: Sequelize.UUID,
                 defaultValue: uuidV4()

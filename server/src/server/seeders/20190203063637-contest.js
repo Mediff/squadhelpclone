@@ -34,6 +34,7 @@ module.exports = {
                 styles: ['funny', 'youthful'],
                 contestGroup: uuidV4(),
                 prize: 500,
+                industryId: 1,
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
@@ -51,6 +52,7 @@ module.exports = {
                 styles: ['any', 'playful'],
                 contestGroup: uuidV4(),
                 prize: 200,
+                industryId: 2,
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
@@ -68,6 +70,7 @@ module.exports = {
                 styles: ['professional', 'youth'],
                 contestGroup: uuidV4(),
                 prize: 300,
+                industryId: 3,
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
@@ -85,6 +88,7 @@ module.exports = {
                 styles: ['professional', 'youth'],
                 contestGroup: uuidV4(),
                 prize: 300,
+                industryId: 1,
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
@@ -102,6 +106,7 @@ module.exports = {
                 styles: ['professional', 'youth'],
                 contestGroup: uuidV4(),
                 prize: 300,
+                industryId: 2,
                 createdAt: new Date(),
                 updatedAt: new Date()
             }

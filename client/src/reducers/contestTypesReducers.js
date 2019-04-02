@@ -3,7 +3,8 @@ import ACTION from '../actions/actiontsTypes';
 const initialState = {
     contestTypes: null,
     error: null,
-    isFetching: false
+    isFetching: false,
+    selectedContestType: null
 };
 
 export default function (state = initialState, action) {
@@ -32,6 +33,13 @@ export default function (state = initialState, action) {
                 contestTypes: null
             }
         }
+        case ACTION.SET_CONTEST_TYPES: {
+            return {
+                ...state,
+                selectedContestType: action.payload
+            }
+        }
+
         default: {
             return state;
         }

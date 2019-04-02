@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
 
     ContestTypes.associate = (models) => {
         ContestTypes.hasOne(models.Contests, {foreignKey: 'contestTypeId'});
+        ContestTypes.hasMany(models.Styles, {foreignKey: 'contestTypeId'});
     };
 
 

@@ -30,3 +30,7 @@ export const getContestTypes = () => ({
     type: ACTION.GET_CONTEST_TYPES
 });
 
+export const setContestTypes = (id) => ({
+    type: ACTION.SET_CONTEST_TYPES,
+    payload: id
+});

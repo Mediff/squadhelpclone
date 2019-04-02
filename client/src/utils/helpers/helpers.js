@@ -13,30 +13,36 @@ const combineTypesInArray = (item, value) => {
         id: [...item.id, value.id],
         image: [...item.image, value.image],
         imageHover: [...item.imageHover, value.imageHover],
-        name: `${item.name} + ${value.name}`,
-        description: 'Establish your entire brand identity and save with this bundle.'
+        name: `${item.name} + ${value.name}`
     }
 };
 
 export const getCombinedTypes = (array) => {
     let result = [];
+
+    const combineElems = (result, index) => {
+        result.forEach((item)=>{
+            let res = item.id.includes(array[index].id);
+            if(!res){
+                const elem = combineTypesInArray(item, array[index]);
+                elem.id.sort();
+                result.push(elem);
+            }
+        });
+    };
+
     for (let i = 0; i < array.length - 1; i++) {
         for (let j = i + 1; j < array.length; j++) {
             result.push(combineTypes(array[i], array[j]));
         }
     }
+
     for(let i = 0; i < array.length - 2; i++){
         for (let j = 0; j < array.length; j++){
-            result.forEach((item)=>{
-                let res = item.id.includes(array[j].id);
-                if(!res){
-                    const elem = combineTypesInArray(item, array[j]);
-                    elem.id.sort();
-                    result.push(elem);
-                }
-            });
+            combineElems(result, j);
         }
     }
+
     result = result.filter((item, index, array)=>{
         if(index<array.length-1){
             return item.id.toString() !== array[index+1].id.toString();

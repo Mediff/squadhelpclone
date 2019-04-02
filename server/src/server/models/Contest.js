@@ -57,6 +57,8 @@ module.exports = (sequelize, DataTypes) => {
         Contests.belongsTo(models.Accounts, { foreignKey: 'winnerId', as: 'Winner' });
         Contests.hasMany(models.Entries, { foreignKey: 'contestId' });
         Contests.belongsTo(models.ContestTypes, {foreignKey: 'contestTypeId'});
+        Contests.belongsTo(models.Industries, {foreignKey: 'industryId'});
+
     };
 
 

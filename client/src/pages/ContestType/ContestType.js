@@ -13,6 +13,7 @@ class ContestType extends Component {
         this.props.getContestTypes();
     }
 
+
     render() {
         let combinedResult;
         if (this.props.contestTypes) {
@@ -23,11 +24,13 @@ class ContestType extends Component {
                 {this.props.contestTypes && <ContestTypeCards contestTypes={this.props.contestTypes}
                                                               titleText={contestTypesTitleText[0]}
                                                               subText={contestTypesSubText[0]}
-                                                              options={contestTypeOptions.FavoriteTypes}/>}
+                                                              options={contestTypeOptions.FavoriteTypes}
+                                                              history={this.props.history}/>}
                 {combinedResult && <ContestTypeCards contestTypes={combinedResult}
                                                      titleText={contestTypesTitleText[1]}
                                                      subText={contestTypesSubText[1]}
-                                                     options={contestTypeOptions.CombinedTypes}/>}
+                                                     options={contestTypeOptions.CombinedTypes}
+                                                     history={this.props.history}/>}
             </div>
 
         );
@@ -36,7 +39,7 @@ class ContestType extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        contestTypes: state.contestTypesReducers.contestTypes,
+        contestTypes: state.contestTypesReducers.contestTypes
     };
 };
 
