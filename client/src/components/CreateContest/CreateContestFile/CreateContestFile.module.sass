@@ -1,0 +1,44 @@
+
+.mainContainer
+  display: flex
+  flex-direction: column
+  justify-content: flex-start
+  align-items: flex-start
+  width: 100%
+
+  .header
+    font-size: 19px
+    color: #585859
+    font-weight: 700
+
+  .inputContainer
+    display: flex
+    justify-content: space-between
+    align-items: center
+    border: 1px
+    background: #eee
+    margin: 0 -5px 0 0
+    vertical-align: middle
+    padding: 12px
+    font-size: 14px
+    border-radius: 4px
+    color: #8d8d8d
+    width: 80%
+    & > input[type='file']
+      display: none
+
+    .inputText
+      background: #fff
+      padding: 20px
+      width: 200px
+      cursor: pointer
+
+    .chosenContainer
+      display: flex
+      align-items: center
+      justify-content: center
+      width: 100%
+
+      .chosenText
+        font-size: 16px
+        font-weight: 700

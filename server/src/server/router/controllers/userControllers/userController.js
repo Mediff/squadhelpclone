@@ -44,7 +44,7 @@ export const loginUser = async (req, res, next) => {
             where: {
                 email
             },
-            attributes: ['id', 'firstName', 'lastName', 'email', 'profilePicture', 'role']
+            attributes: ['id', 'passwordHash']
         });
         if (account) {
             const result = await bcrypt.compare(password, account.passwordHash);
@@ -55,9 +55,10 @@ export const loginUser = async (req, res, next) => {
                 expiresIn: '24h'
             });
             result ? res.send({account, token}) : next(new ForbiddenError('Not valid password'));
-        } else {
-            next(new NotFoundError('Email not exists'));
         }
+
+        next(new NotFoundError('Email not exists'));
+
     } catch (e) {
         next(e);
     }

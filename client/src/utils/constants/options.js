@@ -1,7 +1,8 @@
 
 export const validationMessageOptions = {
     ServerError: 'serverError',
-    FrontError: 'frontError'
+    FrontError: 'frontError',
+    CreateContestError: 'CreateContestError'
 };
 
 export const formHeaderOptions = {

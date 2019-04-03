@@ -5,6 +5,7 @@ import Registration from './pages/Registration/Registration';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ContestType from './pages/ContestType/ContestType';
 import CreateContest from './pages/CreateContest/CreateContest';
+import ContestPay from './pages/ContestPay/ContestPay';
 import {Router, Route, Switch} from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import {AuthRequired} from './components/HOCs/AuthRequired/AuthRequired';
@@ -16,6 +17,7 @@ const App = () => {
     const AuthDashboard = AuthRequired(Dashboard);
     const AuthContestType = AuthRequired(ContestType);
     const AuthCreateContest = AuthRequired(CreateContest);
+    const AuthContestPay = AuthRequired(ContestPay)
 
     return (
         <Router history={history}>
@@ -26,6 +28,7 @@ const App = () => {
                 <Route path='/dashboard' component={(props) => <AuthDashboard {...props}/>}/>
                 <Route path='/contesttype' component={(props) => <AuthContestType {...props}/>}/>
                 <Route path='/createcontest' component={(props) => <AuthCreateContest {...props}/>}/>
+                <Route path='/payment' component={(props) => <AuthContestPay {...props}/>}/>
             </Switch>
         </Router>
     )

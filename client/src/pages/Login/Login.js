@@ -5,7 +5,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import connect from 'react-redux/es/connect/connect';
 import {login} from '../../actions/actionCreator';
 import {loginScheme} from '../../utils/validation/validationSchemes';
-import {ValidationMessage} from '../../components/AuthForms/ValidationMessage/ValidationMessage';
+import {ValidationMessage} from '../../components/ValidationMessage/ValidationMessage';
 import {InputComponent} from '../../components/AuthForms/InputComponent/InputComponent';
 import {FormHeader} from '../../components/AuthForms/FormHeader/FormHeader';
 import {FormSubmitButton} from '../../components/AuthForms/FormSubmitButton/FormSubmitButton';

@@ -47,3 +47,8 @@ export const getIndustries = () => ({
 export const getNameTypes = () => ({
     type: ACTION.GET_NAME_TYPES
 });
+
+export const createContest = (contest) => ({
+    type: ACTION.CREATE_CONTEST,
+    payload: contest
+});

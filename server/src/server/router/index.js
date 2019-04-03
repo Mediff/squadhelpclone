@@ -6,6 +6,7 @@ import {createContest, getContests, getActiveContests, getContestById,
 import {getContestTypes, getNameTypes, getIndustries, getStylesByContestType} from './controllers/contestTypeControllers/contestTypesController';
 import {validateToken} from './controllers/auth/authControllers';
 import {validateUser} from '../utils/validation/userValidation';
+import {validateContest} from "../utils/validation/contestValidation";
 
 const router = express.Router();
 
@@ -18,8 +19,7 @@ router.get('/contests/active', getActiveContests);
 router.get('/contests/user', validateToken, getUserContests);
 router.get('/contests/style', getContestsByStyle);
 router.get('/contests', getContests);
-
-router.post('/contests', createContest);
+router.post('/contests', validateToken, validateContest, createContest);
 
 router.get('/types/styles/:id', validateToken, getStylesByContestType);
 router.get('/types/industries', validateToken, getIndustries);

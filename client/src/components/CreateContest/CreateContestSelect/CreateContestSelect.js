@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './CreateContestSelect.module.sass';
 
-export const CreateContestSelect = ({header, selectOptions, placeholder}) => {
+export const CreateContestSelect = ({header, selectOptions, placeholder, changeHandler}) => {
 
     const renderOptions = () => {
         return selectOptions.map((item) => <option key={item.id} value={item.id}>{item.name}</option>);
@@ -13,7 +13,8 @@ export const CreateContestSelect = ({header, selectOptions, placeholder}) => {
             <div className={styles.header}>
                 {header}
             </div>
-            <select className={styles.inputStyles} defaultValue={placeholder}>
+            <select className={styles.inputStyles} onChange={(event)=>changeHandler(event)}>
+                <option key={-1} value={''}>{placeholder}</option>
                 {renderOptions()}
             </select>
         </div>
@@ -23,5 +24,6 @@ export const CreateContestSelect = ({header, selectOptions, placeholder}) => {
 CreateContestSelect.propTypes = {
     header: PropTypes.string,
     selectOptions: PropTypes.array,
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    changeHandler: PropTypes.func
 };

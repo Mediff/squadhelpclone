@@ -31,7 +31,8 @@ export const contestTypesTitleText = ['Our Most Popular Categories', 'Save With 
 
 export const createContestNameHeaders = ['Enter title of your contest', 'What type of Name are you looking for?',
     'Select a category that best describes your business', 'What does your company / business do?',
-    'Tell us about your customers', 'Select styles which describes your contest'];
+    'Tell us about your customers', 'Select styles which describes your contest', 'Do you have any documents that might ' +
+    'be helpful (Optional)?'];
 
 export const createContestNamePlaceholders = ['Select name for your contest', 'Select type of name',
     'Select your industry', 'e.g. We are an online lifestyle brand that provides stylish and high quality apparel ' +

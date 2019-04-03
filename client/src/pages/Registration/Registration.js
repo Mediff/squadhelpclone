@@ -6,7 +6,7 @@ import connect from 'react-redux/es/connect/connect';
 import {register} from '../../actions/actionCreator';
 import {registerScheme} from '../../utils/validation/validationSchemes';
 import {InputComponent} from '../../components/AuthForms/InputComponent/InputComponent';
-import {ValidationMessage} from '../../components/AuthForms/ValidationMessage/ValidationMessage';
+import {ValidationMessage} from '../../components/ValidationMessage/ValidationMessage';
 import {AuthHeader} from '../../components/AuthForms/AuthHeader/AuthHeader';
 import {FormHeader} from "../../components/AuthForms/FormHeader/FormHeader";
 import {registerInputKeys, registerPlaceholders, registerRadioBottomText, registerRadioHeadText,

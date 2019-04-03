@@ -74,10 +74,6 @@ module.exports = {
             prize: {
                 type: Sequelize.INTEGER
             },
-            type: {
-                type: Sequelize.ENUM('logo', 'tagline', 'name'),
-                allowNull: false
-            },
             styles: {
                 type: Sequelize.ARRAY(Sequelize.TEXT)
             },

@@ -39,13 +39,6 @@ module.exports = (sequelize, DataTypes) => {
         prize: {
           type: DataTypes.INTEGER
         },
-        type: {
-            type: DataTypes.ENUM('logo', 'tagline', 'name'),
-            allowNull: false,
-            validate: {
-                isIn: [['logo', 'tagline', 'name']]
-            }
-        },
         styles: {
             type: DataTypes.ARRAY(DataTypes.TEXT)
         }

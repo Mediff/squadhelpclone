@@ -12,3 +12,4 @@ export const getContestTypes = () => axios.get(`${restURL}/types`);
 export const getIndustries = () => axios.get(`${restURL}/types/industries`);
 export const getStyles = (id) => axios.get(`${restURL}/types/styles/` + id);
 export const getNameTypes = () => axios.get(`${restURL}/types/nametypes`);
+export const createContest = (contest) => axios.post(`${restURL}/contests`, contest);

@@ -1,6 +1,6 @@
 import {put} from 'redux-saga/effects';
 import ACTION from '../actions/actiontsTypes';
-import {getUserContests, getContestTypes, getIndustries, getStyles, getNameTypes} from "../api/rest/restContoller";
+import {getUserContests, getContestTypes, getIndustries, getStyles, getNameTypes, createContest} from "../api/rest/restContoller";
 
 export function* getUserContestsSaga() {
     yield put({type: ACTION.GET_USER_CONTESTS_REQUEST});
@@ -49,5 +49,17 @@ export function * getNameTypesSaga(){
         yield put({type: ACTION.GET_NAME_TYPES_RESPONSE, payload: data});
     } catch (e) {
         yield put({type: ACTION.GET_NAME_TYPES_ERROR, error: e});
+    }
+}
+
+export function * createContestSaga({payload}){
+    yield put({type: ACTION.CREATE_CONTEST_REQUEST});
+    try {
+        const {contests, history} = payload;
+        const {data} = yield createContest(contests);
+        yield put({type: ACTION.CREATE_CONTEST_RESPONSE, payload: data});
+        history.push('/payment');
+    } catch (e) {
+        yield put({type: ACTION.CREATE_CONTEST_ERROR, error: e});
     }
 }

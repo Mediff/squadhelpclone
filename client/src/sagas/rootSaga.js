@@ -4,7 +4,7 @@ import {
   loginSaga, registerSaga, getUserSaga
 } from './userSaga';
 import {getUserContestsSaga, getContestTypesSaga, getIndustriesSaga, getNameTypesSaga,
-  getStylesSaga} from './contestSaga';
+  getStylesSaga, createContestSaga} from './contestSaga';
 
 function* rootSaga() {
   yield takeLatest(ACTION.LOGIN_ACTION, loginSaga);
@@ -15,7 +15,7 @@ function* rootSaga() {
   yield takeLatest(ACTION.GET_NAME_TYPES, getNameTypesSaga);
   yield takeLatest(ACTION.GET_INDUSTRIES, getIndustriesSaga);
   yield takeLatest(ACTION.GET_STYLES, getStylesSaga);
-
+  yield takeLatest(ACTION.CREATE_CONTEST, createContestSaga);
 }
 
 export default rootSaga;
