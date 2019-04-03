@@ -1,18 +1,35 @@
 
 .mainContainer
   display: flex
-  flex-wrap: wrap
+  flex-direction: column
   justify-content: flex-start
+  align-items: flex-start
   width: 100%
   font-size: 14px
   color: #555
 
+  .header
+    font-size: 19px
+    color: #585859
+    font-weight: 700
 
-  .checkbox
+  .checkboxContainer
     display: flex
     flex-direction: row
-    justify-content: flex-start
+    justify-content: space-between
+    align-items: center
     align-content: center
-    width: 80px
+    width: 100%
     height: 40px
-    margin-right: 10px
+
+    .checkboxWithLabel
+      display: flex
+      width: 25%
+      justify-content: flex-start
+      align-items: center
+
+      .checkbox
+        margin-right: 12px
+        margin-bottom: 0
+        width: 20px
+

@@ -2,17 +2,29 @@ import React, {Component} from 'react';
 import styles from './CreateContest.module.sass';
 import connect from 'react-redux/es/connect/connect';
 import {getIndustries, getNameTypes, getStyles} from '../../actions/actionCreator'
-import {CreateContestInput} from '../../components/CreateContestInput/CreateContestInput';
+import {CreateContestTextInput} from '../../components/CreateContestTextInput/CreateContestTextInput';
+import {CreateContestTextArea} from '../../components/CreateContestTextArea/CreateContestTextArea';
+import {CreateContestCheckboxes} from '../../components/CreateContestCheckboxes/CreateContestCheckboxes';
+import {CreateContestSelect} from '../../components/CreateContestSelect/CreateContestSelect';
 import {createContestNameHeaders} from '../../utils/constants/constants';
-import {createContestNameInputs} from '../../utils/constants/constants';
 import {createContestNamePlaceholders} from '../../utils/constants/constants';
-import {inputTypeOptions} from '../../utils/constants/options';
+import {getTypeId, clearTypeId} from '../../utils/localStorage/localStorage';
 
 class CreateContest extends Component {
 
+    state = {
+        id: null
+    };
+
     componentDidMount() {
-        const id = Array.isArray(this.props.selectedContestType) ? this.props.selectedContestType[0] :
+        let id = Array.isArray(this.props.selectedContestType) ? this.props.selectedContestType[0] :
             this.props.selectedContestType;
+        if(!id){
+            id = getTypeId()? getTypeId(): this.props.history.push('/contesttype');
+        }
+        this.setState({
+            id
+        });
         this.props.getIndustries();
         this.props.getNameTypes();
         this.props.getStyles(id);
@@ -21,37 +33,23 @@ class CreateContest extends Component {
 
 
     renderNameContestInputs = () => {
-        return createContestNameInputs.map((item, index) => {
-                if (item === inputTypeOptions.InputSelect) {
-                    if (index === 1) {
-                        return (
-                            <CreateContestInput key={index}
-                                                placeholder={createContestNamePlaceholders[index]} inputRenderOptions={item}
-                                                header={createContestNameHeaders[index]}
-                                                selectOptions={this.props.nameTypes}/>
-                        );
-                    }
-                    if (index === 2) {
-                        return (
-                            <CreateContestInput key={index}
-                                                placeholder={createContestNamePlaceholders[index]} inputRenderOptions={item}
-                                                header={createContestNameHeaders[index]}
-                                                selectOptions={this.props.industries}/>
-                        );
-                    }
-                }
-                if (item === inputTypeOptions.InputCheckboxes) {
-                    return (<CreateContestInput key={index}
-                                                placeholder={createContestNamePlaceholders[index]} inputRenderOptions={item}
-                                                header={createContestNameHeaders[index]}
-                                                selectOptions={this.props.styles}/>);
-                }
-                return (
-                    <CreateContestInput key={index}
-                                        placeholder={createContestNamePlaceholders[index]} inputRenderOptions={item}
-                                        header={createContestNameHeaders[index]}/>
-                );
-            }
+
+        return (
+            <div className={styles.inputs}>
+                {this.state.id === 1 && <CreateContestTextInput header={createContestNameHeaders[0]}
+                                            placeholder={createContestNamePlaceholders[0]}/>}
+                <CreateContestSelect header={createContestNameHeaders[1]} placeholder={createContestNamePlaceholders[1]}
+                                     selectOptions={this.props.nameTypes}/>
+                <CreateContestSelect header={createContestNameHeaders[2]} placeholder={createContestNamePlaceholders[2]}
+                                     selectOptions={this.props.industries}/>
+                <CreateContestTextArea header={createContestNameHeaders[3]}
+                                       placeholder={createContestNamePlaceholders[3]}/>
+                <CreateContestTextArea header={createContestNameHeaders[4]}
+                                       placeholder={createContestNamePlaceholders[4]}/>
+                <CreateContestCheckboxes header={createContestNameHeaders[5]}
+                                         placeholder={createContestNamePlaceholders[5]}
+                                         selectOptions={this.props.styles}/>
+            </div>
         );
     };
 

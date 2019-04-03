@@ -5,6 +5,7 @@ import {imagesURL} from '../../../api/baseURL';
 import {contestTypeOptions} from '../../../utils/constants/options';
 import connect from 'react-redux/es/connect/connect';
 import {setContestTypes} from '../../../actions/actionCreator';
+import {setTypeId} from '../../../utils/localStorage/localStorage';
 
 class ContestTypeCard extends Component {
 
@@ -15,6 +16,7 @@ class ContestTypeCard extends Component {
     clickHandler = () => {
         const {id} = this.props;
         this.props.setContestTypes(id);
+        setTypeId(id);
         this.props.history.push('/createcontest');
     };
 
