@@ -1,18 +1,21 @@
 
-@mixin for-extra-small-devices
+@mixin for-extra-small-screen
   @media (max-width: 400px) {@content}
 
 @mixin for-phone-only
   @media (max-width: 599px) {@content}
 
-@mixin for-tablet-portrait-up
+@mixin for-tablet-portrait
   @media (min-width: 600px) {@content}
 
-@mixin for-tablet-landscape-up
+@mixin for-medium-screen
+  @media (max-width: 700px) {@content}
+
+@mixin for-tablet-landscape
   @media (min-width: 900px) {@content}
 
-@mixin for-desktop-up
+@mixin for-desktop
   @media (min-width: 1200px) {@content}
 
-@mixin for-big-desktop-up
+@mixin for-big-desktop
   @media (min-width: 1800px) {@content}
