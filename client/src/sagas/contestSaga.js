@@ -1,6 +1,13 @@
 import {put} from 'redux-saga/effects';
 import ACTION from '../actions/actiontsTypes';
-import {getUserContests, getContestTypes, getIndustries, getStyles, getNameTypes, createContest} from "../api/rest/restContoller";
+import {
+    getUserContests,
+    getContestTypes,
+    getIndustries,
+    getStyles,
+    getNameTypes,
+    createContest
+} from "../api/rest/restContoller";
 
 export function* getUserContestsSaga() {
     yield put({type: ACTION.GET_USER_CONTESTS_REQUEST});
@@ -42,7 +49,7 @@ export function* getStylesSaga({payload}) {
     }
 }
 
-export function * getNameTypesSaga(){
+export function* getNameTypesSaga() {
     yield put({type: ACTION.GET_NAME_TYPES_REQUEST});
     try {
         const {data} = yield getNameTypes();
@@ -52,10 +59,15 @@ export function * getNameTypesSaga(){
     }
 }
 
-export function * createContestSaga({payload}){
+export function* createContestSaga({payload}) {
     yield put({type: ACTION.CREATE_CONTEST_REQUEST});
     try {
         const {contests, history} = payload;
+        for(let contest of contests){
+            const formData = new FormData();
+            formData.append('file', contest.file);
+            contest.file = formData;
+        }
         const {data} = yield createContest(contests);
         yield put({type: ACTION.CREATE_CONTEST_RESPONSE, payload: data});
         history.push('/payment');
@@ -63,3 +75,4 @@ export function * createContestSaga({payload}){
         yield put({type: ACTION.CREATE_CONTEST_ERROR, error: e});
     }
 }
+

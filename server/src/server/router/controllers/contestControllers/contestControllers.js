@@ -1,28 +1,30 @@
 import {Accounts, Contests, Entries} from '../../../models';
 import {consoleLogSequelizeModelAccessors} from '../../../utils/helpers/helpers';
 
+const uuidV4 = require('uuid/v4');
+
 const sequelize = require('sequelize');
 const Op = sequelize.Op;
 
 
 export const createContest = async (req, res, next) => {
     try {
-        let contestUuid = null;
+        let contestUuid = uuidV4();
 
         for (let c of req.body) {
-            let {title, ventureDescribe, customerDescribe, filePath, industry, contestTypeId, styles} = c;
-            console.log(styles);
+            let {title, ventureDescribe, customerDescribe, file, industry, contestTypeId, styles} = c;
             const contest = await Contests.create({
                 title,
                 ventureDescribe,
                 customerDescribe,
-                filePath,
+                file,
+                styles,
                 industryId: industry,
                 contestTypeId,
-                contestCreatorId: req.decoded.id
+                contestCreatorId: req.decoded.id,
+                contestGroup: contestUuid
             });
 
-            contestUuid = contest.contestGroup;
         }
         res.send('Hooray');
 

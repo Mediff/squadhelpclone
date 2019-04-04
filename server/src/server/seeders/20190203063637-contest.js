@@ -22,7 +22,6 @@ module.exports = {
         return queryInterface.bulkInsert('Contests', [
             {
                 title: 'FirstContest',
-                ventureName: 'Venture',
                 ventureDescribe: 'Describe',
                 customerDescribe: 'Describe',
                 file: 'filePath',
@@ -39,7 +38,6 @@ module.exports = {
             },
             {
                 title: 'SecondContest',
-                ventureName: 'Venture',
                 ventureDescribe: 'Describe',
                 customerDescribe: 'Describe',
                 file: 'filePath',
@@ -56,7 +54,6 @@ module.exports = {
             },
             {
                 title: 'ThirdContest',
-                ventureName: 'Venture',
                 ventureDescribe: 'Describe',
                 customerDescribe: 'Describe',
                 file: 'filePath',
@@ -73,7 +70,6 @@ module.exports = {
             },
             {
                 title: 'FourthContest',
-                ventureName: 'Venture',
                 ventureDescribe: 'Describe',
                 customerDescribe: 'Describe',
                 file: 'filePath',
@@ -90,7 +86,6 @@ module.exports = {
             },
             {
                 title: 'FourthContest',
-                ventureName: 'Venture',
                 ventureDescribe: 'Describe',
                 customerDescribe: 'Describe',
                 file: 'filePath',

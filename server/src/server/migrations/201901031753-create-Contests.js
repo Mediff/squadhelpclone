@@ -14,9 +14,6 @@ module.exports = {
                 type: Sequelize.TEXT,
                 allowNull: false
             },
-            ventureName: {
-                type: Sequelize.TEXT
-            },
             ventureDescribe: {
                 type: Sequelize.TEXT,
                 allowNull: false

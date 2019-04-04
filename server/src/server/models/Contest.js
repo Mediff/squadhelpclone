@@ -14,9 +14,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: false
         },
-        ventureName: {
-            type: DataTypes.TEXT
-        },
         ventureDescribe: {
             type: DataTypes.TEXT,
             allowNull: false

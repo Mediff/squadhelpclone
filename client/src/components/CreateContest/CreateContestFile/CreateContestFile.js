@@ -34,7 +34,7 @@ class CreateContestFile extends Component {
                 <div className={styles.inputContainer}>
                     <div className={styles.inputText} onClick={this.spanClickHandler}>Choose File</div>
                     <input className={styles.inputText} ref={this.fileInputRef} type='file'
-                           onChange={this.fileChangeHandler}/>
+                           onChange={this.fileChangeHandler} name='file'/>
                     <div className={styles.chosenContainer}>
                         <div className={styles.chosenText}>{this.state.chosenText}</div>
                     </div>

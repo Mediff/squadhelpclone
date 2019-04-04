@@ -12,8 +12,10 @@ import {ValidationMessage} from '../../components/ValidationMessage/ValidationMe
 import {validationMessageOptions} from '../../utils/constants/options';
 import {createContestNameHeaders} from '../../utils/constants/constants';
 import {createContestNamePlaceholders} from '../../utils/constants/constants';
-import {getTypeId, clearTypeId, setContest, getContest, setTypeId, clearContests} from '../../utils/localStorage/localStorage';
+import {getTypeId, clearTypeId, setContest, getContest, setTypeId, clearContests, setUniversalStorage, getUniversalStorage
+} from '../../utils/localStorage/localStorage';
 import {contestTaglineLogoScheme, contestNameScheme} from '../../utils/validation/validationSchemes';
+import {uploadFile} from "../../api/rest/restContoller";
 
 class CreateContest extends Component {
 
@@ -25,7 +27,7 @@ class CreateContest extends Component {
         ventureDescribe: '',
         customerDescribe: '',
         styles: '',
-        filePath: '',
+        file: '',
         titleErrorMessage: '',
         nameTypeErrorMessage: '',
         industryErrorMessage: '',
@@ -58,6 +60,13 @@ class CreateContest extends Component {
         });
     };
 
+    fileUploadHandler = event => {
+        this.setState({
+            file: event.target.files[0]
+        });
+
+    };
+
     proceedError = (error) => {
         this.setState({
             [error.path + 'ErrorMessage']: error.message
@@ -73,7 +82,8 @@ class CreateContest extends Component {
             ventureDescribeErrorMessage: '',
             customerDescribeErrorMessage: ''
         });
-        const {title, nameType, industry, customerDescribe, ventureDescribe, styles, filePath, contestTypeId} = this.state;
+        const {title, nameType, industry, customerDescribe, ventureDescribe, file, contestTypeId} = this.state;
+        let {styles} = this.state;
         try {
             this.state.contestTypeId === 2 ?
                 await contestNameScheme.validate({title, nameType, industry, customerDescribe, ventureDescribe},
@@ -82,6 +92,7 @@ class CreateContest extends Component {
                     {abortEarly: false});
 
             const contests = getContest() ? getContest() : [];
+            styles = styles ? styles : [];
 
             contests.push({
                 title,
@@ -90,11 +101,14 @@ class CreateContest extends Component {
                 ventureDescribe,
                 contestTypeId,
                 styles,
-                filePath,
+                file,
                 nameType
             });
 
             setContest(contests);
+
+            console.log(getContest());
+
             const ids = getTypeId();
             if (ids.length > 1) {
                 ids.shift();
@@ -103,6 +117,9 @@ class CreateContest extends Component {
             } else {
                 clearTypeId();
                 clearContests();
+                for (let contest of contests){
+                    contest.file = getUniversalStorage(contest.contestTypeId);
+                }
                 this.props.createContest({
                     contests,
                     history: this.props.history
@@ -152,7 +169,7 @@ class CreateContest extends Component {
                                          placeholder={createContestNamePlaceholders[5]}
                                          selectOptions={this.props.styles}/>
                 <CreateContestFile header={createContestNameHeaders[6]}
-                                   changeHandler={this.changeHandler('filePath')}/>
+                                   changeHandler={this.fileUploadHandler}/>
             </div>
         );
     };
@@ -160,7 +177,7 @@ class CreateContest extends Component {
     render() {
         return (
             <div className={styles.mainContainer}>
-                <form onSubmit={this.onSubmitHandler}>
+                <form onSubmit={this.onSubmitHandler} encType='multipart/form-data'>
                     <div className={styles.formContainer}>
                         {(this.props.nameTypes && this.props.industries && this.props.styles) && this.renderNameContestInputs()}
                     </div>
