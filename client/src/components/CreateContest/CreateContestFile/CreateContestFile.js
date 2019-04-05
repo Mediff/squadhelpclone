@@ -13,6 +13,7 @@ class CreateContestFile extends Component {
         chosenText: 'Upload a file'
     };
 
+
     spanClickHandler = () => {
         this.fileInputRef.current.click();
     };

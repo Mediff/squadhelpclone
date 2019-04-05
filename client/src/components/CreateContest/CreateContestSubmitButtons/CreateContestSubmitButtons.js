@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './CreateContestSubmitButtons.module.sass';
 
-export const CreateContestSubmitButtons = ({firstText, clickHandler, secondText}) => {
+export const CreateContestSubmitButtons = ({resetText, clickHandler, submitText}) => {
 
     return (
         <div className={styles.container}>
-            <button className={styles.firstButton} onClick={()=> clickHandler()}>{firstText}</button>
-            <button type='submit' className={styles.secondButton}>{secondText}</button>
+            <button className={styles.resetButton} onClick={()=> clickHandler()}>{resetText}</button>
+            <button type='submit' className={styles.submitButton}>{submitText}</button>
         </div>
     );
 };
 
 CreateContestSubmitButtons.propTypes = {
-    firstText: PropTypes.string,
-    secondText: PropTypes.string,
+    resetText: PropTypes.string,
+    submitText: PropTypes.string,
     clickHandler: PropTypes.func
 };

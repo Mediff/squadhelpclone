@@ -26,6 +26,11 @@ import {contestTaglineLogoScheme, contestNameScheme} from '../../utils/validatio
 
 class CreateContest extends Component {
 
+    constructor(props){
+        super(props);
+        this.formRef = React.createRef();
+    }
+
     state = {
         title: '',
         nameType: '',
@@ -53,32 +58,27 @@ class CreateContest extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.selectedContestType) {
             setTypeId(this.props.selectedContestType);
-            this.props.selectedContestType.length === 0 && this.props.history.push('/payment');
+            if (this.props.selectedContestType.length === 0) {
+                clearContests();
+                clearTypeId();
+                this.props.history.push('/payment')
+            }
         } else {
+            clearContests();
+            clearTypeId();
             this.props.history.push('/contesttype');
         }
         if (this.props.savedContest) {
             if (this.props.savedContest !== prevProps.savedContest) {
-                setContest(this.props.contest);
-                this.setState({
-                        title: '',
-                        nameType: '',
-                        industry: '',
-                        ventureDescribe: '',
-                        customerDescribe: '',
-                        styles: '',
-                        file: '',
-                        titleErrorMessage: '',
-                        nameTypeErrorMessage: '',
-                        industryErrorMessage: '',
-                        ventureDescribeErrorMessage: '',
-                        customerDescribeErrorMessage: '',
-                        savedContest: ''
-                    }
-                );
+                this.resetFormFields();
+                setContest(this.props.savedContest);
             }
         }
     }
+
+    resetFormFields = () => {
+        this.formRef.current.reset();
+    };
 
     redirectToContestTypeHandler = () => {
         clearTypeId();
@@ -118,8 +118,9 @@ class CreateContest extends Component {
         const {title, nameType, industry, customerDescribe, ventureDescribe, file} = this.state;
         let {styles} = this.state;
         styles = styles ? styles : [];
-        const contestTypeId = this.props.selectedContestType;
+        const contestTypeId = this.props.selectedContestType[0];
         const contestGroup = this.props.savedContest && this.props.savedContest.contestGroup;
+        const priority =  this.props.savedContest ? this.props.savedContest.priority + 1: 1;
         try {
             this.state.contestTypeId === 2 ?
                 await contestNameScheme.validate({title, nameType, industry, customerDescribe, ventureDescribe},
@@ -127,8 +128,10 @@ class CreateContest extends Component {
                 await contestTaglineLogoScheme.validate({title, industry, customerDescribe, ventureDescribe},
                     {abortEarly: false});
             this.props.createContest({
-                contest: {title, nameType, industry, customerDescribe, ventureDescribe, file,
-                    contestTypeId, styles, contestGroup}
+                contest: {
+                    title, nameType, industry, customerDescribe, ventureDescribe, file,
+                    contestTypeId, styles, contestGroup, priority
+                }
             });
         } catch (e) {
             e.inner.forEach(error => {
@@ -181,17 +184,17 @@ class CreateContest extends Component {
     render() {
         return (
             <div className={styles.mainContainer}>
-                <form onSubmit={this.onSubmitHandler} encType='multipart/form-data'>
+                {(this.props.nameTypes && this.props.industries && this.props.styles) &&
+                <form onSubmit={this.onSubmitHandler} encType='multipart/form-data' ref={this.formRef}>
                     <div className={styles.formContainer}>
-                        {(this.props.nameTypes && this.props.industries && this.props.styles) && this.renderNameContestInputs()}
+                        {this.renderNameContestInputs()}
                     </div>
                     <div className={styles.submitContainer}>
-                        <CreateContestSubmitButtons firstText='Back' secondText='Next'
+                        <CreateContestSubmitButtons resetText='Back' submitText='Next'
                                                     clickHandler={this.redirectToContestTypeHandler}/>
                     </div>
-                </form>
+                </form>}
             </div>
-
         );
     }
 }

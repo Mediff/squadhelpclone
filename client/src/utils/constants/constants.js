@@ -1,4 +1,3 @@
-import {inputTypeOptions} from '../constants/options';
 
 export const loginPlaceholders = ['Email', 'Password'];
 
@@ -39,5 +38,6 @@ export const createContestNamePlaceholders = ['Select name for your contest', 'S
     'to the expert eco-conscious shopper.', 'Share any relevant information such as their demographics, ' +
     'interests, aspirations etc'];
 
-export const createContestNameInputs = [inputTypeOptions.InputTextField, inputTypeOptions.InputSelect,
-    inputTypeOptions.InputSelect, inputTypeOptions.InputTextBox, inputTypeOptions.InputTextBox, inputTypeOptions.InputCheckboxes];
+export const createContestPaymentHeaders = ['Card number', '* Expires', '* Security code', 'Prize'];
+
+export const createContestPaymentPlaceholders = ['Card number', 'MM / YY', 'cvc', '100$'];

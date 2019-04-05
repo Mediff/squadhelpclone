@@ -9,8 +9,8 @@ const Op = sequelize.Op;
 
 export const createContest = async (req, res, next) => {
     try {
-        let {title, ventureDescribe, customerDescribe, file, industry, contestTypeId, styles, contestGroup} = req.body;
-        if(!contestGroup){
+        let {title, ventureDescribe, customerDescribe, file, industry, contestTypeId, styles, contestGroup, priority} = req.body;
+        if (!contestGroup) {
             contestGroup = uuidV4();
         }
         const contest = await Contests.create({
@@ -22,7 +22,8 @@ export const createContest = async (req, res, next) => {
             industryId: industry,
             contestTypeId,
             contestCreatorId: req.decoded.id,
-            contestGroup
+            contestGroup,
+            priority
         });
 
         res.send(contest);
@@ -143,11 +144,9 @@ export const getContestsByStyle = async (req, res, next) => {
 
 export const getUserContests = async (req, res, next) => {
     try {
-        const userId = req.decoded.id;
-        consoleLogSequelizeModelAccessors(Entries);
         const userContests = await Contests.findAll({
             where: {
-                contestCreatorId: 2
+                contestCreatorId: req.decoded.id
             },
             include: [{
                 model: Accounts,
@@ -162,6 +161,24 @@ export const getUserContests = async (req, res, next) => {
             }]
         });
         res.send(userContests);
+    } catch (e) {
+        next(e);
+    }
+};
+
+export const proceedPay = async (req, res, next) => {
+    try {
+        const {prize, contest} = req.body;
+        const {priority} = contest;
+        const sumForContest = parseInt(prize / priority);
+        await Contests.update({
+            prize: sumForContest
+        }, {
+            where: {
+                contestGroup: contest.contestGroup
+            }
+        });
+        res.send('Success');
     } catch (e) {
         next(e);
     }

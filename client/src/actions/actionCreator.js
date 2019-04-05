@@ -56,3 +56,8 @@ export const setSavedContest = (contest) => ({
     type: ACTION.SET_SAVED_CONTEST,
     payload: contest
 });
+
+export const proceedPay = (contest) => ({
+    type: ACTION.PROCEED_PAY,
+    payload: contest
+});

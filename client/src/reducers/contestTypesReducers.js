@@ -124,7 +124,7 @@ export default function (state = initialState, action) {
             }
         }
         case ACTION.CREATE_CONTEST_RESPONSE: {
-            const selectedTypes = this.state.selectedContestType;
+            const selectedTypes = state.selectedContestType;
             selectedTypes && selectedTypes.shift();
             return {
                 ...state,

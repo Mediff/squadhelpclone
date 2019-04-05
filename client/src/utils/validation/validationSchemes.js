@@ -1,4 +1,4 @@
-const {object, string, ref} = require('yup');
+const {object, string, ref, number} = require('yup');
 
 export const loginScheme = object({
     email: string()
@@ -59,4 +59,17 @@ export const contestNameScheme = object({
     nameType: string()
         .required('Select name type for your contest')
 
+});
+
+export const contestPayScheme = object({
+    cardNumber: string()
+        .required('Card number required'),
+    cardExpiration: string()
+        .required('Card expiration required'),
+    cardSecurityCode: string()
+        .required('Card security code required'),
+    cardPrize: number()
+        .required('Card prize required')
+        .positive('Number cant be negative')
+        .integer('Number cant be decimal')
 });
