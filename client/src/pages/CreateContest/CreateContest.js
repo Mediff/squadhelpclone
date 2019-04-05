@@ -26,7 +26,7 @@ import {contestTaglineLogoScheme, contestNameScheme} from '../../utils/validatio
 
 class CreateContest extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.formRef = React.createRef();
     }
@@ -115,9 +115,9 @@ class CreateContest extends Component {
             ventureDescribeErrorMessage: '',
             customerDescribeErrorMessage: ''
         });
-        const {title, nameType, industry, customerDescribe, ventureDescribe, file} = this.state;
-        let {styles} = this.state;
-        styles = styles ? styles : [];
+        const {title, nameType, industry, customerDescribe, ventureDescribe, file, styles} = this.state;
+        /*let {styles} = this.state;
+        styles = styles ? styles : [];*/
         const contestTypeId = this.props.selectedContestType[0];
         const contestGroup = this.props.savedContest && this.props.savedContest.contestGroup;
         const priority =  this.props.savedContest ? this.props.savedContest.priority + 1: 1;
@@ -130,7 +130,7 @@ class CreateContest extends Component {
             this.props.createContest({
                 contest: {
                     title, nameType, industry, customerDescribe, ventureDescribe, file,
-                    contestTypeId, styles, contestGroup, priority
+                    contestTypeId, styles: styles || [], contestGroup, priority
                 }
             });
         } catch (e) {

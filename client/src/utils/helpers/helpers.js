@@ -37,8 +37,8 @@ export const getCombinedTypes = (array) => {
         }
     }
 
-    for(let i = 0; i < array.length - 2; i++){
-        for (let j = 0; j < array.length; j++){
+    for(let i = 0; i < array.length - 2; i++) {
+        for (let j = 0; j < array.length; j++) {
             combineElems(result, j);
         }
     }

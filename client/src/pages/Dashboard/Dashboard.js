@@ -32,7 +32,7 @@ class Dashboard extends Component {
                         <img src={plus} alt='Add contest'/>
                         Add contest
                     </div>
-                    {this.props.userContests && <Contests contests={contests}/>}
+                    {this.props.userContests && <Contests contests={contests} history={this.props.history}/>}
                 </div>
             </div>
         );

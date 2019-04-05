@@ -61,3 +61,8 @@ export const proceedPay = (contest) => ({
     type: ACTION.PROCEED_PAY,
     payload: contest
 });
+
+export const setContest = (contest) => ({
+    type: ACTION.SET_CONTEST,
+    payload: contest
+});

@@ -1,26 +1,17 @@
 import 'babel-polyfill';
 import express from 'express';
-import multer from 'multer';
 import {createUser, getUserById, loginUser} from './controllers/userControllers/userController';
 import {createContest, getContests, getActiveContests, getContestById,
     getContestsByType, getContestsByStyle, getUserContests, proceedPay} from "./controllers/contestControllers/contestControllers";
 import {getContestTypes, getNameTypes, getIndustries, getStylesByContestType, getStyles}
     from './controllers/contestTypeControllers/contestTypesController';
-import {uploadFile} from './controllers/filesController/filesController';
+import {uploadFile, upload} from './controllers/filesController/filesController';
 import {validateToken} from './controllers/auth/authControllers';
 import {validateUser} from '../utils/validation/userValidation';
 import {validateContest} from "../utils/validation/contestValidation";
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
-    destination: './files',
-    filename(req, file, cb) {
-        cb(null, `${new Date().toISOString()}-${file.originalname}`);
-    },
-});
-
-const upload = multer({storage}).single('file');
 
 router.post('/login', loginUser);
 router.post('/register', validateUser, createUser);

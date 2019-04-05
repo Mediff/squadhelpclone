@@ -7,7 +7,8 @@ const initialState = {
     getActive: true,
     payProceed: null,
     payProceedError: null,
-    payProceedFetching: false
+    payProceedFetching: false,
+    selectedContest: null
 };
 
 export default function (state = initialState, action) {
@@ -71,6 +72,13 @@ export default function (state = initialState, action) {
                 payProceed: null,
                 payProceedError: action.error,
                 payProceedFetching: false
+            }
+        }
+        case ACTION.SET_CONTEST: {
+            console.log(action.payload);
+            return {
+                ...state,
+                selectedContest: action.payload
             }
         }
         default: {
