@@ -1,7 +1,14 @@
 import React, {Component} from 'react';
 import styles from './CreateContest.module.sass';
 import connect from 'react-redux/es/connect/connect';
-import {getIndustries, getNameTypes, getStyles, createContest} from '../../actions/actionCreator'
+import {
+    getIndustries,
+    getNameTypes,
+    getStyles,
+    createContest,
+    setContestTypes,
+    setSavedContest
+} from '../../actions/actionCreator'
 import {CreateContestTextInput} from '../../components/CreateContest/CreateContestTextInput/CreateContestTextInput';
 import {CreateContestTextArea} from '../../components/CreateContest/CreateContestTextArea/CreateContestTextArea';
 import {CreateContestCheckboxes} from '../../components/CreateContest/CreateContestCheckboxes/CreateContestCheckboxes';
@@ -12,15 +19,14 @@ import {ValidationMessage} from '../../components/ValidationMessage/ValidationMe
 import {validationMessageOptions} from '../../utils/constants/options';
 import {createContestNameHeaders} from '../../utils/constants/constants';
 import {createContestNamePlaceholders} from '../../utils/constants/constants';
-import {getTypeId, clearTypeId, setContest, getContest, setTypeId, clearContests, setUniversalStorage, getUniversalStorage
+import {
+    getTypeId, clearTypeId, setContest, getContest, setTypeId, clearContests
 } from '../../utils/localStorage/localStorage';
 import {contestTaglineLogoScheme, contestNameScheme} from '../../utils/validation/validationSchemes';
-import {uploadFile} from "../../api/rest/restContoller";
 
 class CreateContest extends Component {
 
     state = {
-        contestTypeId: null,
         title: '',
         nameType: '',
         industry: '',
@@ -32,25 +38,51 @@ class CreateContest extends Component {
         nameTypeErrorMessage: '',
         industryErrorMessage: '',
         ventureDescribeErrorMessage: '',
-        customerDescribeErrorMessage: ''
+        customerDescribeErrorMessage: '',
+        savedContest: ''
     };
 
     componentDidMount() {
-        let id = this.props.selectedContestType && this.props.selectedContestType[0];
-        if (!id) {
-            let ids = getTypeId();
-            id = ids ? ids[0] : this.props.history.push('/contesttype');
-        }
-        this.setState({
-            contestTypeId: id
-        });
+        !this.props.selectedContestType && this.props.setContestTypes(getTypeId());
+        !this.props.savedContest && this.props.setSavedContest(getContest());
         this.props.getIndustries();
         this.props.getNameTypes();
-        this.props.getStyles(id);
+        this.props.getStyles();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.selectedContestType) {
+            setTypeId(this.props.selectedContestType);
+            this.props.selectedContestType.length === 0 && this.props.history.push('/payment');
+        } else {
+            this.props.history.push('/contesttype');
+        }
+        if (this.props.savedContest) {
+            if (this.props.savedContest !== prevProps.savedContest) {
+                setContest(this.props.contest);
+                this.setState({
+                        title: '',
+                        nameType: '',
+                        industry: '',
+                        ventureDescribe: '',
+                        customerDescribe: '',
+                        styles: '',
+                        file: '',
+                        titleErrorMessage: '',
+                        nameTypeErrorMessage: '',
+                        industryErrorMessage: '',
+                        ventureDescribeErrorMessage: '',
+                        customerDescribeErrorMessage: '',
+                        savedContest: ''
+                    }
+                );
+            }
+        }
     }
 
     redirectToContestTypeHandler = () => {
         clearTypeId();
+        clearContests();
         this.props.history.push('/contesttype');
     };
 
@@ -61,10 +93,11 @@ class CreateContest extends Component {
     };
 
     fileUploadHandler = event => {
+        const formData = new FormData();
+        formData.append('file', event.target.files[0]);
         this.setState({
-            file: event.target.files[0]
+            file: formData
         });
-
     };
 
     proceedError = (error) => {
@@ -82,50 +115,21 @@ class CreateContest extends Component {
             ventureDescribeErrorMessage: '',
             customerDescribeErrorMessage: ''
         });
-        const {title, nameType, industry, customerDescribe, ventureDescribe, file, contestTypeId} = this.state;
+        const {title, nameType, industry, customerDescribe, ventureDescribe, file} = this.state;
         let {styles} = this.state;
+        styles = styles ? styles : [];
+        const contestTypeId = this.props.selectedContestType;
+        const contestGroup = this.props.savedContest && this.props.savedContest.contestGroup;
         try {
             this.state.contestTypeId === 2 ?
                 await contestNameScheme.validate({title, nameType, industry, customerDescribe, ventureDescribe},
                     {abortEarly: false}) :
                 await contestTaglineLogoScheme.validate({title, industry, customerDescribe, ventureDescribe},
                     {abortEarly: false});
-
-            const contests = getContest() ? getContest() : [];
-            styles = styles ? styles : [];
-
-            contests.push({
-                title,
-                industry,
-                customerDescribe,
-                ventureDescribe,
-                contestTypeId,
-                styles,
-                file,
-                nameType
+            this.props.createContest({
+                contest: {title, nameType, industry, customerDescribe, ventureDescribe, file,
+                    contestTypeId, styles, contestGroup}
             });
-
-            setContest(contests);
-
-            console.log(getContest());
-
-            const ids = getTypeId();
-            if (ids.length > 1) {
-                ids.shift();
-                setTypeId(ids);
-                window.location.reload();
-            } else {
-                clearTypeId();
-                clearContests();
-                for (let contest of contests){
-                    contest.file = getUniversalStorage(contest.contestTypeId);
-                }
-                this.props.createContest({
-                    contests,
-                    history: this.props.history
-                });
-            }
-
         } catch (e) {
             e.inner.forEach(error => {
                 this.proceedError(error)
@@ -197,15 +201,18 @@ const mapStateToProps = (state) => {
         selectedContestType: state.contestTypesReducers.selectedContestType,
         industries: state.contestTypesReducers.industries,
         styles: state.contestTypesReducers.styles,
-        nameTypes: state.contestTypesReducers.nameTypes
+        nameTypes: state.contestTypesReducers.nameTypes,
+        savedContest: state.contestTypesReducers.savedContest
     };
 };
 
 const mapDispatchToProps = (dispatch) => ({
     getIndustries: () => dispatch(getIndustries()),
-    getStyles: (id) => dispatch(getStyles(id)),
+    getStyles: () => dispatch(getStyles()),
     getNameTypes: () => dispatch(getNameTypes()),
-    createContest: (data) => dispatch(createContest(data))
+    createContest: (data) => dispatch(createContest(data)),
+    setContestTypes: (id) => dispatch(setContestTypes(id)),
+    setSavedContest: (contest) => dispatch(setSavedContest(contest))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateContest);

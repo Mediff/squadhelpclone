@@ -9,24 +9,23 @@ const Op = sequelize.Op;
 
 export const createContest = async (req, res, next) => {
     try {
-        let contestUuid = uuidV4();
-
-        for (let c of req.body) {
-            let {title, ventureDescribe, customerDescribe, file, industry, contestTypeId, styles} = c;
-            const contest = await Contests.create({
-                title,
-                ventureDescribe,
-                customerDescribe,
-                file,
-                styles,
-                industryId: industry,
-                contestTypeId,
-                contestCreatorId: req.decoded.id,
-                contestGroup: contestUuid
-            });
-
+        let {title, ventureDescribe, customerDescribe, file, industry, contestTypeId, styles, contestGroup} = req.body;
+        if(!contestGroup){
+            contestGroup = uuidV4();
         }
-        res.send('Hooray');
+        const contest = await Contests.create({
+            title,
+            ventureDescribe,
+            customerDescribe,
+            file,
+            styles,
+            industryId: industry,
+            contestTypeId,
+            contestCreatorId: req.decoded.id,
+            contestGroup
+        });
+
+        res.send(contest);
 
     } catch (e) {
         next(e);

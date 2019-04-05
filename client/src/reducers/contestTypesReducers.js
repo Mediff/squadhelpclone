@@ -13,7 +13,10 @@ const initialState = {
     stylesFetching: null,
     nameTypes: null,
     nameTypesError: null,
-    nameTypesFetching: null
+    nameTypesFetching: null,
+    savedContest: null,
+    savedContestError: null,
+    savedContestFetching: null
 };
 
 export default function (state = initialState, action) {
@@ -120,7 +123,23 @@ export default function (state = initialState, action) {
                 selectedContestType: action.payload
             }
         }
-
+        case ACTION.CREATE_CONTEST_RESPONSE: {
+            const selectedTypes = this.state.selectedContestType;
+            selectedTypes && selectedTypes.shift();
+            return {
+                ...state,
+                savedContest: action.payload,
+                selectedContestType: selectedTypes,
+                savedContestError: null,
+                savedContestFetching: false
+            }
+        }
+        case ACTION.SET_SAVED_CONTEST: {
+            return {
+                ...state,
+                savedContest: action.payload
+            }
+        }
         default: {
             return state;
         }

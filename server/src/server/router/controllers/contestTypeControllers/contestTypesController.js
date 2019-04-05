@@ -21,6 +21,15 @@ export const getIndustries = async (req, res, next) => {
     }
 };
 
+export const getStyles = async (req, res, next) => {
+    try {
+        const styles = await Styles.findAll({});
+        res.send(styles);
+    } catch (e) {
+        next(e);
+    }
+};
+
 export const getNameTypes = async (req, res, next) => {
     try {
         const nameTypes = await NameTypes.findAll({});

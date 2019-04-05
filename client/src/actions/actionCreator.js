@@ -35,9 +35,8 @@ export const setContestTypes = (id) => ({
     payload: id
 });
 
-export const getStyles = (id) => ({
-    type: ACTION.GET_STYLES,
-    payload: id
+export const getStyles = () => ({
+    type: ACTION.GET_STYLES
 });
 
 export const getIndustries = () => ({
@@ -50,5 +49,10 @@ export const getNameTypes = () => ({
 
 export const createContest = (contest) => ({
     type: ACTION.CREATE_CONTEST,
+    payload: contest
+});
+
+export const setSavedContest = (contest) => ({
+    type: ACTION.SET_SAVED_CONTEST,
     payload: contest
 });
