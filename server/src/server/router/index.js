@@ -5,7 +5,7 @@ import {createContest, getContests, getActiveContests, getContestById,
     getContestsByType, getContestsByStyle, getUserContests, proceedPay} from "./controllers/contestControllers/contestControllers";
 import {getContestTypes, getNameTypes, getIndustries, getStylesByContestType, getStyles}
     from './controllers/contestTypeControllers/contestTypesController';
-import {uploadFile, upload} from './controllers/filesController/filesController';
+import {getFilePath, upload} from './controllers/filesController/filesController';
 import {validateToken} from './controllers/auth/authControllers';
 import {validateUser} from '../utils/validation/userValidation';
 import {validateContest} from "../utils/validation/contestValidation";
@@ -33,7 +33,7 @@ router.get('/types', validateToken, getContestTypes);
 
 router.get('/user', validateToken, getUserById);
 
-router.post('/files', upload, uploadFile);
+router.post('/files', upload, getFilePath);
 
 module.exports = router;
 

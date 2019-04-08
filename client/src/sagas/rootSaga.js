@@ -1,7 +1,7 @@
 import { takeLatest } from 'redux-saga/effects';
 import ACTION from '../actions/actiontsTypes';
 import {
-  loginSaga, registerSaga, getUserSaga
+  loginSaga, registerSaga, getUserSaga, logoutSaga
 } from './userSaga';
 import {getUserContestsSaga, getContestTypesSaga, getIndustriesSaga, getNameTypesSaga,
   getStylesSaga, createContestSaga, proceedPaySaga} from './contestSaga';
@@ -17,7 +17,7 @@ function* rootSaga() {
   yield takeLatest(ACTION.GET_STYLES, getStylesSaga);
   yield takeLatest(ACTION.CREATE_CONTEST, createContestSaga);
   yield takeLatest(ACTION.PROCEED_PAY, proceedPaySaga);
-
+  yield takeLatest(ACTION.USER_LOGOUT,logoutSaga);
 }
 
 export default rootSaga;

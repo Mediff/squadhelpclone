@@ -66,3 +66,7 @@ export const setContest = (contest) => ({
     type: ACTION.SET_CONTEST,
     payload: contest
 });
+
+export const logout = () => ({
+    type: ACTION.USER_LOGOUT
+});

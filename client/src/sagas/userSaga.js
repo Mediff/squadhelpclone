@@ -1,6 +1,6 @@
 import {put} from 'redux-saga/effects';
 import ACTION from '../actions/actiontsTypes';
-import {setToken} from '../utils/localStorage/localStorage';
+import {setToken, clearToken} from '../utils/localStorage/localStorage';
 
 import {
     login, register, getUser
@@ -42,4 +42,9 @@ export function* getUserSaga() {
     } catch (e) {
         yield put({type: ACTION.GET_USER_ERROR, error: e.response.data});
     }
+}
+
+export function* logoutSaga() {
+    clearToken();
+    yield put({type: ACTION.USER_LOGOUT});
 }

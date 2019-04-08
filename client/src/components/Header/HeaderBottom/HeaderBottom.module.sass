@@ -1,32 +1,83 @@
+@import '../../../sass/mixins/mixins'
+
+$largeScreenHeight: 55px
+$phoneScreenHeight: 30px
+$largeScreenWidth: 300px
+$phoneScreenWidth: 150px
+$phoneScreenLogoWidth: 100px
+$buttonWidth: 200px
 
 .mainContainer
-  margin: 0 auto
+  display: flex
+  justify-content: space-between
+  align-items: center
+  height: $largeScreenHeight
+  width: 100%
+  padding: 15px
+  margin-bottom: 15px
+  font-family: 'Montserrat', serif
+  @include for-phone-only
+    height: $phoneScreenHeight
+    border-bottom: 1px solid #cacaca
 
-.linkContainer
-  height: 55px
+  .logoContainer
+    display: flex
+    width: $largeScreenWidth
+    justify-content: center
+    @include for-phone-only
+      width: $phoneScreenWidth
+    & > img
+      width: $phoneScreenWidth
+      max-width: 100%
+      max-height: $largeScreenHeight
+      @include for-phone-only
+        height: $phoneScreenHeight
+        width: $phoneScreenLogoWidth
+        align-self: flex-start
 
-.link
-  border: 2px solid #28d2d0
-  border-radius: 5px
-  color: #28d2d0
-  display: inline-block
-  width: 80%
-  height: 100%
-  line-height: 55px
-  text-align: center
-  &:hover
-    color: white
-    text-decoration: none
-    background-color: #28D2D0
+  .linkContainer
+    display: flex
+    justify-content: center
+    width: $buttonWidth
+    @include for-phone-only
+      display: none
 
-.linkDropdown
-  font-family: 'Montserrat', sans-serif
-  height: 55px
-  line-height: 55px
-  & > button
-    font-size: 16px
-    text-decoration: none
-    color: #495d8b
+    .link
+      border: 2px solid #28d2d0
+      border-radius: 5px
+      color: #28d2d0
+      display: inline-block
+      width: 80%
+      max-height: 100%
+      line-height: $largeScreenHeight
+      text-align: center
+      &:hover
+        color: white
+        text-decoration: none
+        background-color: #28D2D0
+
+  .dropdown
+    cursor: pointer
+    display: none
+    @include for-phone-only
+      display: inline-block
+
+  .dropdownList
+    padding: 0 20px
+    width: 100%
+    margin: 10px 0 0 0
+    border: 0 solid white
+    & > li
+      padding: 10px 15px
+      font-size: 14px
+
+    .dropdownLink
+      color: #333
+      &:hover
+        text-decoration: none
+      & > i
+        margin-right: 10px
+
 
 
 

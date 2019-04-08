@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './HeaderTop.module.sass';
-import {AuthUserHeader} from '../AuthUserHeader/AuthUserHeader';
+import AuthUserHeader from '../AuthUserHeader/AuthUserHeader';
 import {AuthRegButtonHeader} from "../AuthRegButtonsHeader/AuthRegButtonHeader";
 
 export const HeaderTop = ({user}) => {

@@ -17,17 +17,50 @@
     & > span
       padding-left: 10px
 
-    .authHeaderImage
-      width: 20px
-      height: 20px
-      border-radius: 50%
-      line-height: 40px
+    .dropdown
+      display: flex
+      flex-direction: row
+      justify-content: center
+      cursor: pointer
+      align-items: center
 
-    .userHi
-      color: #718888
-      font-size: 13.5px
+      .personInfoContainer
+        display: flex
+        justify-content: center
+        align-items: center
+        width: 100%
+        & > img
+          margin-right: 10px
 
-  .authHeaderEmail
-    padding-left: 10px
-    color: #718888
+        .authHeaderImage
+          width: 20px
+          height: 20px
+          border-radius: 50%
+          line-height: 40px
+
+        .userHi
+          color: #718888
+          font-size: 13.5px
+
+    .dropdownList
+      margin: 0
+      & > li
+        padding: 10px 20px
+        font-size: 14px
+        cursor: pointer
+        color: #718888
+        &:hover
+          background-color: #f5f5f5
+          color: #262626
+
+      .dropdownLink
+        color: inherit
+        &:hover
+          text-decoration: none
+
+  .authHeaderMail
+    padding: 0 20px
+    border-right: 1px solid #ebebeb
+    border-left: 1px solid #ebebeb
+
 

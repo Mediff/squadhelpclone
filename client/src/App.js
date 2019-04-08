@@ -25,7 +25,7 @@ const App = () => {
     return (
         <Router history={history}>
             <Switch>
-                <Route path='/' exact component={AuthRequired(Main)}/>
+                <Route path='/' exact component={(props) => <Main {...props}/>}/>
                 <Route path='/login' component={(props) => <Login {...props}/>}/>
                 <Route path='/register' component={(props) => <Registration {...props}/>}/>
                 <Route path='/dashboard' component={(props) => <AuthDashboard {...props}/>}/>
