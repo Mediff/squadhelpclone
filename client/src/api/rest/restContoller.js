@@ -15,3 +15,4 @@ export const getNameTypes = () => axios.get(`${restURL}/types/nametypes`);
 export const createContest = (contest) => axios.post(`${restURL}/contests`, contest);
 export const uploadFile = (file) => axios.post(`${restURL}/files`, file);
 export const proceedPay = (contest) => axios.put(`${restURL}/contests/pay`, contest);
+export const updateEntry = (entry) => axios.put(`${restURL}/entries`, entry);

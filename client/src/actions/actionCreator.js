@@ -70,3 +70,18 @@ export const setContest = (contest) => ({
 export const logout = () => ({
     type: ACTION.USER_LOGOUT
 });
+
+export const setAllEntries = (contest) => ({
+    type: ACTION.SET_ALL_ENTRIES,
+    payload: contest
+});
+
+export const setRejectedEntries = (contest) => ({
+   type: ACTION.SET_REJECTED_ENTRIES,
+   payload: contest
+});
+
+export const updateEntryStatus = (entry) => ({
+    type: ACTION.UPDATE_ENTRY_STATUS,
+    payload: entry
+});

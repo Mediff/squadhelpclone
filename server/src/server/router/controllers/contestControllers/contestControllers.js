@@ -1,4 +1,4 @@
-import {Accounts, Contests, Entries} from '../../../models';
+import {Accounts, Contests, Entries, ContestTypes} from '../../../models';
 import {consoleLogSequelizeModelAccessors} from '../../../utils/helpers/helpers';
 
 const uuidV4 = require('uuid/v4');
@@ -43,6 +43,10 @@ export const getActiveContests = async (req, res, next) => {
                 model: Accounts,
                 as: 'Creator',
                 attributes: ['id', 'firstName', 'lastName', 'displayName', 'email', 'profilePicture', 'role'],
+            }, {
+                model: ContestTypes,
+                as: 'ContestType',
+                attributes: ['id', 'name']
             }]
         });
         res.send(activeContests);
@@ -62,6 +66,10 @@ export const getContests = async (req, res, next) => {
                 model: Accounts,
                 as: 'Winner',
                 attributes: ['id', 'firstName', 'lastName', 'displayName', 'email', 'profilePicture', 'role']
+            }, {
+                model: ContestTypes,
+                as: 'ContestType',
+                attributes: ['id', 'name']
             }]
         });
         res.send(contests);
@@ -157,7 +165,15 @@ export const getUserContests = async (req, res, next) => {
                 as: 'Winner',
                 attributes: ['id', 'firstName', 'lastName', 'displayName', 'email', 'profilePicture', 'role']
             }, {
-                model: Entries
+                model: Entries,
+                include: [{
+                    model: Accounts,
+                    as: 'account',
+                    attributes: ['firstName']
+                }]
+            }, {
+                model: ContestTypes,
+                as: 'ContestType'
             }]
         });
         res.send(userContests);

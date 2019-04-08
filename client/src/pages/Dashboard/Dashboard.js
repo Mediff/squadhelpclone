@@ -3,7 +3,6 @@ import styles from './Dashboard.module.sass';
 import {Contests} from '../../components/Contests/Contests';
 import connect from 'react-redux/es/connect/connect';
 import {getUserContests} from "../../actions/actionCreator";
-import SideNav from '../../components/SideNav/SideNav';
 import plus from '../../images/plus.png';
 
 class Dashboard extends Component {
@@ -13,7 +12,7 @@ class Dashboard extends Component {
     }
 
     addContestRedirect = () => {
-        this.props.history.push('/');
+        this.props.history.push('/contesttype');
     };
 
     render() {
@@ -24,9 +23,6 @@ class Dashboard extends Component {
         }
         return (
             <div className={styles.mainContainer}>
-                <div className={styles.sideNavContainer}>
-                    <SideNav {...this.props}/>
-                </div>
                 <div className={styles.contestsContainer}>
                     <div className={styles.addContestButton} onClick={()=>this.addContestRedirect}>
                         <img src={plus} alt='Add contest'/>

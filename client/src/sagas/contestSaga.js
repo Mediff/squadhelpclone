@@ -53,23 +53,26 @@ export function* getNameTypesSaga() {
     }
 }
 
-/*const uploadImage = async (file) => {
+const uploadImage = async (file) => {
     return await uploadFile(file);
-};*/
+};
 
 export function* createContestSaga({payload}) {
     yield put({type: ACTION.CREATE_CONTEST_REQUEST});
     try {
         const {contest} = payload;
-        /*if(contest.file){
+        if(contest.file){
             const response = yield call(uploadImage, contest.file);
             contest.file = response.data;
-        }*/
+        }
+        /*
         let res;
         if(contest.file) {
             res = yield uploadFile(contest.file);
         }
-        console.log(res.data);
+        res.file = res;
+        console.log(res);
+        */
         const {data} = yield createContest(contest);
         yield put({type: ACTION.CREATE_CONTEST_RESPONSE, payload: data});
     } catch (e) {

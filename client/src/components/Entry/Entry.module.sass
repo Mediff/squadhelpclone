@@ -1,0 +1,38 @@
+.mainContainer
+  display: flex
+  flex-direction: column
+  justify-content: flex-start
+  align-content: center
+  box-shadow: -2px -1px 5px -3px rgba(0,0,0,0.75)
+  padding: 20px 20px 10px 20px
+
+
+  .entriesContainer
+    display: flex
+    justify-content: flex-start
+
+    .entriesKeys
+      display: flex
+      flex-direction: column
+      & > div
+        margin-bottom: 10px
+
+    .entriesValues
+      display: flex
+      flex-direction: column
+      margin-left: 5px
+      & > div
+        margin-bottom: 10px
+
+  .statusContainer
+    display: flex
+    font-size: 18px
+
+    .statusRejected
+      color: #64676b
+
+    .statusAccepted
+      color: #6fe236
+
+    .buttonsContainer
+      width: 100%

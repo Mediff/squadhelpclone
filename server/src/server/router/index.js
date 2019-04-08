@@ -31,6 +31,8 @@ router.get('/types/industries', validateToken, getIndustries);
 router.get('/types/nametypes', validateToken, getNameTypes);
 router.get('/types', validateToken, getContestTypes);
 
+router.put('/entries', validateToken, updateEntry);
+
 router.get('/user', validateToken, getUserById);
 
 router.post('/files', upload, getFilePath);

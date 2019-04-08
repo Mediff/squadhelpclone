@@ -5,13 +5,13 @@ import diamond from '../../../images/diamond.png';
 import check from '../../../images/check.png';
 import {setContest} from "../../../actions/actionCreator";
 import connect from 'react-redux/es/connect/connect';
-
+import PropTypes from 'prop-types';
 
 class ContestCard extends Component {
 
     onClickHandler = () => {
         this.props.setContest(this.props.contest);
-        this.props.history.push('/brief');
+        this.props.history.push('/dashboard/brief');
     };
 
     render() {
@@ -19,7 +19,7 @@ class ContestCard extends Component {
             <div className={styles.contestContainer} onClick={this.onClickHandler}>
                 <div className={styles.contestDescriptionContainer}>
                     <div className={styles.contestHeader}>
-                        Name for a house painting, renovation and decoration business (#21186)
+                        {this.props.contest.title}
                     </div>
                     <div className={styles.contestName}>
                         Naming / Company Name
@@ -49,6 +49,14 @@ class ContestCard extends Component {
             </div>
         )
     };
+}
+
+ContestCard.propTypes = {
+    contest: PropTypes.shape({
+        ventureDescribe: PropTypes.string,
+        winnerId: PropTypes.number,
+        prize: PropTypes.number
+    })
 };
 
 const mapStateToProps = () => {

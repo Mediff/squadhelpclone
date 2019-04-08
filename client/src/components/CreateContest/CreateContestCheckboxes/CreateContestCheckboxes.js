@@ -9,7 +9,7 @@ export const CreateContestCheckboxes = ({selectOptions, header, changeHandler}) 
             return (
                 <div className={styles.checkboxContainer} key={item.id}>
                     <div className={styles.checkboxWithLabel}>
-                        <input type='checkbox' name='styles[]' className={styles.checkbox} value={item.id}
+                        <input type='checkbox' name='styles[]' className={styles.checkbox} value={item.name}
                                onChange={(event) => changeHandler(event)}/>
                         <label>{item.name}</label>
                     </div>

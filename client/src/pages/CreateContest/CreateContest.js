@@ -37,7 +37,7 @@ class CreateContest extends Component {
         industry: '',
         ventureDescribe: '',
         customerDescribe: '',
-        styles: '',
+        styles: [],
         file: '',
         titleErrorMessage: '',
         nameTypeErrorMessage: '',
@@ -92,6 +92,19 @@ class CreateContest extends Component {
         });
     };
 
+    styleHandler = event => {
+        if (event.target.checked) {
+            this.setState({
+                styles: [...this.state.styles, event.target.value]
+            });
+        }
+        else {
+            this.setState({
+                styles: this.state.styles.filter(style=>style !== event.target.value)
+            });
+        }
+    };
+
     fileUploadHandler = event => {
         const formData = new FormData();
         formData.append('file', event.target.files[0]);
@@ -116,11 +129,9 @@ class CreateContest extends Component {
             customerDescribeErrorMessage: ''
         });
         const {title, nameType, industry, customerDescribe, ventureDescribe, file, styles} = this.state;
-        /*let {styles} = this.state;
-        styles = styles ? styles : [];*/
         const contestTypeId = this.props.selectedContestType[0];
         const contestGroup = this.props.savedContest && this.props.savedContest.contestGroup;
-        const priority =  this.props.savedContest ? this.props.savedContest.priority + 1: 1;
+        const priority = this.props.savedContest ? this.props.savedContest.priority + 1 : 1;
         try {
             this.state.contestTypeId === 2 ?
                 await contestNameScheme.validate({title, nameType, industry, customerDescribe, ventureDescribe},
@@ -172,7 +183,7 @@ class CreateContest extends Component {
                 <ValidationMessage message={this.state.customerDescribeErrorMessage}
                                    type={validationMessageOptions.CreateContestError}/>
                 <CreateContestCheckboxes header={createContestNameHeaders[5]}
-                                         changeHandler={this.changeHandler('styles')}
+                                         changeHandler={this.styleHandler}
                                          placeholder={createContestNamePlaceholders[5]}
                                          selectOptions={this.props.styles}/>
                 <CreateContestFile header={createContestNameHeaders[6]}

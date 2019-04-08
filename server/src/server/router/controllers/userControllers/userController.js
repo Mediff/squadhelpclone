@@ -54,11 +54,10 @@ export const loginUser = async (req, res, next) => {
             const token = await jwt.sign(payload, secretToken, {
                 expiresIn: '24h'
             });
-            return result ? res.send({account, token}) : next(new ForbiddenError('Not valid password'));
+            result ? res.send({account, token}) : next(new ForbiddenError('Not valid password'));
+        } else {
+            next(new NotFoundError('Email not exists'));
         }
-
-        next(new NotFoundError('Email not exists'));
-
     } catch (e) {
         next(e);
     }

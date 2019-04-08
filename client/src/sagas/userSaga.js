@@ -13,6 +13,8 @@ export function* loginSaga({payload}) {
         const {data} = yield login(user);
         const {account, token} = data;
         setToken(token);
+        console.log(token);
+        console.log(account);
         yield put({type: ACTION.LOGIN_RESPONSE, payload: account});
         history.push('/');
 
