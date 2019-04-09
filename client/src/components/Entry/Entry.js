@@ -4,6 +4,14 @@ import styles from './Entry.module.sass';
 import {RejectAcceptButtons} from '../../components/RejectAcceptButtons/RejectAcceptButtons';
 
 export const Entry = ({entry, onReject, onAccept}) => {
+
+    const onRejectEntry = () => {
+        onReject(entry)
+    };
+    const onAcceptEntry = () => {
+        onAccept(entry);
+    };
+
     const {isWinner, isRejected} = entry;
     const notChecked = !isWinner && !isRejected;
     return (
@@ -22,7 +30,7 @@ export const Entry = ({entry, onReject, onAccept}) => {
                 {isWinner && <div className={styles.statusAccepted}>Accepted</div>}
                 {isRejected && <div className={styles.statusRejected}>Rejected</div>}
                 {notChecked && <div className={styles.buttonsContainer}>
-                    <RejectAcceptButtons onAccept={onAccept} onReject={onReject}/>
+                    <RejectAcceptButtons onAccept={onAcceptEntry} onReject={onRejectEntry}/>
                 </div>}
             </div>
         </div>

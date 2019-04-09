@@ -16,3 +16,4 @@ export const createContest = (contest) => axios.post(`${restURL}/contests`, cont
 export const uploadFile = (file) => axios.post(`${restURL}/files`, file);
 export const proceedPay = (contest) => axios.put(`${restURL}/contests/pay`, contest);
 export const updateEntry = (entry) => axios.put(`${restURL}/entries`, entry);
+export const updateContest = (contest) => axios.put(`${restURL}/contests`, contest);

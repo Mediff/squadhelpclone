@@ -6,9 +6,17 @@ import {Entry} from '../../components/Entry/Entry';
 
 export const EntriesList = ({allClickHandler, rejectedClickHandler, items, isRejectSelected, onAccept, onReject}) => {
 
+    const onAcceptHandler = (entry) => {
+        onAccept(entry);
+    };
+
+    const onRejectHandler = (entry) => {
+        onReject(entry);
+    };
+
     const renderEntries = () => {
-        return items.map(item => <div className={styles.entry} key={item.id}><Entry entry={item} onAccept={onAccept}
-                                                                      onReject={onReject}/></div>)
+        return items.map(item => <div className={styles.entry} key={item.id}><Entry entry={item} onAccept={onAcceptHandler}
+                                                                      onReject={onRejectHandler}/></div>)
     };
 
     const styleReject = isRejectSelected? styles.tabItemSelected: styles.tabItem;

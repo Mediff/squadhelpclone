@@ -1,5 +1,5 @@
 import ACTION from '../actions/actiontsTypes';
-import {put, call} from 'redux-saga/effects';
+import {put} from 'redux-saga/effects';
 import {updateEntry} from "../api/rest/restContoller";
 
 export function* setAllEntriesSaga({payload}) {
@@ -19,12 +19,25 @@ export function* setRejectedEntriesSaga({payload}) {
     });
 }
 
-export function* updateEntryStatusSaga() {
+export function* updateRejectedEntrySaga({payload}) {
     try {
-        const {data} = yield updateEntry();
-        yield put({type: ACTION.UPDATE_ENTRY_STATUS_RESPONSE, payload: data});
+        const {entry, prize} = payload;
+        entry.isWinner = false;
+        const {data} = yield updateEntry({entry, prize});
+        yield put({type: ACTION.UPDATE_ENTRY_REJECTED_RESPONSE, payload: data});
     } catch (e) {
         yield put({type: ACTION.GET_CONTEST_TYPES_ERROR, error: e});
     }
 }
 
+
+export function* updateAcceptedEntrySaga({payload}) {
+    try {
+        const {entry, prize} = payload;
+        entry.isWinner = true;
+        const {data} = yield updateEntry({entry, prize});
+        yield put({type: ACTION.UPDATE_ENTRY_ACCEPTED_RESPONSE, payload: data});
+    } catch (e) {
+        yield put({type: ACTION.GET_CONTEST_TYPES_ERROR, error: e});
+    }
+}

@@ -17,7 +17,8 @@ export const createUser = async (req, res, next) => {
                 email,
                 passwordHash: hash,
                 role,
-                displayName
+                displayName,
+                balance: 0
             }, {
                 attributes: ['id', 'firstName', 'lastName', 'email', 'profilePicture', 'role']
             }

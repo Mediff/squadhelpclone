@@ -81,7 +81,17 @@ export const setRejectedEntries = (contest) => ({
    payload: contest
 });
 
-export const updateEntryStatus = (entry) => ({
-    type: ACTION.UPDATE_ENTRY_STATUS,
-    payload: entry
+export const entryAccepted = (payload) => ({
+    type: ACTION.UPDATE_ENTRY_ACCEPTED,
+    payload: payload
+});
+
+export const entryRejected = (payload) => ({
+    type: ACTION.UPDATE_ENTRY_REJECTED,
+    payload: payload
+});
+
+export const updateContest = (contest) => ({
+    type: ACTION.UPDATE_CONTEST,
+    payload: contest
 });

@@ -2,12 +2,7 @@ import React, {Component} from 'react';
 import styles from './CreateContest.module.sass';
 import connect from 'react-redux/es/connect/connect';
 import {
-    getIndustries,
-    getNameTypes,
-    getStyles,
-    createContest,
-    setContestTypes,
-    setSavedContest
+    getIndustries, getNameTypes, getStyles, createContest, setContestTypes, setSavedContest
 } from '../../actions/actionCreator'
 import {CreateContestTextInput} from '../../components/CreateContest/CreateContestTextInput/CreateContestTextInput';
 import {CreateContestTextArea} from '../../components/CreateContest/CreateContestTextArea/CreateContestTextArea';
@@ -152,6 +147,8 @@ class CreateContest extends Component {
     };
 
     renderNameContestInputs = () => {
+        const currentContestTypeId = this.props.selectedContestType[0];
+        const filteredIndustries = this.props.styles.filter(style => style.contestTypeId === currentContestTypeId);
         return (
             <div className={styles.inputs}>
                 <CreateContestTextInput header={createContestNameHeaders[0]}
@@ -159,7 +156,7 @@ class CreateContest extends Component {
                                         changeHandler={this.changeHandler('title')}/>
                 <ValidationMessage message={this.state.titleErrorMessage}
                                    type={validationMessageOptions.CreateContestError}/>
-                {this.state.contestTypeId === 2 &&
+                {currentContestTypeId === 2 &&
                 <CreateContestSelect header={createContestNameHeaders[1]}
                                      placeholder={createContestNamePlaceholders[1]}
                                      selectOptions={this.props.nameTypes}
@@ -185,7 +182,7 @@ class CreateContest extends Component {
                 <CreateContestCheckboxes header={createContestNameHeaders[5]}
                                          changeHandler={this.styleHandler}
                                          placeholder={createContestNamePlaceholders[5]}
-                                         selectOptions={this.props.styles}/>
+                                         selectOptions={filteredIndustries}/>
                 <CreateContestFile header={createContestNameHeaders[6]}
                                    changeHandler={this.fileUploadHandler}/>
             </div>

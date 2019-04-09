@@ -65,14 +65,6 @@ export function* createContestSaga({payload}) {
             const response = yield call(uploadImage, contest.file);
             contest.file = response.data;
         }
-        /*
-        let res;
-        if(contest.file) {
-            res = yield uploadFile(contest.file);
-        }
-        res.file = res;
-        console.log(res);
-        */
         const {data} = yield createContest(contest);
         yield put({type: ACTION.CREATE_CONTEST_RESPONSE, payload: data});
     } catch (e) {
@@ -87,5 +79,15 @@ export function* proceedPaySaga({payload}) {
         yield put({type: ACTION.PROCEED_PAY_RESPONSE, payload: data});
     } catch (e) {
         yield put({type: ACTION.PROCEED_PAY_ERROR, error: e});
+    }
+}
+
+export function* updateContestSaga ({payload}) {
+    yield put({type: ACTION.UPDATE_CONTEST_REQUEST});
+    try {
+        const {data} = yield proceedPay(payload);
+        yield put({type: ACTION.UPDATE_CONTEST_RESPONSE, payload: data});
+    } catch (e) {
+        yield put({type: ACTION.UPDATE_CONTEST_ERROR, error: e});
     }
 }

@@ -73,3 +73,19 @@ export const contestPayScheme = object({
         .positive('Number cant be negative')
         .integer('Number cant be decimal')
 });
+
+export const updateContestScheme = object({
+    title: string()
+        .min(6, 'Contest title must contain at least 6 symbols')
+        .required('Contest title is required'),
+    ventureDescribe: string()
+        .min(10, 'Venture describe must contain at least 10 symbols')
+        .required('Venture describe is required'),
+    customerDescribe: string()
+        .min(10, 'Customer describe must contain at least 10 symbols')
+        .required('Customer describe is required'),
+    prize: number()
+        .required('Card prize required')
+        .positive('Number cant be negative')
+        .integer('Number cant be decimal')
+});

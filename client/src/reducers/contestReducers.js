@@ -75,7 +75,6 @@ export default function (state = initialState, action) {
             }
         }
         case ACTION.SET_CONTEST: {
-            console.log(action.payload);
             return {
                 ...state,
                 selectedContest: action.payload

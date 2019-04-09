@@ -35,18 +35,39 @@ export const createContest = async (req, res, next) => {
 
 export const getActiveContests = async (req, res, next) => {
     try {
+        const distinstContests = await Contests.sequelize.query('SELECT DISTINCT ON ("Contests"."contestGroup") id\n' +
+            'FROM "Contests"\n' +
+            'GROUP BY "Contests"."contestGroup", id\n' +
+            'HAVING "Contests"."winnerId" IS NULL\n' +
+            'ORDER BY "Contests"."contestGroup"', {type: sequelize.QueryTypes.SELECT});
+        const arr = distinstContests.map(val => {
+            let {id} = val;
+            return id;
+        });
         const activeContests = await Contests.findAll({
             where: {
-                winnerId: null
+                id: {
+                    [Op.in]: arr
+                }
             },
             include: [{
                 model: Accounts,
                 as: 'Creator',
-                attributes: ['id', 'firstName', 'lastName', 'displayName', 'email', 'profilePicture', 'role'],
+                attributes: ['id', 'firstName', 'lastName', 'displayName', 'email', 'profilePicture', 'role']
+            }, {
+                model: Accounts,
+                as: 'Winner',
+                attributes: ['id', 'firstName', 'lastName', 'displayName', 'email', 'profilePicture', 'role']
+            }, {
+                model: Entries,
+                include: [{
+                    model: Accounts,
+                    as: 'account',
+                    attributes: ['firstName']
+                }]
             }, {
                 model: ContestTypes,
-                as: 'ContestType',
-                attributes: ['id', 'name']
+                as: 'ContestType'
             }]
         });
         res.send(activeContests);
@@ -58,6 +79,9 @@ export const getActiveContests = async (req, res, next) => {
 export const getContests = async (req, res, next) => {
     try {
         const contests = await Contests.findAll({
+            where: {
+                contestCreatorId: req.decoded.id
+            },
             include: [{
                 model: Accounts,
                 as: 'Creator',
@@ -67,9 +91,15 @@ export const getContests = async (req, res, next) => {
                 as: 'Winner',
                 attributes: ['id', 'firstName', 'lastName', 'displayName', 'email', 'profilePicture', 'role']
             }, {
+                model: Entries,
+                include: [{
+                    model: Accounts,
+                    as: 'account',
+                    attributes: ['firstName']
+                }]
+            }, {
                 model: ContestTypes,
-                as: 'ContestType',
-                attributes: ['id', 'name']
+                as: 'ContestType'
             }]
         });
         res.send(contests);
@@ -200,3 +230,10 @@ export const proceedPay = async (req, res, next) => {
     }
 };
 
+export const updateContest = async (req, res, next) => {
+    try {
+
+    } catch (e) {
+        next(e);
+    }
+};

@@ -18,7 +18,14 @@ export default function (state = initialState, action) {
                 selectedEntries: action.payload
             };
         }
-
+        case ACTION.UPDATE_ENTRY_ACCEPTED_RESPONSE:
+        case ACTION.UPDATE_ENTRY_REJECTED_RESPONSE: {
+            console.log(action.payload);
+            return {
+                ...state,
+                selectedEntries: action.payload
+            }
+        }
         default: {
             return state;
         }

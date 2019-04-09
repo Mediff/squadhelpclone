@@ -4,8 +4,8 @@ import {
   loginSaga, registerSaga, getUserSaga, logoutSaga
 } from './userSaga';
 import {getUserContestsSaga, getContestTypesSaga, getIndustriesSaga, getNameTypesSaga,
-  getStylesSaga, createContestSaga, proceedPaySaga} from './contestSaga';
-import {setAllEntriesSaga, setRejectedEntriesSaga, updateEntryStatusSaga} from './entriesSaga';
+  getStylesSaga, createContestSaga, proceedPaySaga, updateContestSaga} from './contestSaga';
+import {setAllEntriesSaga, setRejectedEntriesSaga, updateAcceptedEntrySaga, updateRejectedEntrySaga} from './entriesSaga';
 
 function* rootSaga() {
   yield takeLatest(ACTION.LOGIN_ACTION, loginSaga);
@@ -21,7 +21,9 @@ function* rootSaga() {
   yield takeLatest(ACTION.USER_LOGOUT,logoutSaga);
   yield takeLatest(ACTION.SET_ALL_ENTRIES, setAllEntriesSaga);
   yield takeLatest(ACTION.SET_REJECTED_ENTRIES, setRejectedEntriesSaga);
-  yield takeLatest(ACTION.UPDATE_ENTRY_STATUS, updateEntryStatusSaga);
+  yield takeLatest(ACTION.UPDATE_ENTRY_ACCEPTED, updateAcceptedEntrySaga);
+  yield takeLatest(ACTION.UPDATE_ENTRY_REJECTED, updateRejectedEntrySaga);
+  yield takeLatest(ACTION.UPDATE_CONTEST, updateContestSaga);
 }
 
 export default rootSaga;
