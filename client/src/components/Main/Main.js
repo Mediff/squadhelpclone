@@ -6,7 +6,7 @@ import {getUser} from "../../actions/actionCreator";
 class Main extends Component {
 
     componentDidMount() {
-        this.props.getUser();
+        //this.props.getUser();
     }
 
     render() {

@@ -13,12 +13,11 @@ export function* loginSaga({payload}) {
         const {data} = yield login(user);
         const {account, token} = data;
         setToken(token);
-        console.log(token);
-        console.log(account);
         yield put({type: ACTION.LOGIN_RESPONSE, payload: account});
         history.push('/');
 
     } catch (e) {
+        console.log(e);
         yield put({type: ACTION.LOGIN_ERROR, error: e.response.data});
     }
 }
@@ -48,5 +47,5 @@ export function* getUserSaga() {
 
 export function* logoutSaga() {
     clearToken();
-    yield put({type: ACTION.USER_LOGOUT});
+    yield put({type: ACTION.USER_LOGOUT_RESPONSE});
 }

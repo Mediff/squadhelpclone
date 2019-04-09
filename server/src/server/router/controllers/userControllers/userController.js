@@ -44,7 +44,7 @@ export const loginUser = async (req, res, next) => {
             where: {
                 email
             },
-            attributes: ['id', 'passwordHash']
+            attributes: ['id','firstName', 'lastName', 'passwordHash', 'email', 'role']
         });
         if (account) {
             const result = await bcrypt.compare(password, account.passwordHash);
@@ -59,6 +59,7 @@ export const loginUser = async (req, res, next) => {
             next(new NotFoundError('Email not exists'));
         }
     } catch (e) {
+        console.log(e);
         next(e);
     }
 };

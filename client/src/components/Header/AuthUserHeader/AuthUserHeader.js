@@ -48,9 +48,9 @@ AuthUserHeader.propTypes = {
     name: PropTypes.string
 };
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
     return {
-
+        currentUser: state.userReducers.currentUser
     };
 };
 

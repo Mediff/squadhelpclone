@@ -6,6 +6,7 @@ import {createContest, getContests, getActiveContests, getContestById,
 import {getContestTypes, getNameTypes, getIndustries, getStylesByContestType, getStyles}
     from './controllers/contestTypeControllers/contestTypesController';
 import {getFilePath, upload} from './controllers/filesController/filesController';
+import {updateEntry} from './controllers/entryController/entryController';
 import {validateToken} from './controllers/auth/authControllers';
 import {validateUser} from '../utils/validation/userValidation';
 import {validateContest} from "../utils/validation/contestValidation";

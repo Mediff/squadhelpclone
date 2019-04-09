@@ -54,7 +54,7 @@ export default function (state = initialState, action) {
                 currentUser: action.payload
             };
         }
-        case ACTION.USER_LOGOUT: {
+        case ACTION.USER_LOGOUT_RESPONSE: {
             return {
                 ...state,
                 currentUser: null
