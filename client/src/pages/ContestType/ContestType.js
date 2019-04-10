@@ -48,7 +48,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     getContestTypes: () => dispatch(getContestTypes())
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContestType);
