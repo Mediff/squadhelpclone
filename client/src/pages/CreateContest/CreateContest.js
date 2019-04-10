@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import styles from './CreateContest.module.sass';
+import cStyles from './CreateContest.module.sass';
 import connect from 'react-redux/es/connect/connect';
 import {
-    getIndustries, getNameTypes, getStyles, createContest, setContestTypes, setSavedContest
+    createContest, setContestTypes, setSavedContest, getCombinedTypes
 } from '../../actions/actionCreator'
 import {CreateContestTextInput} from '../../components/CreateContest/CreateContestTextInput/CreateContestTextInput';
 import {CreateContestTextArea} from '../../components/CreateContest/CreateContestTextArea/CreateContestTextArea';
@@ -12,12 +12,12 @@ import {CreateContestSubmitButtons} from '../../components/CreateContest/CreateC
 import CreateContestFile from '../../components/CreateContest/CreateContestFile/CreateContestFile';
 import {ValidationMessage} from '../../components/ValidationMessage/ValidationMessage';
 import {validationMessageOptions} from '../../utils/constants/options';
-import {createContestNameHeaders} from '../../utils/constants/constants';
-import {createContestNamePlaceholders} from '../../utils/constants/constants';
+import {createContestNameHeaders, createContestNamePlaceholders, stepsIndicatorMessage} from '../../utils/constants/constants';
 import {
     getTypeId, clearTypeId, setContest, getContest, setTypeId, clearContests
 } from '../../utils/localStorage/localStorage';
 import {contestTaglineLogoScheme, contestNameScheme} from '../../utils/validation/validationSchemes';
+import {StepsIndicator} from '../../components/StepsIndicator/StepsIndicator';
 
 class CreateContest extends Component {
 
@@ -43,26 +43,33 @@ class CreateContest extends Component {
     };
 
     componentDidMount() {
-        !this.props.selectedContestType && this.props.setContestTypes(getTypeId());
-        !this.props.savedContest && this.props.setSavedContest(getContest());
-        this.props.getIndustries();
-        this.props.getNameTypes();
-        this.props.getStyles();
+        //!this.props.selectedContestType && this.props.setContestTypes(getTypeId());
+        //!this.props.savedContest && this.props.setSavedContest(getContest());
+        //this.props.getCombinedTypes();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        /*
         if (this.props.selectedContestType) {
             setTypeId(this.props.selectedContestType);
             if (this.props.selectedContestType.length === 0) {
                 clearContests();
                 clearTypeId();
                 this.props.history.push('/payment')
+            } else {
+                if (this.props.savedContest) {
+                    if (this.props.savedContest !== prevProps.savedContest) {
+                        this.resetFormFields();
+                        setContest(this.props.savedContest);
+                    }
+                }
             }
         } else {
             clearContests();
             clearTypeId();
             this.props.history.push('/contesttype');
         }
+           */
         if (this.props.savedContest) {
             if (this.props.savedContest !== prevProps.savedContest) {
                 this.resetFormFields();
@@ -92,10 +99,9 @@ class CreateContest extends Component {
             this.setState({
                 styles: [...this.state.styles, event.target.value]
             });
-        }
-        else {
+        } else {
             this.setState({
-                styles: this.state.styles.filter(style=>style !== event.target.value)
+                styles: this.state.styles.filter(style => style !== event.target.value)
             });
         }
     };
@@ -137,7 +143,8 @@ class CreateContest extends Component {
                 contest: {
                     title, nameType, industry, customerDescribe, ventureDescribe, file,
                     contestTypeId, styles: styles || [], contestGroup, priority
-                }
+                },
+                contestTypes: this.props.selectedContestType
             });
         } catch (e) {
             e.inner.forEach(error => {
@@ -147,10 +154,11 @@ class CreateContest extends Component {
     };
 
     renderNameContestInputs = () => {
-        const currentContestTypeId = this.props.selectedContestType[0];
-        const filteredIndustries = this.props.styles.filter(style => style.contestTypeId === currentContestTypeId);
+        const {industries, styles, nameTypes} = this.props.combinedTypes;
+        const currentContestTypeId = this.props.selectedContestType && this.props.selectedContestType[0];
+        const filteredIndustries = styles.filter(style => style.contestTypeId === currentContestTypeId);
         return (
-            <div className={styles.inputs}>
+            <div className={cStyles.inputs}>
                 <CreateContestTextInput header={createContestNameHeaders[0]}
                                         placeholder={createContestNamePlaceholders[0]}
                                         changeHandler={this.changeHandler('title')}/>
@@ -159,13 +167,13 @@ class CreateContest extends Component {
                 {currentContestTypeId === 2 &&
                 <CreateContestSelect header={createContestNameHeaders[1]}
                                      placeholder={createContestNamePlaceholders[1]}
-                                     selectOptions={this.props.nameTypes}
+                                     selectOptions={nameTypes}
                                      changeHandler={this.changeHandler('nameType')}/>}
                 <ValidationMessage message={this.state.nameTypeErrorMessage}
                                    type={validationMessageOptions.CreateContestError}/>
                 <CreateContestSelect header={createContestNameHeaders[2]}
                                      placeholder={createContestNamePlaceholders[2]}
-                                     selectOptions={this.props.industries}
+                                     selectOptions={industries}
                                      changeHandler={this.changeHandler('industry')}/>
                 <ValidationMessage message={this.state.industryErrorMessage}
                                    type={validationMessageOptions.CreateContestError}/>
@@ -190,18 +198,32 @@ class CreateContest extends Component {
     };
 
     render() {
+        let contest, passedSteps;
+        if (this.props.combinedTypes && this.props.selectedContestType) {
+            const {contestTypes} = this.props.combinedTypes;
+            const contestId = this.props.selectedContestType[0];
+            contest = contestTypes.find(contestType => contestType.id === contestId);
+        }
+        passedSteps = this.props.savedContest? this.props.savedContest.priority + 1: 1;
         return (
-            <div className={styles.mainContainer}>
-                {(this.props.nameTypes && this.props.industries && this.props.styles) &&
-                <form onSubmit={this.onSubmitHandler} encType='multipart/form-data' ref={this.formRef}>
-                    <div className={styles.formContainer}>
-                        {this.renderNameContestInputs()}
+            <div>
+                {(this.props.combinedTypes && contest) &&
+                <div className={cStyles.mainContainer}>
+                    <div className={cStyles.stepsContainer}>
+                        <StepsIndicator title={contest.name} message={stepsIndicatorMessage[1]} overallSteps={this.props.steps}
+                        passedSteps={passedSteps}
+                        />
                     </div>
-                    <div className={styles.submitContainer}>
-                        <CreateContestSubmitButtons resetText='Back' submitText='Next'
-                                                    clickHandler={this.redirectToContestTypeHandler}/>
-                    </div>
-                </form>}
+                    <form onSubmit={this.onSubmitHandler} encType='multipart/form-data' ref={this.formRef}>
+                        <div className={cStyles.formContainer}>
+                            {this.renderNameContestInputs()}
+                        </div>
+                        <div className={cStyles.submitContainer}>
+                            <CreateContestSubmitButtons resetText='Back' submitText='Next'
+                                                        clickHandler={this.redirectToContestTypeHandler}/>
+                        </div>
+                    </form>
+                </div>}
             </div>
         );
     }
@@ -210,20 +232,17 @@ class CreateContest extends Component {
 const mapStateToProps = (state) => {
     return {
         selectedContestType: state.contestTypesReducers.selectedContestType,
-        industries: state.contestTypesReducers.industries,
-        styles: state.contestTypesReducers.styles,
-        nameTypes: state.contestTypesReducers.nameTypes,
-        savedContest: state.contestTypesReducers.savedContest
+        savedContest: state.contestTypesReducers.savedContest,
+        combinedTypes: state.contestTypesReducers.combinedTypes,
+        steps: state.contestTypesReducers.steps,
     };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    getIndustries: () => dispatch(getIndustries()),
-    getStyles: () => dispatch(getStyles()),
-    getNameTypes: () => dispatch(getNameTypes()),
     createContest: (data) => dispatch(createContest(data)),
     setContestTypes: (id) => dispatch(setContestTypes(id)),
-    setSavedContest: (contest) => dispatch(setSavedContest(contest))
+    setSavedContest: (contest) => dispatch(setSavedContest(contest)),
+    getCombinedTypes: () => dispatch(getCombinedTypes())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateContest);

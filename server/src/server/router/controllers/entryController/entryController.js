@@ -2,6 +2,7 @@ import {Entries, Accounts, Contests, ContestTypes} from '../../../models';
 
 const sequelize = require('sequelize');
 
+
 export const updateEntry = async (req, res, next) => {
     try {
         const {entry, prize} = req.body;
@@ -30,7 +31,7 @@ export const updateEntry = async (req, res, next) => {
                 where: {
                     id: contestId
                 }
-            });
+            }, {returning: true});
             await Promise.all([winnerEntryUpdate, winnerUpdate, contestUpdate]);
         } else {
             await Entries.update({

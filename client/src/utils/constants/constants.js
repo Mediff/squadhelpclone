@@ -41,3 +41,10 @@ export const createContestNamePlaceholders = ['Select name for your contest', 'S
 export const createContestPaymentHeaders = ['Card number', '* Expires', '* Security code', 'Prize'];
 
 export const createContestPaymentPlaceholders = ['Card number', 'MM / YY', 'cvc', '100$'];
+
+export const stepsIndicatorTitle = ['Start a Contest'];
+
+export const stepsIndicatorMessage = ['Launching a contest on Squadhelp is very simple. Select the type of contest you ' +
+'would like to launch from the list below. Provide a detailed brief and select a pricing package. Begin receiving submissions instantly!',
+'Since you have selected a bundle, let us first setup your Naming contest. Once you have selected your Naming, you will be able ' +
+'to launch your next contest'];

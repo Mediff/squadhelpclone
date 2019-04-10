@@ -3,7 +3,7 @@ import express from 'express';
 import {createUser, getUserById, loginUser} from './controllers/userControllers/userController';
 import {createContest, getContests, getActiveContests, getContestById,
     getContestsByType, getContestsByStyle, getUserContests, proceedPay, updateContest} from './controllers/contestControllers/contestControllers';
-import {getContestTypes, getNameTypes, getIndustries, getStylesByContestType, getStyles}
+import {getContestTypes, getNameTypes, getIndustries, getStylesByContestType, getStyles, getCombinedTypes}
     from './controllers/contestTypeControllers/contestTypesController';
 import {getFilePath, upload} from './controllers/filesController/filesController';
 import {updateEntry} from './controllers/entryController/entryController';
@@ -25,12 +25,13 @@ router.get('/contests/:id', getContestById);
 router.get('/contests', getContests);
 router.post('/contests', validateToken, validateContest, createContest);
 router.put('/contests/pay', validateToken, proceedPay);
-router.put('/contests/pay', validateToken, updateContest);
+router.put('/contests', validateToken, validateContest, updateContest);
 
 router.get('/types/styles/:id', validateToken, getStylesByContestType);
 router.get('/types/styles', validateToken, getStyles);
 router.get('/types/industries', validateToken, getIndustries);
 router.get('/types/nametypes', validateToken, getNameTypes);
+router.get('/types/all', validateToken, getCombinedTypes);
 router.get('/types', validateToken, getContestTypes);
 
 router.put('/entries', validateToken, updateEntry);

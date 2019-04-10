@@ -1,0 +1,57 @@
+
+.mainContainer
+  display: flex
+  align-content: center
+  align-items: center
+
+  .circle
+    display: flex
+    justify-content: center
+    align-items: center
+    position: relative
+    margin: 0 0 15px -2px
+    font-size: 14px
+    line-height: 1.42857143
+    color: #333
+    background: #fff
+    width: 36px
+    height: 36px
+    border-radius: 40px
+    border: 1px solid #d5d5da
+    &:hover
+      border: 2px solid #28d2d0
+      z-index: 1000
+
+  .circleSelected
+    @extend .circle
+    background-color: #8ACA6B
+    color: white
+
+  .current
+    @extend .circle
+    border: 2px solid #28d2d0
+    z-index: 3
+    & > .label
+      display: inline-block
+      width: 18px
+      height: 18px
+      color: #FFF
+      background: #28d2d0
+      border-radius: 40px
+
+  .bar
+    display: inline-block
+    position: relative
+    width: 76px
+    height: 5px
+    margin-bottom: 15px
+    border-radius: 0
+    border: 1px solid #d5d5da
+    border-left: 0
+    border-right: 0
+    z-index: 2
+    background-color: white
+
+  .barSelected
+    @extend .bar
+    background-color: #8ACA6B

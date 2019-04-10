@@ -24,7 +24,7 @@ class Dashboard extends Component {
         return (
             <div className={styles.mainContainer}>
                 <div className={styles.contestsContainer}>
-                    <div className={styles.addContestButton} onClick={()=>this.addContestRedirect}>
+                    <div className={styles.addContestButton} onClick={this.addContestRedirect}>
                         <img src={plus} alt='Add contest'/>
                         Add contest
                     </div>

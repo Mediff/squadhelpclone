@@ -14,6 +14,7 @@ import {
 } from '../../actions/actionCreator';
 import {StylesSelect} from '../../components/StylesSelect/StylesSelect';
 import {ValidationMessage} from '../../components/ValidationMessage/ValidationMessage';
+import {SuccessMessage} from "../../components/SuccessMessage/SuccessMessage";
 import {validationMessageOptions} from '../../utils/constants/options';
 import {updateContestScheme} from "../../utils/validation/validationSchemes";
 
@@ -72,7 +73,6 @@ class Brief extends Component {
     };
 
     onButtonClick = () => {
-        console.log('On button click');
         const {isReadOnly} = this.state;
         if (isReadOnly) {
             this.setState({
@@ -93,8 +93,9 @@ class Brief extends Component {
         });
         try {
             const {title, ventureDescribe, customerDescribe, prize} = this.state;
+            const {id} = this.props.selectedContest;
             await updateContestScheme.validate({title, ventureDescribe, customerDescribe, prize}, {abortEarly: false});
-            this.props.updateContest(this.props.selectedContest);
+            this.props.updateContest({title, ventureDescribe, customerDescribe, prize, id});
         } catch (e) {
             e.inner.forEach(error => this.proceedError(error));
         }
@@ -126,6 +127,7 @@ class Brief extends Component {
 
     render() {
         const {isReadOnly, title, ventureDescribe, customerDescribe, prize} = this.state;
+        const {updateSuccess, updateError} = this.props;
         const inputStyle = isReadOnly ? cStyles.inputField : cStyles.editInputField;
         const buttonText = isReadOnly ? 'edit' : 'save';
         let filteredStyles;
@@ -136,6 +138,10 @@ class Brief extends Component {
             <div className={cStyles.mainContainer}>
                 <div className={cStyles.briefContainer}>
                     <div className={cStyles.contestBriefContainer}>
+                        {updateSuccess &&
+                            <SuccessMessage message='Update success'/>}
+                        {updateError &&
+                            <ValidationMessage type={validationMessageOptions.CreateContestError} message={updateError}/>}
                         <button className={cStyles.editLink} onClick={this.onButtonClick}>{buttonText}</button>
                         <div className={cStyles.inputContainer}>
                             <div className={cStyles.inputDesc}>Name:</div>
@@ -183,7 +189,8 @@ class Brief extends Component {
                             <div className={cStyles.prize}>
                                 <img src={diamond} alt='Prize'/>
                                 <input className={inputStyle} type='text'
-                                       value={prize} readOnly={isReadOnly} onChange={this.changeHandler('prize')}/>
+                                       value={prize} readOnly={isReadOnly}
+                                       onChange={this.changeHandler('prize')}/>
                                 <div>&#36;</div>
                                 <ValidationMessage type={validationMessageOptions.CreateContestError}
                                                    message={this.state.prizeError}/>
@@ -205,7 +212,9 @@ const mapStateToProps = (state) => {
     return {
         selectedContest: state.contestReducers.selectedContest,
         selectedEntries: state.entriesReducers.selectedEntries,
-        styles: state.contestTypesReducers.styles
+        styles: state.contestTypesReducers.styles,
+        updateSuccess: state.contestReducers.updateSuccess,
+        updateError: state.contestReducers.updateError
     };
 };
 

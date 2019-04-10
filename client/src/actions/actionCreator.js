@@ -95,3 +95,7 @@ export const updateContest = (contest) => ({
     type: ACTION.UPDATE_CONTEST,
     payload: contest
 });
+
+export const getCombinedTypes = () => ({
+    type: ACTION.GET_COMBINED_TYPES
+});

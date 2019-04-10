@@ -16,7 +16,9 @@ const initialState = {
     nameTypesFetching: null,
     savedContest: null,
     savedContestError: null,
-    savedContestFetching: null
+    savedContestFetching: null,
+    steps: null,
+    combinedTypes: null
 };
 
 export default function (state = initialState, action) {
@@ -117,19 +119,16 @@ export default function (state = initialState, action) {
                 nameTypes: null
             }
         }
-        case ACTION.SET_CONTEST_TYPES: {
+        case ACTION.SET_CONTEST_TYPES_RESPONSE: {
             return {
                 ...state,
                 selectedContestType: action.payload
             }
         }
         case ACTION.CREATE_CONTEST_RESPONSE: {
-            const selectedTypes = state.selectedContestType;
-            selectedTypes && selectedTypes.shift();
             return {
                 ...state,
-                savedContest: action.payload,
-                selectedContestType: selectedTypes,
+                selectedContestType: action.payload,
                 savedContestError: null,
                 savedContestFetching: false
             }
@@ -138,6 +137,18 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 savedContest: action.payload
+            }
+        }
+        case ACTION.SET_STEPS: {
+            return {
+                ...state,
+                steps: action.payload
+            }
+        }
+        case ACTION.GET_COMBINED_TYPES_RESPONSE: {
+            return {
+                ...state,
+                combinedTypes: action.payload
             }
         }
         default: {

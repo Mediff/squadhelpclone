@@ -52,3 +52,15 @@ export const getStylesByContestType = async(req, res, next) => {
         next(e);
     }
 };
+
+export const getCombinedTypes = async(req, res, next) => {
+    try{
+        const industries = await Industries.findAll({});
+        const styles = await Styles.findAll({});
+        const nameTypes = await NameTypes.findAll({});
+        const contestTypes = await ContestTypes.findAll({});
+        res.send({industries, styles, nameTypes, contestTypes});
+    } catch(e){
+        next(e);
+    }
+};

@@ -5,7 +5,6 @@ import {imagesURL} from '../../../api/baseURL';
 import {contestTypeOptions} from '../../../utils/constants/options';
 import connect from 'react-redux/es/connect/connect';
 import {setContestTypes} from '../../../actions/actionCreator';
-import {setTypeId, clearContests} from '../../../utils/localStorage/localStorage';
 
 class ContestTypeCard extends Component {
 
@@ -15,15 +14,7 @@ class ContestTypeCard extends Component {
 
     clickHandler = () => {
         const {id} = this.props;
-        if (Array.isArray(id)) {
-            this.props.setContestTypes(id);
-            setTypeId(id);
-        } else {
-
-            this.props.setContestTypes([id]);
-            setTypeId([id]);
-        }
-        clearContests();
+        this.props.setContestTypes(id);
         this.props.history.push('/createcontest');
     };
 
@@ -55,11 +46,8 @@ class ContestTypeCard extends Component {
             styles.secondaryContainer;
 
         return (
-            <div className={mainStyle}
-                 onMouseEnter={() => this.mouseHoverHandler()}
-                 onMouseLeave={() => this.mouseHoverHandler()} onClick={() => {
-                this.clickHandler()
-            }}>
+            <div className={mainStyle} onMouseEnter={() => this.mouseHoverHandler()}
+                 onMouseLeave={() => this.mouseHoverHandler()} onClick={() => {this.clickHandler()}}>
                 <div className={styles.imageContainer}>
                     {this.renderImages()}
                 </div>
@@ -93,7 +81,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     setContestTypes: (id) => dispatch(setContestTypes(id))
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContestTypeCard);

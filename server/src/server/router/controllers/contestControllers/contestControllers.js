@@ -184,7 +184,10 @@ export const getUserContests = async (req, res, next) => {
     try {
         const userContests = await Contests.findAll({
             where: {
-                contestCreatorId: req.decoded.id
+                contestCreatorId: req.decoded.id,
+                prize: {
+                    [Op.ne]: null
+                }
             },
             include: [{
                 model: Accounts,
@@ -232,7 +235,44 @@ export const proceedPay = async (req, res, next) => {
 
 export const updateContest = async (req, res, next) => {
     try {
-
+        const {title, customerDescribe, ventureDescribe, styles, prize, id} = req.body;
+        await Contests.update({
+            title,
+            customerDescribe,
+            ventureDescribe,
+            styles,
+            prize
+        }, {
+            where: {
+                id
+            }
+        });
+        const updatedContest = await Contests.findOne({
+            where: {
+                id
+            },
+            include: [{
+                model: Accounts,
+                as: 'Creator',
+                attributes: ['id', 'firstName', 'lastName', 'displayName', 'email', 'profilePicture', 'role']
+            }, {
+                model: Accounts,
+                as: 'Winner',
+                attributes: ['id', 'firstName', 'lastName', 'displayName', 'email', 'profilePicture', 'role']
+            }, {
+                model: Entries,
+                include: [{
+                    model: Accounts,
+                    as: 'account',
+                    attributes: ['firstName']
+                }]
+            }, {
+                model: ContestTypes,
+                as: 'ContestType'
+            }]
+        });
+        console.log(updatedContest);
+        res.send(updatedContest);
     } catch (e) {
         next(e);
     }

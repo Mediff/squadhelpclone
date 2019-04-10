@@ -8,7 +8,9 @@ const initialState = {
     payProceed: null,
     payProceedError: null,
     payProceedFetching: false,
-    selectedContest: null
+    selectedContest: null,
+    updateSuccess: null,
+    updateError: null
 };
 
 export default function (state = initialState, action) {
@@ -78,6 +80,21 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 selectedContest: action.payload
+            }
+        }
+        case ACTION.UPDATE_CONTEST_RESPONSE: {
+            return {
+                ...state,
+                selectedContest: action.payload,
+                updateSuccess: true,
+                updateError: null
+            }
+        }
+        case ACTION.UPDATE_CONTEST_ERROR: {
+            return {
+                ...state,
+                updateSuccess: null,
+                updateError: action.error
             }
         }
         default: {
