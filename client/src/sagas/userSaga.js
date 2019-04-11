@@ -17,7 +17,6 @@ export function* loginSaga({payload}) {
         history.push('/');
 
     } catch (e) {
-        console.log(e);
         yield put({type: ACTION.LOGIN_ERROR, error: e.response.data});
     }
 }

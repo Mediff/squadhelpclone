@@ -1,9 +1,9 @@
-import {put, call} from 'redux-saga/effects';
+import {put} from 'redux-saga/effects';
 import ACTION from '../actions/actiontsTypes';
 import {getUserContests, getContestTypes, getIndustries, getStyles, getNameTypes, createContest, uploadFile, proceedPay,
 updateContest, getCombinedTypes}
     from '../api/rest/restContoller';
-import {clearContests, setTypeId} from '../utils/localStorage/localStorage';
+import {setTypeId, getContest} from '../utils/localStorage/localStorage';
 
 export function* getUserContestsSaga() {
     yield put({type: ACTION.GET_USER_CONTESTS_REQUEST});
@@ -55,16 +55,12 @@ export function* getNameTypesSaga() {
     }
 }
 
-const uploadImage = async (file) => {
-    return await uploadFile(file);
-};
-
 export function* createContestSaga({payload}) {
     yield put({type: ACTION.CREATE_CONTEST_REQUEST});
     try {
         const {contest, contestTypes} = payload;
         if(contest.file){
-            const response = yield call(uploadImage, contest.file);
+            const response = yield uploadFile(contest.file);
             contest.file = response.data;
         }
         const {data} = yield createContest(contest);
@@ -101,8 +97,9 @@ export function* updateContestSaga ({payload}) {
 export function* setContestTypeSaga ({payload}) {
     const id = Array.isArray(payload)? payload : [payload];
     setTypeId(id);
-    clearContests();
-    yield put({type: ACTION.SET_STEPS, payload: id.length + 2});
+    const savedContest = getContest();
+    const stepsCount = savedContest? savedContest.priority + id.length + 2 : id.length + 2;
+    yield put({type: ACTION.SET_STEPS, payload: stepsCount});
     yield put({type: ACTION.SET_CONTEST_TYPES_RESPONSE, payload: id});
 }
 

@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
 import connect from 'react-redux/es/connect/connect';
 import {Header} from '../Header/Header';
-import {getUser} from "../../actions/actionCreator";
+import {getUser} from '../../actions/actionCreator';
+import {getToken} from '../../utils/localStorage/localStorage';
 
 class Main extends Component {
 
     componentDidMount() {
-        //this.props.getUser();
+        if (getToken()) {
+            this.props.getUser();
+        }
     }
 
     render() {
         return (
-           <Header user={this.props.currentUser}/>
+            <Header user={this.props.currentUser}/>
         );
     }
 

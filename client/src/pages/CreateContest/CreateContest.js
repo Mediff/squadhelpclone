@@ -12,9 +12,13 @@ import {CreateContestSubmitButtons} from '../../components/CreateContest/CreateC
 import CreateContestFile from '../../components/CreateContest/CreateContestFile/CreateContestFile';
 import {ValidationMessage} from '../../components/ValidationMessage/ValidationMessage';
 import {validationMessageOptions} from '../../utils/constants/options';
-import {createContestNameHeaders, createContestNamePlaceholders, stepsIndicatorMessage} from '../../utils/constants/constants';
 import {
-    getTypeId, clearTypeId, setContest, getContest, setTypeId, clearContests
+    createContestNameHeaders,
+    createContestNamePlaceholders,
+    stepsIndicatorMessage
+} from '../../utils/constants/constants';
+import {
+    clearTypeId, setContest, clearContests
 } from '../../utils/localStorage/localStorage';
 import {contestTaglineLogoScheme, contestNameScheme} from '../../utils/validation/validationSchemes';
 import {StepsIndicator} from '../../components/StepsIndicator/StepsIndicator';
@@ -42,39 +46,20 @@ class CreateContest extends Component {
         savedContest: ''
     };
 
-    componentDidMount() {
-        //!this.props.selectedContestType && this.props.setContestTypes(getTypeId());
-        //!this.props.savedContest && this.props.setSavedContest(getContest());
-        //this.props.getCombinedTypes();
+    shouldComponentUpdate(){
+        if (this.props.selectedContestType.length === 0) {
+            clearContests();
+            clearTypeId();
+            this.props.history.push('/payment');
+            return false;
+        }
+        return true;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        /*
-        if (this.props.selectedContestType) {
-            setTypeId(this.props.selectedContestType);
-            if (this.props.selectedContestType.length === 0) {
-                clearContests();
-                clearTypeId();
-                this.props.history.push('/payment')
-            } else {
-                if (this.props.savedContest) {
-                    if (this.props.savedContest !== prevProps.savedContest) {
-                        this.resetFormFields();
-                        setContest(this.props.savedContest);
-                    }
-                }
-            }
-        } else {
-            clearContests();
-            clearTypeId();
-            this.props.history.push('/contesttype');
-        }
-           */
-        if (this.props.savedContest) {
-            if (this.props.savedContest !== prevProps.savedContest) {
-                this.resetFormFields();
-                setContest(this.props.savedContest);
-            }
+        if (this.props.savedContest !== prevProps.savedContest) {
+            this.resetFormFields();
+            setContest(this.props.savedContest);
         }
     }
 
@@ -155,7 +140,7 @@ class CreateContest extends Component {
 
     renderNameContestInputs = () => {
         const {industries, styles, nameTypes} = this.props.combinedTypes;
-        const currentContestTypeId = this.props.selectedContestType && this.props.selectedContestType[0];
+        const currentContestTypeId = this.props.selectedContestType[0];
         const filteredIndustries = styles.filter(style => style.contestTypeId === currentContestTypeId);
         return (
             <div className={cStyles.inputs}>
@@ -198,20 +183,17 @@ class CreateContest extends Component {
     };
 
     render() {
-        let contest, passedSteps;
-        if (this.props.combinedTypes && this.props.selectedContestType) {
-            const {contestTypes} = this.props.combinedTypes;
-            const contestId = this.props.selectedContestType[0];
-            contest = contestTypes.find(contestType => contestType.id === contestId);
-        }
-        passedSteps = this.props.savedContest? this.props.savedContest.priority + 1: 1;
+        const {contestTypes} = this.props.combinedTypes;
+        const contestId = this.props.selectedContestType[0];
+        const contest = contestTypes.find(contestType => contestType.id === contestId);
+        const passedSteps = this.props.savedContest ? this.props.savedContest.priority + 1 : 1;
         return (
             <div>
-                {(this.props.combinedTypes && contest) &&
                 <div className={cStyles.mainContainer}>
                     <div className={cStyles.stepsContainer}>
-                        <StepsIndicator title={contest.name} message={stepsIndicatorMessage[1]} overallSteps={this.props.steps}
-                        passedSteps={passedSteps}
+                        <StepsIndicator title={contest.name} message={stepsIndicatorMessage[1]}
+                                        overallSteps={this.props.steps}
+                                        passedSteps={passedSteps}
                         />
                     </div>
                     <form onSubmit={this.onSubmitHandler} encType='multipart/form-data' ref={this.formRef}>
@@ -223,7 +205,7 @@ class CreateContest extends Component {
                                                         clickHandler={this.redirectToContestTypeHandler}/>
                         </div>
                     </form>
-                </div>}
+                </div>
             </div>
         );
     }

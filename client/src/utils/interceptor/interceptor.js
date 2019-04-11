@@ -1,6 +1,5 @@
-
 import axios from 'axios';
-import {clearToken} from '../localStorage/localStorage';
+import {clearToken, getToken} from '../localStorage/localStorage';
 
 export default {
     setupInterceptors: (store, history) => {
@@ -15,5 +14,15 @@ export default {
 
             return Promise.reject(error);
         });
+
+        axios.interceptors.request.use( config => {
+                const token = getToken();
+                if (token) {
+                    config.headers.Authorization = token;
+                }
+                return config;
+            },
+            error => Promise.reject(error)
+        );
     },
 };

@@ -17,15 +17,16 @@ export const TypesRequired = (ComposedComponent) => {
         }
 
         componentDidUpdate(prevProps, prevState) {
+            /*
             if (this.props.selectedContestType && this.props.selectedContestType.length === 0) {
                 clearContests();
                 clearTypeId();
                 this.props.history.push('/payment')
-            }
+            } */
         }
 
         render() {
-            return this.props.combinedTypes && <ComposedComponent {...this.props} />
+            return this.props.combinedTypes && this.props.selectedContestType && <ComposedComponent {...this.props} />
         }
     }
 
