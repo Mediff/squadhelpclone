@@ -30,7 +30,7 @@ class Registration extends Component {
         displayName: '',
         firstName: '',
         lastName: '',
-        role: 'buyer'
+        role: 'customer'
     };
 
     proceedError = (error) => {

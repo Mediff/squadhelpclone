@@ -1,3 +1,12 @@
+import monvelli from '../../images/monvelli.jpg';
+import avanti from '../../images/avanti.jpg';
+import pepper from '../../images/pepper.jpg';
+import westgate from '../../images/westgate.jpg';
+import stow from '../../images/stow.jpg';
+import kreo from '../../images/kreo.jpg';
+import highjump from '../../images/highjump.jpg';
+import petesNuts from '../../images/petesNuts.jpg';
+import property from '../../images/property.jpg';
 
 export const loginPlaceholders = ['Email', 'Password'];
 
@@ -7,7 +16,7 @@ export const registerPlaceholders = ['First Name', 'Last Name', 'Display Name', 
 
 export const registerInputKeys = ['firstName', 'lastName', 'displayName', 'email', 'password', 'confirmPassword'];
 
-export const registerRadioValues = ['buyer', 'creator'];
+export const registerRadioValues = ['customer', 'creative'];
 
 export const registerRadioHeadText = ['Join As a Buyer', 'Join As a Creative'];
 
@@ -48,3 +57,21 @@ export const stepsIndicatorMessage = ['Launching a contest on Squadhelp is very 
 'would like to launch from the list below. Provide a detailed brief and select a pricing package. Begin receiving submissions instantly!',
 'Since you have selected a bundle, let us first setup your Naming contest. Once you have selected your Naming, you will be able ' +
 'to launch your next contest'];
+
+export const startPageTitle = ['Find a Perfect Name for'];
+
+export const startPageAnimationListItems = ['a Brand', 'a Company', 'a Startup', 'a Service', 'a Book'];
+
+export const startPageText = ['Launch a naming contest to engage hundreds of naming experts as you’re guided through our ' +
+'agency-level naming process. ', 'Or, explore our hand-picked collection of premium names available for immediate purchase'];
+
+export const getImagesArray = [[monvelli, avanti, pepper, monvelli, avanti, pepper, monvelli, avanti, pepper],
+    [petesNuts, property, westgate, petesNuts, property, westgate, petesNuts, property, westgate],
+    [stow, kreo, highjump, stow, kreo, highjump, stow, kreo, highjump]];
+
+export const userLinks = [{link: '/register' , title: 'Signup'}, {link: '/login', title: 'Login'}];
+
+export const customerLinks = [{link: '/contesttype', title: 'Create Contest'},
+    {link: '/dashboard', title: 'Dashboard'}, {link: '/profile', title: 'Profile'}];
+
+export const creativeLinks = [{link: '/dashboard', title: 'Dashboard'}, {link: '/profile', title: 'Profile'}];

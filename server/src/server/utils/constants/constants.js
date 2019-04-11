@@ -1,5 +1,5 @@
 
-export const userRoles = ['creator', 'buyer'];
+export const userRoles = ['creative', 'customer'];
 
 export const secretToken = 'Very Secret Token';
 

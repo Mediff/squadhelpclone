@@ -21,3 +21,8 @@ export const inputTypeOptions = {
     InputSelect: 'InputSelect',
     InputCheckboxes: 'InputCheckboxes'
 };
+
+export const userRoles = {
+  customer: 'Customer',
+  creative: 'Creative'
+};

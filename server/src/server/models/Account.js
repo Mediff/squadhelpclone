@@ -41,10 +41,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
         },
         role: {
-            type: DataTypes.ENUM('buyer', 'creator'),
+            type: DataTypes.ENUM('customer', 'creative'),
             allowNull: false,
             validate: {
-                isIn: [['buyer', 'creator']]
+                isIn: [['customer', 'creative']]
             }
         }
     });

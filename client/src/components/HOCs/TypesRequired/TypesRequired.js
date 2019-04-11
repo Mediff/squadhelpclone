@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import connect from 'react-redux/es/connect/connect';
 import {getCombinedTypes, setSavedContest, setContestTypes} from '../../../actions/actionCreator';
-import {clearContests, clearTypeId, getContest, getTypeId, setContest} from '../../../utils/localStorage/localStorage';
+import {getContest, getTypeId} from '../../../utils/localStorage/localStorage';
 
 
 export const TypesRequired = (ComposedComponent) => {
@@ -14,15 +14,6 @@ export const TypesRequired = (ComposedComponent) => {
             }
             !this.props.selectedContestType && this.props.setContestTypes(getTypeId());
             !this.props.savedContest && this.props.setSavedContest(getContest());
-        }
-
-        componentDidUpdate(prevProps, prevState) {
-            /*
-            if (this.props.selectedContestType && this.props.selectedContestType.length === 0) {
-                clearContests();
-                clearTypeId();
-                this.props.history.push('/payment')
-            } */
         }
 
         render() {

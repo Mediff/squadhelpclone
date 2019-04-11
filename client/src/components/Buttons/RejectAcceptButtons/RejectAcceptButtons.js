@@ -2,8 +2,8 @@
 import React from 'react';
 import styles from './RejectAcceptButtons.module.sass';
 import PropTypes from 'prop-types';
-import check from '../../images/check-btn.png';
-import close from '../../images/close-btn.png';
+import check from '../../../images/check-btn.png';
+import close from '../../../images/close-btn.png';
 
 export const RejectAcceptButtons = ({onReject, onAccept}) => {
     return (

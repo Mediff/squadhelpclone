@@ -1,29 +1,41 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styles from './HeaderBottom.module.sass';
 import {Link} from 'react-router-dom';
 import burger from '../../../images/burger-menu.png';
+import {userLinks, creativeLinks, customerLinks} from '../../../utils/constants/constants';
+import {userRoles} from '../../../utils/constants/options';
+import connect from 'react-redux/es/connect/connect';
+import {logout} from "../../../actions/actionCreator";
 
-export const HeaderBottom = ({logo, user}) => {
 
-    const getAuthUserLinks = () => {
+class HeaderBottom extends Component {
 
+    renderLinks = () => {
+        const {user} = this.props;
+        const linkArray = !user ? userLinks : user.role === userRoles.creative ? creativeLinks : customerLinks;
+        const renderArray = linkArray.map(item => <li><Link className={styles.dropdownLink}
+                                                            to={item.link}>{item.title}</Link></li>);
+        user && renderArray.push(<li><Link className={styles.dropdownLink} to='/'
+                                           onClick={this.onClickHandler}>Logout</Link></li>);
+        return renderArray;
     };
 
-    const getUserLinks = () => {
-
+    onClickHandler = () => {
+        this.props.logout();
     };
 
-    return (
-        <div className={styles.mainContainer}>
-            <div className={styles.logoContainer}>
-                <img src={logo} alt='Company Logo'/>
-            </div>
-            <div className={styles.linkContainer}>
-                <Link className={styles.link} to="/contesttype">START CONTEST</Link>
-            </div>
+    render() {
+        return (
+            <div className={styles.mainContainer}>
+                <div className={styles.logoContainer}>
+                    <img src={this.props.logo} alt='Company Logo'/>
+                </div>
+                <div className={styles.linkContainer}>
+                    <Link className={styles.link} to="/contesttype">START CONTEST</Link>
+                </div>
                 <a className={styles.dropdown} id='dropdownMenuLink' data-toggle='dropdown'
-                        data-hover='dropdown'>
+                   data-hover='dropdown'>
                     <img src={burger} alt='Responsive menu'/>
                 </a>
                 <ul className={`dropdown-menu ${styles.dropdownList}`} aria-labelledby="dropdownMenuLink">
@@ -33,20 +45,23 @@ export const HeaderBottom = ({logo, user}) => {
                             <span>(877)&nbsp;355-3585</span>
                         </Link>
                     </li>
-                    <li>
-                        <Link className={styles.dropdownLink} to='/register'>Signup</Link>
-                    </li>
-                    <li>
-                        <Link className={styles.dropdownLink} to='/login'>Login</Link>
-                    </li>
-                    <li>
-                        <Link className={styles.dropdownLink} to='/contesttype'>Start Contest</Link>
-                    </li>
+                    {this.renderLinks()}
                 </ul>
-        </div>
-    );
-};
+            </div>
+        );
+    }
+}
 
 HeaderBottom.propTypes = {
     logo: PropTypes.string
 };
+
+const mapStateToProps = (state) => {
+    return {};
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    logout: () => dispatch(logout())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderBottom);

@@ -37,7 +37,7 @@ module.exports = {
                 allowNull: true,
             },
             role: {
-                type: Sequelize.ENUM('buyer', 'creator'),
+                type: Sequelize.ENUM('customer', 'creative'),
                 allowNull: false
             },
             balance: {

@@ -16,7 +16,7 @@ $buttonWidth: 200px
   padding: 15px
   margin-bottom: 15px
   font-family: 'Montserrat', serif
-  @include for-phone-only
+  @include for-tablet-portrait
     height: $phoneScreenHeight
     border-bottom: 1px solid #cacaca
 
@@ -24,13 +24,13 @@ $buttonWidth: 200px
     display: flex
     width: $largeScreenWidth
     justify-content: center
-    @include for-phone-only
+    @include for-tablet-portrait
       width: $phoneScreenWidth
     & > img
       width: $phoneScreenWidth
       max-width: 100%
       max-height: $largeScreenHeight
-      @include for-phone-only
+      @include for-tablet-portrait
         height: $phoneScreenHeight
         width: $phoneScreenLogoWidth
         align-self: flex-start
@@ -39,7 +39,7 @@ $buttonWidth: 200px
     display: flex
     justify-content: center
     width: $buttonWidth
-    @include for-phone-only
+    @include for-tablet-portrait
       display: none
 
     .link
@@ -59,7 +59,7 @@ $buttonWidth: 200px
   .dropdown
     cursor: pointer
     display: none
-    @include for-phone-only
+    @include for-tablet-portrait
       display: inline-block
 
   .dropdownList
@@ -73,6 +73,7 @@ $buttonWidth: 200px
 
     .dropdownLink
       color: #333
+
       &:hover
         text-decoration: none
       & > i

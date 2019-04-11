@@ -1,5 +1,5 @@
 import React from 'react';
-import Main from './components/Main/Main';
+import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
 import Registration from './pages/Registration/Registration';
 import ContestType from './pages/ContestType/ContestType';

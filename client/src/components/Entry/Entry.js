@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Entry.module.sass';
-import {RejectAcceptButtons} from '../../components/RejectAcceptButtons/RejectAcceptButtons';
+import {RejectAcceptButtons} from '../Buttons/RejectAcceptButtons/RejectAcceptButtons';
 
 export const Entry = ({entry, onReject, onAccept}) => {
 

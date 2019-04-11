@@ -1,0 +1,57 @@
+@import '../../sass/mixins/mixins'
+
+.titleContainer
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  width: 100%
+  font-family: 'Montserrat', sans-serif
+  padding: 75px 10% 0 10%
+  @include for-phone-only
+    padding-top: 10px
+
+  .title
+    font-size: 36px
+    font-weight: 500
+    padding: 20px 0
+    text-align: center
+    & > div
+      margin-left: 10px
+
+    .titleUnderline
+      display: inline-block
+
+  .text
+    font-size: 17px
+    font-weight: 400
+    display: flex
+    text-align: center
+    line-height: 26px
+
+  .buttonContainer
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 200px
+    margin-top: 20px
+
+    .button
+      border: 2px solid #28d2d0
+      border-radius: 5px
+      color: white
+      display: inline-block
+      width: 100%
+      max-height: 100%
+      text-align: center
+      background-color: #28d2d0
+      font-weight: 500
+      text-decoration: none
+      padding: 20px
+      &:hover
+        background-color: #24bdbb
+
+  .carouselContainer
+    margin-top: 20px
+    overflow: hidden
+    max-width: 100%
