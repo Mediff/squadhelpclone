@@ -9,7 +9,8 @@ import {getFilePath, upload} from './controllers/filesController/filesController
 import {updateEntry} from './controllers/entryController/entryController';
 import {validateToken} from './controllers/auth/authControllers';
 import {validateUser} from '../utils/validation/userValidation';
-import {validateContest} from "../utils/validation/contestValidation";
+import {validateContest} from '../utils/validation/contestValidation';
+import {sendEmail} from './controllers/emailController/emailController';
 
 const router = express.Router();
 
@@ -39,6 +40,8 @@ router.put('/entries', validateToken, updateEntry);
 router.get('/user', validateToken, getUserById);
 
 router.post('/files', upload, getFilePath);
+
+router.post('/email', validateToken, sendEmail);
 
 module.exports = router;
 
