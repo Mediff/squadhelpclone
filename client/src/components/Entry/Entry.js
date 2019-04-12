@@ -22,7 +22,7 @@ export const Entry = ({entry, onReject, onAccept}) => {
                     <div>value:</div>
                 </div>
                 <div className={styles.entriesValues}>
-                    <div>{entry.account.firstName}</div>
+                    <div>{entry.Creator.firstName}</div>
                     <div>{entry.text}</div>
                 </div>
             </div>

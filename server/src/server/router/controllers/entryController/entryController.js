@@ -2,37 +2,37 @@ import {Entries, Accounts, Contests, ContestTypes} from '../../../models';
 
 const sequelize = require('sequelize');
 
-
 export const updateEntry = async (req, res, next) => {
     try {
         const {entry, prize} = req.body;
         const {isWinner, id, contestId, creatorId} = entry;
         if (isWinner) {
+            let result = await Entries.sequelize.transaction( async (t) => {
             await Entries.update({
                 isWinner: false,
                 isRejected: true
             }, {
                 where: {
                     contestId
-                }
+                }, transaction: t
             });
-            const winnerEntryUpdate = Entries.update({
+            await Entries.update({
                 isWinner: true,
                 isRejected: false
             }, {
                 where: {
                     id
-                }
+                }, transaction: t
             });
-            const winnerUpdate = Accounts.increment(['balance'], {by: prize, where: {id: creatorId}});
-            const contestUpdate = Contests.update({
+            await Accounts.increment(['balance'], {by: prize, where: {id: creatorId}, transaction: t});
+            await Contests.update({
                 winnerId: creatorId
             }, {
                 where: {
                     id: contestId
-                }
-            }, {returning: true});
-            await Promise.all([winnerEntryUpdate, winnerUpdate, contestUpdate]);
+                }, transaction: t
+            }, {returning: true});});
+            //await Promise.all([winnerEntryUpdate, winnerUpdate, contestUpdate]);
         } else {
             await Entries.update({
                 isWinner: false,
@@ -52,7 +52,7 @@ export const updateEntry = async (req, res, next) => {
                     model: Entries,
                     include: [{
                         model: Accounts,
-                        as: 'account',
+                        as: 'Creator',
                         attributes: ['firstName']
                     }]
                 }, {

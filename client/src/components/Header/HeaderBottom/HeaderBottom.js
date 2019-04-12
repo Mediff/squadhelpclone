@@ -14,10 +14,10 @@ class HeaderBottom extends Component {
     renderLinks = () => {
         const {user} = this.props;
         const linkArray = !user ? userLinks : user.role === userRoles.creative ? creativeLinks : customerLinks;
-        const renderArray = linkArray.map(item => <li><Link className={styles.dropdownLink}
-                                                            to={item.link}>{item.title}</Link></li>);
-        user && renderArray.push(<li><Link className={styles.dropdownLink} to='/'
-                                           onClick={this.onClickHandler}>Logout</Link></li>);
+        const renderArray = linkArray.map((item, index) => <li key={index}><Link className={styles.dropdownLink}
+                                                                                 to={item.link}>{item.title}</Link></li>);
+        user && renderArray.push(<li key={linkArray.length + 1}><button className={styles.dropdownLink}
+                                                                      onClick={this.onClickHandler}>Logout</button></li>);
         return renderArray;
     };
 
@@ -34,10 +34,10 @@ class HeaderBottom extends Component {
                 <div className={styles.linkContainer}>
                     <Link className={styles.link} to="/contesttype">START CONTEST</Link>
                 </div>
-                <a className={styles.dropdown} id='dropdownMenuLink' data-toggle='dropdown'
+                <button className={styles.dropdown} id='dropdownMenuLink' data-toggle='dropdown'
                    data-hover='dropdown'>
                     <img src={burger} alt='Responsive menu'/>
-                </a>
+                </button>
                 <ul className={`dropdown-menu ${styles.dropdownList}`} aria-labelledby="dropdownMenuLink">
                     <li>
                         <Link className={styles.dropdownLink} to='tel:(877)355-3585'>

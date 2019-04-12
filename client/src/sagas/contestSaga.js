@@ -1,7 +1,9 @@
 import {put} from 'redux-saga/effects';
 import ACTION from '../actions/actiontsTypes';
-import {getUserContests, getContestTypes, getIndustries, getStyles, getNameTypes, createContest, uploadFile, proceedPay,
-updateContest, getCombinedTypes}
+import {
+    getUserContests, getContestTypes, getIndustries, getStyles, getNameTypes, createContest, uploadFile, proceedPay,
+    updateContest, getCombinedTypes
+}
     from '../api/rest/restContoller';
 import {setTypeId, getContest} from '../utils/localStorage/localStorage';
 
@@ -59,7 +61,7 @@ export function* createContestSaga({payload}) {
     yield put({type: ACTION.CREATE_CONTEST_REQUEST});
     try {
         const {contest, contestTypes} = payload;
-        if(contest.file){
+        if (contest.file) {
             const response = yield uploadFile(contest.file);
             contest.file = response.data;
         }
@@ -84,7 +86,7 @@ export function* proceedPaySaga({payload}) {
     }
 }
 
-export function* updateContestSaga ({payload}) {
+export function* updateContestSaga({payload}) {
     yield put({type: ACTION.UPDATE_CONTEST_REQUEST});
     try {
         const {data} = yield updateContest(payload);
@@ -94,19 +96,19 @@ export function* updateContestSaga ({payload}) {
     }
 }
 
-export function* setContestTypeSaga ({payload}) {
-    const id = Array.isArray(payload)? payload : [payload];
+export function* setContestTypeSaga({payload}) {
+    const id = Array.isArray(payload) ? payload : [payload];
     setTypeId(id);
     const savedContest = getContest();
-    const stepsCount = savedContest? savedContest.priority + id.length + 2 : id.length + 2;
+    const stepsCount = savedContest ? savedContest.priority + id.length + 2 : id.length + 2;
     yield put({type: ACTION.SET_STEPS, payload: stepsCount});
     yield put({type: ACTION.SET_CONTEST_TYPES_RESPONSE, payload: id});
 }
 
-export function* getCombinedTypesSaga ({}) {
+export function* getCombinedTypesSaga() {
     try {
         const {data} = yield getCombinedTypes();
-        yield put({type: ACTION.GET_COMBINED_TYPES_RESPONSE, payload:data});
+        yield put({type: ACTION.GET_COMBINED_TYPES_RESPONSE, payload: data});
     } catch (e) {
         yield put({type: ACTION.GET_COMBINED_TYPES_ERROR, error: e});
     }

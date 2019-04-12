@@ -15,7 +15,7 @@ export const HeaderTop = ({user}) => {
                         </div>
                     </div>
                     <div className="col-md-6 col-xs-5 col-sm-6 text-center">
-                        {user ? <AuthUserHeader name={user.firstName}/> : <AuthRegButtonHeader/>}
+                        {user ? <AuthUserHeader user={user}/> : <AuthRegButtonHeader/>}
                     </div>
                 </div>
             </div>

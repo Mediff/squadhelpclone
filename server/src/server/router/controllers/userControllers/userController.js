@@ -67,15 +67,12 @@ export const loginUser = async (req, res, next) => {
 
 export const getUserById = async (req, res, next) => {
     try {
-        console.log('In get user');
-        console.log(req.decoded.id);
         const user = await Accounts.findOne({
             where: {
                 id: req.decoded.id
             },
             attributes: ['id', 'firstName', 'lastName', 'email', 'profilePicture', 'role']
         });
-        console.log(user);
         res.send(user);
     } catch (e) {
         next(e);

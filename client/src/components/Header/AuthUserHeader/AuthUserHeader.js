@@ -6,6 +6,8 @@ import email from '../../../images/email-small.png';
 import {Link} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 import {logout} from '../../../actions/actionCreator';
+import {creativeLinks, customerLinks} from "../../../utils/constants/constants";
+import {userRoles} from "../../../utils/constants/options";
 
 class AuthUserHeader extends Component {
 
@@ -13,27 +15,29 @@ class AuthUserHeader extends Component {
         this.props.logout();
     };
 
+    renderLinks = () => {
+        const {user} = this.props;
+        const linkArray = user.role === userRoles.creative ? creativeLinks : customerLinks;
+        const renderArray = linkArray.map((item, index) => <li key={index}><Link className={styles.dropdownLink}
+                                                                                 to={item.link}>{item.title}</Link></li>);
+        renderArray.push(<li key={linkArray.length + 1}><div className={styles.dropdownLink}
+                                                                        onClick={this.onClickHandler}>Logout</div></li>);
+        return renderArray;
+    };
+
     render() {
         return (
             <div className={styles.authHeaderContainer}>
                 <div className={styles.authHeaderGreeting}>
-                    <a className={`dropdown-toggle ${styles.dropdown}`} id='dropdownMenuLink' data-toggle='dropdown'
+                    <button className={`dropdown-toggle ${styles.dropdown}`} id='dropdownMenuLink' data-toggle='dropdown'
                        data-hover='dropdown'>
                         <div className={styles.personInfoContainer}>
                             <img className={styles.authHeaderImage} src={anonymous} alt="Current user"/>
-                            <span className={styles.userHi}>{'Hi, ' + this.props.name}</span>
+                            <span className={styles.userHi}>{'Hi, ' + this.props.user.firstName}</span>
                         </div>
-                    </a>
+                    </button>
                     <ul className={`dropdown-menu ${styles.dropdownList}`} aria-labelledby="dropdownMenuLink">
-                        <li>
-                            <Link className={styles.dropdownLink} to='/dashboard'>Dashboard</Link>
-                        </li>
-                        <li>
-                            <Link className={styles.dropdownLink} to='/profile'>Profile</Link>
-                        </li>
-                        <li>
-                            <Link className={styles.dropdownLink} to='/' onClick={this.onClickHandler}>Logout</Link>
-                        </li>
+                        {this.renderLinks()}
                     </ul>
                 </div>
                 <div className={styles.authHeaderMail}>
@@ -45,7 +49,10 @@ class AuthUserHeader extends Component {
 }
 
 AuthUserHeader.propTypes = {
-    name: PropTypes.string
+    user: PropTypes.shape({
+        firstName: PropTypes.string,
+        role: PropTypes.string
+    })
 };
 
 const mapStateToProps = (state) => {

@@ -4,14 +4,8 @@ import connect from 'react-redux/es/connect/connect';
 import {StyleBadge} from '../../components/StyleBadge/StyleBadge';
 import diamond from '../../images/diamond.png';
 import {EntriesList} from '../../components/EntriesList/EntriesList';
-import {
-    setAllEntries,
-    setRejectedEntries,
-    entryRejected,
-    entryAccepted,
-    getStyles,
-    updateContest
-} from '../../actions/actionCreator';
+import {setAllEntries, setRejectedEntries, entryRejected, entryAccepted, getStyles, updateContest}
+from '../../actions/actionCreator';
 import {StylesSelect} from '../../components/StylesSelect/StylesSelect';
 import {ValidationMessage} from '../../components/ValidationMessage/ValidationMessage';
 import {SuccessMessage} from "../../components/SuccessMessage/SuccessMessage";
@@ -145,9 +139,7 @@ class Brief extends Component {
                         <button className={cStyles.editLink} onClick={this.onButtonClick}>{buttonText}</button>
                         <div className={cStyles.inputContainer}>
                             <div className={cStyles.inputDesc}>Name:</div>
-                            <input className={inputStyle} type='text'
-                                   value={title}
-                                   readOnly={isReadOnly}
+                            <input className={inputStyle} type='text' value={title} readOnly={isReadOnly}
                                    onChange={this.changeHandler('title')}/>
                             <ValidationMessage type={validationMessageOptions.CreateContestError}
                                                message={this.state.titleError}/>

@@ -1,5 +1,6 @@
 import {Accounts, Contests, Entries, ContestTypes} from '../../../models';
-import {consoleLogSequelizeModelAccessors} from '../../../utils/helpers/helpers';
+import {sendEmail} from '../../../utils/helpers/emailSender';
+import _ from 'lodash';
 
 const uuidV4 = require('uuid/v4');
 
@@ -35,20 +36,15 @@ export const createContest = async (req, res, next) => {
 
 export const getActiveContests = async (req, res, next) => {
     try {
-        const distinstContests = await Contests.sequelize.query('SELECT DISTINCT ON ("Contests"."contestGroup") id\n' +
+        /*const distinctContests = await Contests.sequelize.query('SELECT DISTINCT ON ("Contests"."contestGroup") id\n' +
             'FROM "Contests"\n' +
             'GROUP BY "Contests"."contestGroup", id\n' +
             'HAVING "Contests"."winnerId" IS NULL\n' +
             'ORDER BY "Contests"."contestGroup"', {type: sequelize.QueryTypes.SELECT});
-        const arr = distinstContests.map(val => {
-            let {id} = val;
-            return id;
-        });
-        const activeContests = await Contests.findAll({
+        const arr = distinctContests.map(val => val.id); */
+        let activeContests = await Contests.findAll({
             where: {
-                id: {
-                    [Op.in]: arr
-                }
+                winnerId: null
             },
             include: [{
                 model: Accounts,
@@ -62,7 +58,7 @@ export const getActiveContests = async (req, res, next) => {
                 model: Entries,
                 include: [{
                     model: Accounts,
-                    as: 'account',
+                    as: 'Creator',
                     attributes: ['firstName']
                 }]
             }, {
@@ -70,6 +66,8 @@ export const getActiveContests = async (req, res, next) => {
                 as: 'ContestType'
             }]
         });
+        activeContests = activeContests.sort(contest => contest.priority);
+        activeContests = _.uniqBy(activeContests, 'contestGroup');
         res.send(activeContests);
     } catch (e) {
         next(e);
@@ -94,7 +92,7 @@ export const getContests = async (req, res, next) => {
                 model: Entries,
                 include: [{
                     model: Accounts,
-                    as: 'account',
+                    as: 'Creator',
                     attributes: ['firstName']
                 }]
             }, {
@@ -201,7 +199,7 @@ export const getUserContests = async (req, res, next) => {
                 model: Entries,
                 include: [{
                     model: Accounts,
-                    as: 'account',
+                    as: 'Creator',
                     attributes: ['firstName']
                 }]
             }, {
@@ -246,7 +244,7 @@ export const updateContest = async (req, res, next) => {
             where: {
                 id
             }
-        });
+        }, {transaction: t});
         const updatedContest = await Contests.findOne({
             where: {
                 id
@@ -263,15 +261,17 @@ export const updateContest = async (req, res, next) => {
                 model: Entries,
                 include: [{
                     model: Accounts,
-                    as: 'account',
-                    attributes: ['firstName']
+                    as: 'Creator',
+                    attributes: ['firstName', 'email']
                 }]
             }, {
                 model: ContestTypes,
                 as: 'ContestType'
             }]
         });
-        console.log(updatedContest);
+        const emailsArray = updatedContest.Entries.map(entry => entry.Creator.email);
+        const uniqueEmails = [...new Set(emailsArray)];
+        sendEmail(uniqueEmails);
         res.send(updatedContest);
     } catch (e) {
         next(e);

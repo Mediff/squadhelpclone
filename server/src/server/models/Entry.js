@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Entries.associate = (models) => {
-        Entries.belongsTo(models.Accounts, { foreignKey: 'creatorId', as: 'account'});
+        Entries.belongsTo(models.Accounts, { foreignKey: 'creatorId', as: 'Creator'});
         Entries.belongsTo(models.Contests, { foreignKey: 'contestId'});
     };
 

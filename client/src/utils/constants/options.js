@@ -23,6 +23,6 @@ export const inputTypeOptions = {
 };
 
 export const userRoles = {
-  customer: 'Customer',
-  creative: 'Creative'
+  customer: 'customer',
+  creative: 'creative'
 };
