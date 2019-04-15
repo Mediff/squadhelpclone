@@ -18,12 +18,12 @@ export const getUserContests = () => ({
     type: ACTION.GET_USER_CONTESTS
 });
 
-export const getUserActiveContests = () => ({
-    type: ACTION.GET_USER_ACTIVE_CONTESTS
+export const setUserActiveContests = () => ({
+    type: ACTION.SET_USER_ACTIVE_CONTESTS
 });
 
-export const getUserCompletedContests = () => ({
-    type: ACTION.GET_USER_COMPLETED_CONTESTS
+export const setUserCompletedContests = () => ({
+    type: ACTION.SET_USER_COMPLETED_CONTESTS
 });
 
 export const getContestTypes = () => ({
@@ -106,4 +106,12 @@ export const getAllUserEntries = () => ({
 
 export const getAllActiveContests = () => ({
     type: ACTION.GET_ALL_ACTIVE_CONTESTS
+});
+
+export const setAllActiveContests = () => ({
+    type: ACTION.SET_ALL_ACTIVE_CONTESTS
+});
+
+export const setAllUserEntries = () => ({
+    type: ACTION.SET_USER_ENTRIES
 });

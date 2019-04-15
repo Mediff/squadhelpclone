@@ -5,7 +5,7 @@ import logo from '../../images/logo.png';
 import {Link} from 'react-router-dom';
 import {customerSideNavIcons, customerSideNavText, creativeSideNavIcons, creativeSideNavText} from '../../utils/constants/constants';
 import {SideNavLink} from './SideNavLink/SideNavLink'
-import {getUserActiveContests, getUserCompletedContests, getAllUserEntries, getAllActiveContests} from '../../actions/actionCreator';
+import {setUserActiveContests, setUserCompletedContests, setAllUserEntries, setAllActiveContests} from '../../actions/actionCreator';
 import {userRoles} from '../../utils/constants/options';
 
 class SideNav extends Component {
@@ -32,12 +32,12 @@ class SideNav extends Component {
 
     userActiveContestsHandler = () => {
         this.props.history.push('/dashboard');
-        this.props.getUserActiveContests();
+        this.props.setUserActiveContests();
     };
 
     userCompletedContestsHandler = () => {
         this.props.history.push('/dashboard');
-        this.props.getUserCompletedContests();
+        this.props.setUserCompletedContests();
     };
 
     redirectToAccountHandler = () => {
@@ -45,11 +45,13 @@ class SideNav extends Component {
     };
 
     allActiveContestsHandler = () => {
-        this.props.getAllActiveContests();
+        this.props.history.push('/dashboard');
+        this.props.setAllActiveContests();
     };
 
     allUserEntries = () => {
-        this.props.getUserEntries();
+        this.props.history.push('/dashboard');
+        this.props.setAllUserEntries();
     };
 
     customerHandlers = [this.userActiveContestsHandler, this.userCompletedContestsHandler, this.redirectToAccountHandler];
@@ -86,10 +88,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    getUserCompletedContests: () => dispatch(getUserCompletedContests()),
-    getUserActiveContests: () => dispatch(getUserActiveContests()),
-    getAllActiveContests: () => dispatch(getAllActiveContests()),
-    getUserEntries: () => dispatch(getAllUserEntries())
+    setUserCompletedContests: () => dispatch(setUserCompletedContests()),
+    setUserActiveContests: () => dispatch(setUserActiveContests()),
+    setAllActiveContests: () => dispatch(setAllActiveContests()),
+    setAllUserEntries: () => dispatch(setAllUserEntries())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideNav);

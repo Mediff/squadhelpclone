@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './Entry.module.sass';
 import {RejectAcceptButtons} from '../../Buttons/RejectAcceptButtons/RejectAcceptButtons';
 
-export const Entry = ({entry, onReject, onAccept}) => {
+export const Entry = ({entry, onReject, onAccept, isCheckable}) => {
 
     const onRejectEntry = () => {
         onReject(entry)
@@ -28,7 +28,8 @@ export const Entry = ({entry, onReject, onAccept}) => {
             <div className={styles.statusContainer}>
                 {isWinner === true && <div className={styles.statusAccepted}>Accepted</div>}
                 {isWinner === false && <div className={styles.statusRejected}>Rejected</div>}
-                {isWinner === null && <div className={styles.buttonsContainer}>
+                {(isWinner === null && !isCheckable) && <div className={styles.statusPending}>Pending</div>}
+                {(isWinner === null && isCheckable) && <div className={styles.buttonsContainer}>
                     <RejectAcceptButtons onAccept={onAcceptEntry} onReject={onRejectEntry}/>
                 </div>}
             </div>
@@ -46,5 +47,6 @@ Entry.propTypes = {
         })
     }),
     onReject: PropTypes.func,
-    onAccept: PropTypes.func
+    onAccept: PropTypes.func,
+    isCheckable: PropTypes.bool
 };

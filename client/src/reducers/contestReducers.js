@@ -13,7 +13,8 @@ const initialState = {
     payProceedFetching: false,
     selectedContest: null,
     updateSuccess: null,
-    updateError: null
+    updateError: null,
+    getUserEntries: false
 };
 
 export default function (state = initialState, action) {
@@ -43,13 +44,13 @@ export default function (state = initialState, action) {
                 userContests: null
             }
         }
-        case ACTION.GET_USER_ACTIVE_CONTESTS: {
+        case ACTION.SET_USER_ACTIVE_CONTESTS: {
             return {
                 ...state,
                 getActive: true
             }
         }
-        case ACTION.GET_USER_COMPLETED_CONTESTS: {
+        case ACTION.SET_USER_COMPLETED_CONTESTS: {
             return {
                 ...state,
                 getActive: false
@@ -122,6 +123,18 @@ export default function (state = initialState, action) {
                 activeContests: null,
                 activeContestsFetching: false,
                 activeContestsError: action.error
+            }
+        }
+        case ACTION.SET_USER_ENTRIES: {
+            return {
+                ...state,
+                getUserEntries: true
+            }
+        }
+        case ACTION.SET_ALL_ACTIVE_CONTESTS: {
+            return {
+                ...state,
+                getUserEntries: false
             }
         }
         default: {

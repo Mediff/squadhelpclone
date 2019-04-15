@@ -16,7 +16,7 @@ export const EntriesList = ({allClickHandler, rejectedClickHandler, items, isRej
 
     const renderEntries = () => {
         return items.map(item => <div className={styles.entry} key={item.id}><Entry entry={item} onAccept={onAcceptHandler}
-                                                                      onReject={onRejectHandler}/></div>)
+                                                                      onReject={onRejectHandler} isCheckable={true}/></div>)
     };
 
     const styleReject = isRejectSelected? styles.tabItemSelected: styles.tabItem;
