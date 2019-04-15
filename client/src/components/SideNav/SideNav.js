@@ -11,23 +11,27 @@ class SideNav extends Component {
 
     renderLinks = () => {
         return sideNavIcons.map((item, i) => {
-            return <div className={styles.sideNavLink}>
-                <SideNavLink icon={item} text={sideNavText[i]}/>
+            return <div className={styles.sideNavLink} key={i}>
+                <SideNavLink icon={item} text={sideNavText[i]} clickHandler={this.creativeHandlers[i]}/>
             </div>
         });
     };
 
     activeContestsHandler = () => {
+        this.props.history.push('/dashboard');
         this.props.getUserActiveContests();
     };
 
     completedContestsHandler = () => {
+        this.props.history.push('/dashboard');
         this.props.getUserCompletedContests();
     };
 
     redirectToAccountHandler = () => {
         this.props.history.push('/');
     };
+
+    creativeHandlers = [this.activeContestsHandler, this.completedContestsHandler, this.redirectToAccountHandler];
 
     render() {
         return (
@@ -42,15 +46,7 @@ class SideNav extends Component {
                         Navigation
                     </div>
                     <div className={styles.links}>
-                        <div className={styles.sideNavLink}>
-                            <SideNavLink icon='far fa-square' text='Active contests' clickHandler={this.activeContestsHandler}/>
-                        </div>
-                        <div className={styles.sideNavLink}>
-                            <SideNavLink icon='far fa-check-square' text='Completed contests' clickHandler={this.completedContestsHandler}/>
-                        </div>
-                        <div className={styles.sideNavLink}>
-                            <SideNavLink icon='fas fa-briefcase' text='Account' clickHandler={this.redirectToAccountHandler}/>
-                        </div>
+                        {this.renderLinks()}
                     </div>
                 </div>
             </div>

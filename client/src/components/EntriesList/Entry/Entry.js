@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Entry.module.sass';
-import {RejectAcceptButtons} from '../Buttons/RejectAcceptButtons/RejectAcceptButtons';
+import {RejectAcceptButtons} from '../../Buttons/RejectAcceptButtons/RejectAcceptButtons';
 
 export const Entry = ({entry, onReject, onAccept}) => {
 
@@ -12,8 +12,7 @@ export const Entry = ({entry, onReject, onAccept}) => {
         onAccept(entry);
     };
 
-    const {isWinner, isRejected} = entry;
-    const notChecked = !isWinner && !isRejected;
+    const {isWinner} = entry;
     return (
         <div className={styles.mainContainer}>
             <div className={styles.entriesContainer}>
@@ -27,9 +26,9 @@ export const Entry = ({entry, onReject, onAccept}) => {
                 </div>
             </div>
             <div className={styles.statusContainer}>
-                {isWinner && <div className={styles.statusAccepted}>Accepted</div>}
-                {isRejected && <div className={styles.statusRejected}>Rejected</div>}
-                {notChecked && <div className={styles.buttonsContainer}>
+                {isWinner === true && <div className={styles.statusAccepted}>Accepted</div>}
+                {isWinner === false && <div className={styles.statusRejected}>Rejected</div>}
+                {isWinner === null && <div className={styles.buttonsContainer}>
                     <RejectAcceptButtons onAccept={onAcceptEntry} onReject={onRejectEntry}/>
                 </div>}
             </div>

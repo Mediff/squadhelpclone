@@ -1,3 +1,4 @@
+@import '../../../sass/mixins/mixins'
 
 .container
   display: flex
@@ -29,3 +30,5 @@
     text-transform: uppercase
     text-align: center
     cursor: pointer
+    @include for-extra-small-screen
+      font-size: 14px

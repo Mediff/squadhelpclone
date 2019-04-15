@@ -87,9 +87,9 @@ class Brief extends Component {
         });
         try {
             const {title, ventureDescribe, customerDescribe, prize} = this.state;
-            const {id} = this.props.selectedContest;
+            const {id, contestCreatorId} = this.props.selectedContest;
             await updateContestScheme.validate({title, ventureDescribe, customerDescribe, prize}, {abortEarly: false});
-            this.props.updateContest({title, ventureDescribe, customerDescribe, prize, id});
+            this.props.updateContest({title, ventureDescribe, customerDescribe, prize, id, contestCreatorId});
         } catch (e) {
             e.inner.forEach(error => this.proceedError(error));
         }

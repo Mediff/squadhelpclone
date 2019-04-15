@@ -12,7 +12,7 @@ export function* setAllEntriesSaga({payload}) {
 
 export function* setRejectedEntriesSaga({payload}) {
     const entries = payload.Entries;
-    const filteredEntries = entries.filter(entry=> entry.isRejected);
+    const filteredEntries = entries.filter(entry=> entry.isWinner === false);
     yield put({
         type: ACTION.SET_REJECTED_ENTRIES_RESPONSE,
         payload: filteredEntries

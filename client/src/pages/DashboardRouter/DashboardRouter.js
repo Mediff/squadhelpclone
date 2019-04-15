@@ -8,10 +8,11 @@ import Brief from '../Brief/Brief';
 import {ContestRequired} from '../../components/HOCs/ContestRequired/ContestRequired';
 
 export class DashboardRouter extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.ContestBrief = ContestRequired(Brief);
     }
+
     render() {
         return (
             <div className={styles.mainContainer}>

@@ -4,7 +4,8 @@ import ACTION from '../actions/actiontsTypes';
 const initialState = {
     currentUser: null,
     isFetching: false,
-    error: null,
+    loginError: null,
+    registerError: null,
     tokenFailed: false
 };
 
@@ -14,7 +15,7 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 isFetching: false,
-                error: null,
+                loginError: null,
                 currentUser: action.payload
             };
         }
@@ -22,25 +23,39 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 isFetching: false,
-                error: null,
+                registerError: null,
                 currentUser: action.payload
             };
         }
-        case ACTION.LOGIN_REQUEST:
-        case ACTION.REG_REQUEST: {
+        case ACTION.LOGIN_REQUEST: {
             return {
                 ...state,
-                error: null,
+                loginError: null,
                 isFetching: true,
             };
         }
-        case ACTION.LOGIN_ERROR:
+        case ACTION.REG_REQUEST: {
+            return {
+                ...state,
+                registerError: null,
+                isFetching: false
+            }
+        }
+        case ACTION.LOGIN_ERROR: {
+            return {
+                ...state,
+                loginError: action.error,
+                isFetching: false,
+                currentUser: null
+            };
+        }
         case ACTION.REG_ERROR: {
             return {
                 ...state,
-                error: action.error,
+                registerError: action.error,
                 isFetching: false,
-            };
+                currentUser: null
+            }
         }
         case ACTION.GET_USER_ERROR: {
             return {

@@ -19,7 +19,7 @@ export const ContestRequired = (ComposedComponent) => {
         }
 
         render() {
-            return this.props.selectedContest && <ComposedComponent {...this.props} />
+            return <ComposedComponent {...this.props} />
         }
     }
 

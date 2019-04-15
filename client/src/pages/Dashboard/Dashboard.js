@@ -8,7 +8,9 @@ import plus from '../../images/plus.png';
 class Dashboard extends Component {
 
     componentDidMount() {
-        this.props.getUserContests();
+        if (!this.props.userContests) {
+            this.props.getUserContests();
+        }
     }
 
     addContestRedirect = () => {
@@ -28,7 +30,9 @@ class Dashboard extends Component {
                         <img src={plus} alt='Add contest'/>
                         Add contest
                     </div>
-                    {this.props.userContests && <Contests contests={contests} history={this.props.history}/>}
+                    {contests && contests.length > 0 ?
+                        <Contests contests={contests} history={this.props.history}/> :
+                        <div className={styles.noContest}>There is no contests</div>}
                 </div>
             </div>
         );

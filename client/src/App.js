@@ -17,9 +17,10 @@ const history = createHistory();
 const App = () => {
     const AuthDashboard = AuthRequired(DashboardRouter, [userRoles.creative, userRoles.customer]);
     const AuthContestType = AuthRequired(ContestType, [userRoles.customer]);
-    const ContestCreateTypesRequired = TypesRequired(CreateContest, [userRoles.customer]);
+    const ContestCreateTypesRequired = TypesRequired(CreateContest);
     const AuthCreateContest = AuthRequired(ContestCreateTypesRequired, [userRoles.customer]);
-    const AuthContestPay = AuthRequired(ContestPay, [userRoles.customer]);
+    const ContestPayTypesRequired = TypesRequired(ContestPay);
+    const AuthContestPay = AuthRequired(ContestPayTypesRequired, [userRoles.customer]);
 
     return (
         <Router history={history}>
