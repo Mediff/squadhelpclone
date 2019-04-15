@@ -33,12 +33,15 @@ class Dashboard extends Component {
 
     getEntries = () => {
         const {userEntries} = this.props;
-        if (userEntries && userEntries.length > 0) {
-            return userEntries && userEntries.map((entry, i) => <Entry key={i} entry={entry} isCheckable={false}/>)
-        } else {
-            return <div className={styles.noContest}>There is no contests</div>;
+        if (userEntries) {
+            if (userEntries.length > 0) {
+                return userEntries && userEntries.map((entry, i) => <Entry key={i} entry={entry} isCheckable={false}/>)
+            } else {
+                return <div className={styles.noContest}>There is no entries</div>;
+            }
         }
     };
+
 
     getContests = () => {
         const {role} = this.props.currentUser;
@@ -54,7 +57,7 @@ class Dashboard extends Component {
             if (!this.props.getUserEntries && this.props.activeContests) {
                 return this.props.activeContests.length > 0 ?
                     <Contests contests={this.props.activeContests} history={this.props.history}/> :
-                    <div className={styles.noContest}>There is no entries</div>
+                    <div className={styles.noContest}>There is no contests</div>
             }
         }
     };
@@ -65,7 +68,8 @@ class Dashboard extends Component {
         return (
             <div className={styles.mainContainer}>
                 <div className={styles.contestsContainer}>
-                    {role === userRoles.customer && <div className={styles.addContestButton} onClick={this.addContestRedirect}>
+                    {role === userRoles.customer &&
+                    <div className={styles.addContestButton} onClick={this.addContestRedirect}>
                         <img src={plus} alt='Add contest'/>
                         Add contest
                     </div>}
