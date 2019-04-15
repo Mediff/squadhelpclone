@@ -43,10 +43,10 @@ class Dashboard extends Component {
     getContests = () => {
         const {role} = this.props.currentUser;
         if (role === userRoles.customer) {
-            if (this.props.userContests && this.props.activeContests && this.props.activeContests) {
+            if (this.props.userContests) {
                 const contests = this.props.getActive ? this.props.userContests.filter(contest => !contest.winnerId) :
                     this.props.userContests.filter(contest => contest.winnerId);
-                return this.props.activeContests.length > 0 ? <Contests contests={contests} history={this.props.history}/> :
+                return contests.length > 0 ? <Contests contests={contests} history={this.props.history}/> :
                     <div className={styles.noContest}>There is no contests</div>
             }
         }
