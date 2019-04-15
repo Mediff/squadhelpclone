@@ -12,14 +12,8 @@ import {CreateContestSubmitButtons} from '../../components/CreateContest/CreateC
 import CreateContestFile from '../../components/CreateContest/CreateContestFile/CreateContestFile';
 import {ValidationMessage} from '../../components/ValidationMessage/ValidationMessage';
 import {validationMessageOptions} from '../../utils/constants/options';
-import {
-    createContestNameHeaders,
-    createContestNamePlaceholders,
-    stepsIndicatorMessage
-} from '../../utils/constants/constants';
-import {
-    clearTypeId, setContest, clearContests
-} from '../../utils/localStorage/localStorage';
+import {createContestNameHeaders, createContestNamePlaceholders, stepsIndicatorMessage} from '../../utils/constants/constants';
+import {clearTypeId, setContest, clearContests} from '../../utils/localStorage/localStorage';
 import {contestTaglineLogoScheme, contestNameScheme} from '../../utils/validation/validationSchemes';
 import {StepsIndicator} from '../../components/StepsIndicator/StepsIndicator';
 

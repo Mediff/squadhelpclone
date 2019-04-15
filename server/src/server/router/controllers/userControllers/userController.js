@@ -45,7 +45,7 @@ export const loginUser = async (req, res, next) => {
             where: {
                 email
             },
-            attributes: ['id','firstName', 'lastName', 'passwordHash', 'email', 'role']
+            attributes: ['id', 'firstName', 'lastName', 'passwordHash', 'email', 'role']
         });
         if (account) {
             const result = await bcrypt.compare(password, account.passwordHash);
