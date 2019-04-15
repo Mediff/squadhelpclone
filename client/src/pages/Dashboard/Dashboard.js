@@ -1,15 +1,27 @@
+
 import React, {Component} from 'react';
 import styles from './Dashboard.module.sass';
 import {Contests} from '../../components/Contests/Contests';
 import connect from 'react-redux/es/connect/connect';
-import {getUserContests} from "../../actions/actionCreator";
+import {getUserContests, getAllActiveContests} from '../../actions/actionCreator';
 import plus from '../../images/plus.png';
+import {userRoles} from '../../utils/constants/options';
 
 class Dashboard extends Component {
 
     componentDidMount() {
-        if (!this.props.userContests) {
-            this.props.getUserContests();
+        const {role} = this.props.currentUser;
+
+        if(role === userRoles.customer) {
+            if (!this.props.userContests) {
+                this.props.getUserContests();
+            }
+        }
+
+        if(role === userRoles.creative) {
+            if (!this.props.activeContests) {
+                this.props.getAllActiveContests();
+            }
         }
     }
 
@@ -19,10 +31,19 @@ class Dashboard extends Component {
 
     render() {
         let contests;
-        if (this.props.userContests) {
-            contests = this.props.getActive ? this.props.userContests.filter(contest => !contest.winnerId) :
-                this.props.userContests.filter(contest => contest.winnerId);
+        const {role} = this.props.currentUser;
+
+        if(role === userRoles.customer) {
+            if (this.props.userContests) {
+                contests = this.props.getActive ? this.props.userContests.filter(contest => !contest.winnerId) :
+                    this.props.userContests.filter(contest => contest.winnerId);
+            }
         }
+
+        if(role === userRoles.creative) {
+            contests = this.props.activeContests;
+        }
+
         return (
             <div className={styles.mainContainer}>
                 <div className={styles.contestsContainer}>
@@ -43,12 +64,14 @@ const mapStateToProps = (state) => {
     return {
         currentUser: state.userReducers.currentUser,
         userContests: state.contestReducers.userContests,
+        activeContests: state.contestReducers.activeContests,
         getActive: state.contestReducers.getActive
     };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    getUserContests: () => dispatch(getUserContests())
+    getUserContests: () => dispatch(getUserContests()),
+    getAllActiveContests: () => dispatch(getAllActiveContests())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

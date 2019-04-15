@@ -16,9 +16,13 @@ export const registerRadioHeadText = ['Join As a Buyer', 'Join As a Creative'];
 export const registerRadioBottomText = ['I am looking for a Name, Logo or Tagline for my business, brand or product.',
     'I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.'];
 
-export const sideNavIcons = ['far fa-square', 'far fa-check-square', 'fas fa-briefcase'];
+export const customerSideNavIcons = ['far fa-square', 'far fa-check-square', 'fas fa-briefcase'];
 
-export const sideNavText = ['Active contests', 'Completed contests', 'Account'];
+export const creativeSideNavIcons = ['far fa-square', 'far fa-check-square'];
+
+export const customerSideNavText = ['Active contests', 'Completed contests', 'Account'];
+
+export const creativeSideNavText = ['Active contests', 'My entries'];
 
 export const contestTypesDescription = ['Get up and running with the perfect name. ',
     'Kickstart your venture with a unique, memorable logo ',

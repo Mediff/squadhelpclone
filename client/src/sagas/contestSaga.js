@@ -2,7 +2,7 @@ import {put} from 'redux-saga/effects';
 import ACTION from '../actions/actiontsTypes';
 import {
     getUserContests, getContestTypes, getIndustries, getStyles, getNameTypes, createContest, uploadFile, proceedPay,
-    updateContest, getCombinedTypes
+    updateContest, getCombinedTypes, getAllActiveContests
 }
     from '../api/rest/restContoller';
 import {setTypeId, getContest, setContest, clearContests, clearTypeId} from '../utils/localStorage/localStorage';
@@ -14,6 +14,17 @@ export function* getUserContestsSaga() {
         yield put({type: ACTION.GET_USER_CONTESTS_RESPONSE, payload: data});
     } catch (e) {
         yield put({type: ACTION.GET_USER_CONTESTS_ERROR, error: e});
+    }
+}
+
+
+export function* getAllActiveContestsSaga() {
+    yield put({type: ACTION.GET_ALL_ACTIVE_CONTESTS_REQUEST});
+    try {
+        const {data} = yield getAllActiveContests();
+        yield put({type: ACTION.GET_ALL_ACTIVE_CONTESTS_RESPONSE, payload: data});
+    } catch (e) {
+        yield put({type: ACTION.GET_ALL_ACTIVE_CONTESTS_ERROR, error: e});
     }
 }
 

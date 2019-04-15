@@ -5,34 +5,6 @@ export const updateEntry = async (req, res, next) => {
         const {entry, prize} = req.body;
         const {isWinner, id, contestId, creatorId} = entry;
         if (isWinner) {
-<<<<<<< HEAD
-            await Entries.sequelize.transaction(async (t) => {
-                await Entries.update({
-                    isWinner: false,
-                    isRejected: true
-                }, {
-                    where: {
-                        contestId
-                    }, transaction: t
-                });
-                await Entries.update({
-                    isWinner: true,
-                    isRejected: false
-                }, {
-                    where: {
-                        id
-                    }, transaction: t
-                });
-                await Accounts.increment(['balance'], {by: prize, where: {id: creatorId}, transaction: t});
-                await Contests.update({
-                    winnerId: creatorId
-                }, {
-                    where: {
-                        id: contestId
-                    }, transaction: t
-                }, {returning: true});
-            });
-=======
             let result = await Entries.sequelize.transaction( async (t) => {
             await Entries.update({
                 isWinner: false
@@ -56,7 +28,6 @@ export const updateEntry = async (req, res, next) => {
                     id: contestId
                 }, transaction: t
             }, {returning: true});});
->>>>>>> 791c004e03c66c61ddbe733094ea24280a160fbe
         } else {
             await Entries.update({
                 isWinner: false
@@ -85,6 +56,22 @@ export const updateEntry = async (req, res, next) => {
         });
         res.send(updatedContest.Entries);
     } catch (e) {
+        next(e);
+    }
+};
+
+export const getUserEntries = async (req, res, next) => {
+    try{
+        const entries = Entries.findAll({
+            where: {
+                creatorId: req.decoded.id
+            }, include: [{
+                    model: Contests
+                }]
+        });
+
+        res.send(entries);
+    } catch(e){
         next(e);
     }
 };

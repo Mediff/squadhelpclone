@@ -4,6 +4,7 @@ import { restURL } from '../baseURL';
 export const login = (user) => axios.post(`${restURL}/login`, user);
 export const register = (user) => axios.post(`${restURL}/register`, user);
 export const getUser = () => axios.get(`${restURL}/user`);
+export const getAllActiveContests = () => axios.get(`${restURL}/contests/active`);
 export const getUserContests = () => axios.get(`${restURL}/contests/user`);
 export const getContestTypes = () => axios.get(`${restURL}/types`);
 export const getIndustries = () => axios.get(`${restURL}/types/industries`);
@@ -15,3 +16,4 @@ export const proceedPay = (contest) => axios.put(`${restURL}/contests/pay`, cont
 export const updateEntry = (entry) => axios.put(`${restURL}/entries`, entry);
 export const updateContest = (contest) => axios.put(`${restURL}/contests`, contest);
 export const getCombinedTypes = () => axios.get(`${restURL}/types/all`);
+export const getUserEntries = () => axios.get(`${restURL}/entries/user`);

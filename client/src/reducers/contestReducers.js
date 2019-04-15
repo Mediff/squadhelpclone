@@ -2,8 +2,11 @@ import ACTION from '../actions/actiontsTypes';
 
 const initialState = {
     userContests: null,
-    isFetching: false,
-    error: null,
+    userContestsFetching: false,
+    userContestsError: null,
+    activeContests: null,
+    activeContestsFetching: false,
+    activeContestsError: null,
     getActive: true,
     payProceed: null,
     payProceedError: null,
@@ -18,8 +21,8 @@ export default function (state = initialState, action) {
         case ACTION.GET_USER_CONTESTS_RESPONSE: {
             return {
                 ...state,
-                isFetching: false,
-                error: null,
+                userContestsFetching: false,
+                userContestsError: null,
                 userContests: action.payload,
                 getActive: true
             }
@@ -27,16 +30,16 @@ export default function (state = initialState, action) {
         case ACTION.GET_USER_CONTESTS_REQUEST: {
             return {
                 ...state,
-                isFetching: true,
-                error: null,
+                userContestsFetching: true,
+                userContestsError: null,
                 userContests: null
             }
         }
         case ACTION.GET_USER_CONTESTS_ERROR: {
             return {
                 ...state,
-                isFetching: false,
-                error: action.error,
+                userContestsFetching: false,
+                userContestsError: action.error,
                 userContests: null
             }
         }
@@ -95,6 +98,30 @@ export default function (state = initialState, action) {
                 ...state,
                 updateSuccess: null,
                 updateError: action.error
+            }
+        }
+        case ACTION.GET_ALL_ACTIVE_CONTESTS_REQUEST: {
+            return {
+                ...state,
+                activeContests: null,
+                activeContestsFetching: true,
+                activeContestsError: null
+            }
+        }
+        case ACTION.GET_ALL_ACTIVE_CONTESTS_RESPONSE: {
+            return {
+                ...state,
+                activeContests: action.payload,
+                activeContestsFetching: false,
+                activeContestsError: null
+            }
+        }
+        case ACTION.GET_ALL_ACTIVE_CONTESTS_ERROR: {
+            return {
+                ...state,
+                activeContests: null,
+                activeContestsFetching: false,
+                activeContestsError: action.error
             }
         }
         default: {

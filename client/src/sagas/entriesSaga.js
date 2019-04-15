@@ -1,6 +1,6 @@
 import ACTION from '../actions/actiontsTypes';
 import {put} from 'redux-saga/effects';
-import {updateEntry} from "../api/rest/restContoller";
+import {updateEntry, getUserEntries} from "../api/rest/restContoller";
 
 export function* setAllEntriesSaga({payload}) {
     const entries = payload.Entries;
@@ -39,5 +39,15 @@ export function* updateAcceptedEntrySaga({payload}) {
         yield put({type: ACTION.UPDATE_ENTRY_ACCEPTED_RESPONSE, payload: data});
     } catch (e) {
         yield put({type: ACTION.GET_CONTEST_TYPES_ERROR, error: e});
+    }
+}
+
+export function* getUserEntriesSaga() {
+    yield put({type: ACTION.GET_USER_ENTRIES_REQUEST});
+    try {
+        const {data} = yield getUserEntries();
+        yield put({type: ACTION.GET_USER_ENTRIES_RESPONSE, payload: data});
+    } catch (e) {
+        yield put({type: ACTION.GET_USER_ENTRIES_ERROR, error: e});
     }
 }

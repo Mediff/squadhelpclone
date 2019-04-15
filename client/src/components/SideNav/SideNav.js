@@ -3,26 +3,39 @@ import connect from 'react-redux/es/connect/connect';
 import styles from './SideNav.module.sass';
 import logo from '../../images/logo.png';
 import {Link} from 'react-router-dom';
-import {sideNavIcons, sideNavText} from '../../utils/constants/constants';
+import {customerSideNavIcons, customerSideNavText, creativeSideNavIcons, creativeSideNavText} from '../../utils/constants/constants';
 import {SideNavLink} from './SideNavLink/SideNavLink'
-import {getUserActiveContests, getUserCompletedContests} from "../../actions/actionCreator";
+import {getUserActiveContests, getUserCompletedContests, getAllUserEntries, getAllActiveContests} from '../../actions/actionCreator';
+import {userRoles} from '../../utils/constants/options';
 
 class SideNav extends Component {
 
     renderLinks = () => {
-        return sideNavIcons.map((item, i) => {
+        return this.props.currentUser.role === userRoles.customer ? this.customerLinks() : this.creativeLinks();
+    };
+
+    customerLinks = () => {
+        return customerSideNavIcons.map((item, i) => {
             return <div className={styles.sideNavLink} key={i}>
-                <SideNavLink icon={item} text={sideNavText[i]} clickHandler={this.creativeHandlers[i]}/>
+                <SideNavLink icon={item} text={customerSideNavText[i]} clickHandler={this.customerHandlers[i]}/>
             </div>
         });
     };
 
-    activeContestsHandler = () => {
+    creativeLinks = () => {
+        return creativeSideNavIcons.map((item, i) => {
+            return <div className={styles.sideNavLink} key={i}>
+                <SideNavLink icon={item} text={creativeSideNavText[i]} clickHandler={this.creativeHandlers[i]}/>
+            </div>
+        });
+    };
+
+    userActiveContestsHandler = () => {
         this.props.history.push('/dashboard');
         this.props.getUserActiveContests();
     };
 
-    completedContestsHandler = () => {
+    userCompletedContestsHandler = () => {
         this.props.history.push('/dashboard');
         this.props.getUserCompletedContests();
     };
@@ -31,7 +44,16 @@ class SideNav extends Component {
         this.props.history.push('/');
     };
 
-    creativeHandlers = [this.activeContestsHandler, this.completedContestsHandler, this.redirectToAccountHandler];
+    allActiveContestsHandler = () => {
+        this.props.getAllActiveContests();
+    };
+
+    allUserEntries = () => {
+        this.props.getUserEntries();
+    };
+
+    customerHandlers = [this.userActiveContestsHandler, this.userCompletedContestsHandler, this.redirectToAccountHandler];
+    creativeHandlers = [this.allActiveContestsHandler, this.allUserEntries];
 
     render() {
         return (
@@ -58,12 +80,16 @@ class SideNav extends Component {
 const mapStateToProps = (state) => {
     return {
         userContests: state.contestReducers.userContests,
-        selectedContests: state.contestReducers.selectedContests
-    };};
+        selectedContests: state.contestReducers.selectedContests,
+        currentUser: state.userReducers.currentUser
+    };
+};
 
 const mapDispatchToProps = (dispatch) => ({
     getUserCompletedContests: () => dispatch(getUserCompletedContests()),
     getUserActiveContests: () => dispatch(getUserActiveContests()),
+    getAllActiveContests: () => dispatch(getAllActiveContests()),
+    getUserEntries: () => dispatch(getAllUserEntries())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideNav);

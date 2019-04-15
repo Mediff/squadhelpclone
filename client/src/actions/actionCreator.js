@@ -99,3 +99,11 @@ export const updateContest = (contest) => ({
 export const getCombinedTypes = () => ({
     type: ACTION.GET_COMBINED_TYPES
 });
+
+export const getAllUserEntries = () => ({
+    type: ACTION.GET_USER_ENTRIES
+});
+
+export const getAllActiveContests = () => ({
+    type: ACTION.GET_ALL_ACTIVE_CONTESTS
+});
