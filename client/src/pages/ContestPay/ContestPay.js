@@ -9,7 +9,9 @@ import {contestPayScheme} from '../../utils/validation/validationSchemes';
 import {ValidationMessage} from '../../components/ValidationMessage/ValidationMessage';
 import {validationMessageOptions} from '../../utils/constants/options';
 import {proceedPay} from '../../actions/actionCreator';
-import {clearContests, clearTypeId, getContest} from '../../utils/localStorage/localStorage';
+import {Header} from '../../components/Header/Header';
+import {StepsIndicator} from '../../components/StepsIndicator/StepsIndicator';
+import {stepsIndicatorTitle} from '../../utils/constants/constants';
 
 class ContestPay extends Component {
 
@@ -24,22 +26,6 @@ class ContestPay extends Component {
         cardPrizeErrorMessage: ''
     };
 
-    componentDidMount() {
-        !this.props.savedContest && getContest();
-    }
-
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.proceedPayData){
-            clearContests();
-            clearTypeId();
-            this.props.history.push('/dashboard');
-        }
-        if(!this.props.savedContest){
-            this.props.history.push('/contesttype');
-        }
-    }
-
     proceedError = (error) => {
         this.setState({
             [error.path + 'ErrorMessage']: error.message
@@ -48,14 +34,21 @@ class ContestPay extends Component {
 
     onSubmitHandler = async (event) => {
         event.preventDefault();
-        try{
+        try {
             const {cardNumber, cardExpiration, cardSecurityCode, cardPrize} = this.state;
-            await contestPayScheme.validate({cardNumber, cardExpiration, cardSecurityCode, cardPrize}, {abortEarly:false});
+            await contestPayScheme.validate({
+                cardNumber,
+                cardExpiration,
+                cardSecurityCode,
+                cardPrize
+            }, {abortEarly: false});
             this.props.proceedPay({
+                payment: {
                     contest: this.props.savedContest,
                     prize: cardPrize
-                });
-        } catch(e){
+                }, history: this.props.history
+            });
+        } catch (e) {
             e.inner.forEach(error => {
                 this.proceedError(error)
             });
@@ -73,42 +66,48 @@ class ContestPay extends Component {
     };
 
     render() {
+        const steps = this.props.savedContest? this.props.savedContest.priority + 1: 0;
         return (
-            <div className={styles.mainContainer}>
-                <div className={styles.paymentContainer}>
-                    <form onSubmit={this.onSubmitHandler}>
-                        <CreateContestTextInput placeholder={createContestPaymentPlaceholders[0]}
-                                                changeHandler={this.changeHandler('cardNumber')}
-                                                header={createContestPaymentHeaders[0]}/>
-                        <ValidationMessage message={this.state.cardNumberErrorMessage}
-                                           type={validationMessageOptions.CreateContestError}/>
-                        <div className={styles.inputRowContainer}>
-                            <div className={styles.inputRow}>
-                                <CreateContestTextInput placeholder={createContestPaymentPlaceholders[1]}
-                                                        changeHandler={this.changeHandler('cardExpiration')}
-                                                        header={createContestPaymentHeaders[1]}/>
-                                <ValidationMessage message={this.state.cardExpirationErrorMessage}
-                                                   type={validationMessageOptions.CreateContestError}/>
+            <div>
+                <Header user={this.props.currentUser}/>
+                <div className={styles.mainContainer}>
+                    <StepsIndicator title={stepsIndicatorTitle[1]} message={''}
+                                    overallSteps={steps + 1}
+                                    passedSteps={steps}/>
+                    <div className={styles.paymentContainer}>
+                        <form onSubmit={this.onSubmitHandler}>
+                            <CreateContestTextInput placeholder={createContestPaymentPlaceholders[0]}
+                                                    changeHandler={this.changeHandler('cardNumber')}
+                                                    header={createContestPaymentHeaders[0]}/>
+                            <ValidationMessage message={this.state.cardNumberErrorMessage}
+                                               type={validationMessageOptions.CreateContestError}/>
+                            <div className={styles.inputRowContainer}>
+                                <div className={styles.inputRow}>
+                                    <CreateContestTextInput placeholder={createContestPaymentPlaceholders[1]}
+                                                            changeHandler={this.changeHandler('cardExpiration')}
+                                                            header={createContestPaymentHeaders[1]}/>
+                                    <ValidationMessage message={this.state.cardExpirationErrorMessage}
+                                                       type={validationMessageOptions.CreateContestError}/>
+                                </div>
+                                <div className={styles.inputRow}>
+                                    <CreateContestTextInput placeholder={createContestPaymentPlaceholders[2]}
+                                                            changeHandler={this.changeHandler('cardSecurityCode')}
+                                                            header={createContestPaymentHeaders[2]}/>
+                                    <ValidationMessage message={this.state.cardSecurityCodeErrorMessage}
+                                                       type={validationMessageOptions.CreateContestError}/>
+                                </div>
                             </div>
-                            <div className={styles.inputRow}>
-                                <CreateContestTextInput placeholder={createContestPaymentPlaceholders[2]}
-                                                        changeHandler={this.changeHandler('cardSecurityCode')}
-                                                        header={createContestPaymentHeaders[2]}/>
-                                <ValidationMessage message={this.state.cardSecurityCodeErrorMessage}
-                                                   type={validationMessageOptions.CreateContestError}/>
-                            </div>
-                        </div>
-                        <CreateContestTextInput placeholder={createContestPaymentPlaceholders[3]}
-                                                changeHandler={this.changeHandler('cardPrize')}
-                                                header={createContestPaymentHeaders[3]}/>
-                        <ValidationMessage message={this.state.cardPrizeErrorMessage}
-                                           type={validationMessageOptions.CreateContestError}/>
-                        <CreateContestSubmitButtons clickHandler={this.redirectToContestType} resetText='Back'
-                                                    submitText='Pay Now'/>
-                    </form>
+                            <CreateContestTextInput placeholder={createContestPaymentPlaceholders[3]}
+                                                    changeHandler={this.changeHandler('cardPrize')}
+                                                    header={createContestPaymentHeaders[3]}/>
+                            <ValidationMessage message={this.state.cardPrizeErrorMessage}
+                                               type={validationMessageOptions.CreateContestError}/>
+                            <CreateContestSubmitButtons clickHandler={this.redirectToContestType} resetText='Back'
+                                                        submitText='Pay Now'/>
+                        </form>
+                    </div>
                 </div>
             </div>
-
         );
     }
 }
@@ -116,7 +115,9 @@ class ContestPay extends Component {
 const mapStateToProps = (state) => {
     return {
         savedContest: state.contestTypesReducers.savedContest,
-        proceedPayData: state.contestReducers.payProceed
+        proceedPayData: state.contestReducers.payProceed,
+        currentUser: state.userReducers.currentUser,
+        steps: state.contestTypesReducers.steps
     };
 };
 

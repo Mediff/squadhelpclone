@@ -24,5 +24,9 @@
     @content
 
 @mixin for-big-desktop
-  @media (min-width: 1201px)
+  @media (max-width: 1800px)
+    @content
+
+@mixin for-huge-desktop
+  @media (min-width: 1801px)
     @content

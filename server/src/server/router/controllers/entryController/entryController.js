@@ -9,16 +9,14 @@ export const updateEntry = async (req, res, next) => {
         if (isWinner) {
             let result = await Entries.sequelize.transaction( async (t) => {
             await Entries.update({
-                isWinner: false,
-                isRejected: true
+                isWinner: false
             }, {
                 where: {
                     contestId
                 }, transaction: t
             });
             await Entries.update({
-                isWinner: true,
-                isRejected: false
+                isWinner: true
             }, {
                 where: {
                     id
@@ -32,11 +30,9 @@ export const updateEntry = async (req, res, next) => {
                     id: contestId
                 }, transaction: t
             }, {returning: true});});
-            //await Promise.all([winnerEntryUpdate, winnerUpdate, contestUpdate]);
         } else {
             await Entries.update({
-                isWinner: false,
-                isRejected: true
+                isWinner: false
             }, {
                 where: {
                     id

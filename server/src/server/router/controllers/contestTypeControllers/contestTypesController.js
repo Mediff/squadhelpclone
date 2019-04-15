@@ -55,10 +55,12 @@ export const getStylesByContestType = async(req, res, next) => {
 
 export const getCombinedTypes = async(req, res, next) => {
     try{
-        const industries = await Industries.findAll({});
-        const styles = await Styles.findAll({});
-        const nameTypes = await NameTypes.findAll({});
-        const contestTypes = await ContestTypes.findAll({});
+        const industriesPromise = Industries.findAll({});
+        const stylesPromise = Styles.findAll({});
+        const nameTypesPromise = NameTypes.findAll({});
+        const contestTypesPromise = ContestTypes.findAll({});
+        const [industries, styles, nameTypes, contestTypes] = await Promise.all(
+            [industriesPromise, stylesPromise, nameTypesPromise, contestTypesPromise]);
         res.send({industries, styles, nameTypes, contestTypes});
     } catch(e){
         next(e);

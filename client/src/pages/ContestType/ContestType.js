@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import styles from './ContestType.module.sass';
 import connect from 'react-redux/es/connect/connect';
 import {getContestTypes} from "../../actions/actionCreator";
 import {ContestTypeCards} from '../../components/ContestTypeCards/ContestTypeCards';
@@ -16,14 +15,13 @@ class ContestType extends Component {
         this.props.getContestTypes();
     }
 
-
     render() {
         let combinedResult;
         if (this.props.contestTypes) {
             combinedResult = getCombinedTypes(this.props.contestTypes);
         }
         return (
-            <div className={styles.mainContainer}>
+            <div>
                 <Header user={this.props.currentUser}/>
                 <StepsIndicator title={stepsIndicatorTitle[0]} message={stepsIndicatorMessage[0]} overallSteps={3} passedSteps={0}/>
                 {this.props.contestTypes && <ContestTypeCards contestTypes={this.props.contestTypes}

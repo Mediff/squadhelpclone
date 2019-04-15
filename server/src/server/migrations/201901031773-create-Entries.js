@@ -26,13 +26,9 @@ module.exports = {
 					key: 'id'
 				}
 			},
-			isRejected: {
-				type: Sequelize.BOOLEAN,
-				default: false
-			},
 			isWinner: {
 				type: Sequelize.BOOLEAN,
-				default: false
+				default: null
 			},
 			text: {
 				type: Sequelize.TEXT,

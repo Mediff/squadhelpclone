@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import cStyles from './CreateContest.module.sass';
 import connect from 'react-redux/es/connect/connect';
-import {
-    createContest, setContestTypes, setSavedContest, getCombinedTypes
-} from '../../actions/actionCreator'
+import {createContest, setContestTypes, setSavedContest, getCombinedTypes} from '../../actions/actionCreator'
 import {CreateContestTextInput} from '../../components/CreateContest/CreateContestTextInput/CreateContestTextInput';
 import {CreateContestTextArea} from '../../components/CreateContest/CreateContestTextArea/CreateContestTextArea';
 import {CreateContestCheckboxes} from '../../components/CreateContest/CreateContestCheckboxes/CreateContestCheckboxes';
@@ -12,16 +10,12 @@ import {CreateContestSubmitButtons} from '../../components/CreateContest/CreateC
 import CreateContestFile from '../../components/CreateContest/CreateContestFile/CreateContestFile';
 import {ValidationMessage} from '../../components/ValidationMessage/ValidationMessage';
 import {validationMessageOptions} from '../../utils/constants/options';
-import {
-    createContestNameHeaders,
-    createContestNamePlaceholders,
-    stepsIndicatorMessage
+import {createContestNameHeaders, createContestNamePlaceholders, stepsIndicatorMessage
 } from '../../utils/constants/constants';
-import {
-    clearTypeId, setContest, clearContests
-} from '../../utils/localStorage/localStorage';
+import {clearTypeId, clearContests} from '../../utils/localStorage/localStorage';
 import {contestTaglineLogoScheme, contestNameScheme} from '../../utils/validation/validationSchemes';
 import {StepsIndicator} from '../../components/StepsIndicator/StepsIndicator';
+import {Header} from "../../components/Header/Header";
 
 class CreateContest extends Component {
 
@@ -43,28 +37,21 @@ class CreateContest extends Component {
         industryErrorMessage: '',
         ventureDescribeErrorMessage: '',
         customerDescribeErrorMessage: '',
-        savedContest: ''
+        fileName: '',
     };
 
-    shouldComponentUpdate(){
-        if (this.props.selectedContestType.length === 0) {
-            clearContests();
-            clearTypeId();
-            this.props.history.push('/payment');
-            return false;
-        }
-        return true;
-    }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.savedContest !== prevProps.savedContest) {
             this.resetFormFields();
-            setContest(this.props.savedContest);
         }
     }
 
     resetFormFields = () => {
         this.formRef.current.reset();
+        this.setState({
+            fileName: ''
+        });
     };
 
     redirectToContestTypeHandler = () => {
@@ -94,8 +81,10 @@ class CreateContest extends Component {
     fileUploadHandler = event => {
         const formData = new FormData();
         formData.append('file', event.target.files[0]);
+        const name = event.target.value.split(/\\|\//).pop();
         this.setState({
-            file: formData
+            file: formData,
+            fileName: name
         });
     };
 
@@ -129,7 +118,7 @@ class CreateContest extends Component {
                     title, nameType, industry, customerDescribe, ventureDescribe, file,
                     contestTypeId, styles: styles || [], contestGroup, priority
                 },
-                contestTypes: this.props.selectedContestType
+                contestTypes: this.props.selectedContestType, history: this.props.history
             });
         } catch (e) {
             e.inner.forEach(error => {
@@ -176,7 +165,7 @@ class CreateContest extends Component {
                                          changeHandler={this.styleHandler}
                                          placeholder={createContestNamePlaceholders[5]}
                                          selectOptions={filteredIndustries}/>
-                <CreateContestFile header={createContestNameHeaders[6]}
+                <CreateContestFile header={createContestNameHeaders[6]} fileName={this.state.fileName}
                                    changeHandler={this.fileUploadHandler}/>
             </div>
         );
@@ -189,12 +178,12 @@ class CreateContest extends Component {
         const passedSteps = this.props.savedContest ? this.props.savedContest.priority + 1 : 1;
         return (
             <div>
+                <Header user={this.props.currentUser}/>
                 <div className={cStyles.mainContainer}>
                     <div className={cStyles.stepsContainer}>
                         <StepsIndicator title={contest.name} message={stepsIndicatorMessage[1]}
                                         overallSteps={this.props.steps}
-                                        passedSteps={passedSteps}
-                        />
+                                        passedSteps={passedSteps}/>
                     </div>
                     <form onSubmit={this.onSubmitHandler} encType='multipart/form-data' ref={this.formRef}>
                         <div className={cStyles.formContainer}>
@@ -217,6 +206,7 @@ const mapStateToProps = (state) => {
         savedContest: state.contestTypesReducers.savedContest,
         combinedTypes: state.contestTypesReducers.combinedTypes,
         steps: state.contestTypesReducers.steps,
+        currentUser: state.userReducers.currentUser
     };
 };
 

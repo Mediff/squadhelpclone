@@ -29,8 +29,7 @@ class Login extends Component {
         });
     };
 
-    createFormFields = () =>
-        loginInputKeys.map((item, i) =>
+    createFormFields = () => loginInputKeys.map((item, i) =>
             <div className={styles.row} key={i}>
                 <div className={styles.inputFieldContainer}>
                     <InputComponent placeholder={loginPlaceholders[i]}
@@ -39,8 +38,7 @@ class Login extends Component {
                                        message={this.state[loginInputKeys[i] + 'ErrorMessage']}/>
                 </div>
             </div>
-        );
-
+    );
 
     changeHandler = (value) => (event) => {
         this.setState({
@@ -77,8 +75,8 @@ class Login extends Component {
                     <form className={styles.formContainer} onSubmit={this.handleSubmit}>
                         <FormHeader headText='LOGIN TO YOUR ACCOUNT' type={formHeaderOptions.FormHeaderLogin}/>
                         <div className={styles.validationMessageContainer}>
-                            {this.props.error && <ValidationMessage type={validationMessageOptions.ServerError}
-                                                                    message={this.props.error}/>}
+                            {this.props.loginError && <ValidationMessage type={validationMessageOptions.ServerError}
+                                                                    message={this.props.loginError}/>}
                         </div>
                         <div className={styles.inputsContainer}>
                             {this.createFormFields()}
@@ -101,7 +99,7 @@ class Login extends Component {
 const mapStateToProps = (state) => {
     return {
         isFetching: state.userReducers.isFetching,
-        error: state.userReducers.error,
+        loginError: state.userReducers.loginError,
         currentUser: state.userReducers.currentUser
     };
 };

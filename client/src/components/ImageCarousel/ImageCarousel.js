@@ -9,10 +9,10 @@ export const ImageCarousel = ({images, sliceNumber}) => {
 
     const renderCarousel = () => {
         const carousel = [];
-        for(let i = 0; i < images.length; i+=sliceNumber){
+        for(let i = 0; i < images.length; i += sliceNumber){
             carousel.push(<Carousel.Item key={i}>
                 <div className={styles.imagesContainer}>
-                    {renderCarouselItem(images.slice(i, i+sliceNumber))}
+                    {renderCarouselItem(images.slice(i, i + sliceNumber))}
                 </div>
             </Carousel.Item>);
         }

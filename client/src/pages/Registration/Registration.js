@@ -14,6 +14,7 @@ import {registerInputKeys, registerPlaceholders, registerRadioBottomText, regist
 import {FormSubmitButton} from "../../components/AuthForms/FormSubmitButton/FormSubmitButton";
 import {RoleCheck} from "../../components/AuthForms/RoleCheck/RoleCheck";
 import {formHeaderOptions, validationMessageOptions} from "../../utils/constants/options";
+import {userRoles} from '../../utils/constants/options';
 
 class Registration extends Component {
 
@@ -30,7 +31,7 @@ class Registration extends Component {
         displayName: '',
         firstName: '',
         lastName: '',
-        role: 'customer'
+        role: userRoles.customer
     };
 
     proceedError = (error) => {
@@ -90,7 +91,7 @@ class Registration extends Component {
                 <RoleCheck headerText={registerRadioHeadText[i]}
                            bottomText={registerRadioBottomText[i]}
                            radioName='register' radioValue={item}
-                           changeHandler={this.changeHandler(item)}
+                           changeHandler={this.changeHandler('role')}
                            isDefault={i === 0}/>
             </div>
         );
@@ -109,9 +110,9 @@ class Registration extends Component {
                                         headText='CREATE AN ACCOUNT' type={formHeaderOptions.FormHeaderRegister}/>
                         </div>
                         <div className={styles.validationMessageContainer}>
-                            {this.props.error &&
+                            {this.props.registerError &&
                             <ValidationMessage type={validationMessageOptions.ServerError}
-                                               message={this.props.error}/>}
+                                               message={this.props.registerError}/>}
                         </div>
                         <div className={styles.inputContainer}>
                             {this.createFormFields()}
@@ -132,7 +133,7 @@ class Registration extends Component {
 const mapStateToProps = (state) => {
     return {
         isFetching: state.userReducers.isFetching,
-        error: state.userReducers.error,
+        registerError: state.userReducers.registerError,
         currentUser: state.userReducers.currentUser
     };
 };

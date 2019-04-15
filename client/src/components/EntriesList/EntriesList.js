@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './EntriesList.module.sass';
-import {Entry} from '../../components/Entry/Entry';
+import {Entry} from './Entry/Entry';
 
 export const EntriesList = ({allClickHandler, rejectedClickHandler, items, isRejectSelected, onAccept, onReject}) => {
 

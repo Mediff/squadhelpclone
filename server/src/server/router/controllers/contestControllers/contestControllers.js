@@ -1,6 +1,7 @@
 import {Accounts, Contests, Entries, ContestTypes} from '../../../models';
 import {sendEmail} from '../../../utils/helpers/emailSender';
 import _ from 'lodash';
+import UnAuthorizedError from "../../../utils/errors/unAuthorizedError";
 
 const uuidV4 = require('uuid/v4');
 
@@ -36,12 +37,6 @@ export const createContest = async (req, res, next) => {
 
 export const getActiveContests = async (req, res, next) => {
     try {
-        /*const distinctContests = await Contests.sequelize.query('SELECT DISTINCT ON ("Contests"."contestGroup") id\n' +
-            'FROM "Contests"\n' +
-            'GROUP BY "Contests"."contestGroup", id\n' +
-            'HAVING "Contests"."winnerId" IS NULL\n' +
-            'ORDER BY "Contests"."contestGroup"', {type: sequelize.QueryTypes.SELECT});
-        const arr = distinctContests.map(val => val.id); */
         let activeContests = await Contests.findAll({
             where: {
                 winnerId: null
@@ -244,7 +239,7 @@ export const updateContest = async (req, res, next) => {
             where: {
                 id
             }
-        }, {transaction: t});
+        });
         const updatedContest = await Contests.findOne({
             where: {
                 id
@@ -276,4 +271,9 @@ export const updateContest = async (req, res, next) => {
     } catch (e) {
         next(e);
     }
+};
+
+export const validateAuthor = (req, res, next) => {
+    const {contestCreatorId} = req.body;
+    contestCreatorId !== req.decoded.id ? next(new UnAuthorizedError('Forbidden operation')) : next();
 };

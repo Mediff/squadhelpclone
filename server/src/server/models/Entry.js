@@ -8,13 +8,9 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             type: DataTypes.INTEGER
         },
-        isRejected: {
-            type: DataTypes.BOOLEAN,
-            default: false
-        },
         isWinner: {
             type: DataTypes.BOOLEAN,
-            default: false
+            default: null
         },
         text: {
             type: DataTypes.TEXT,

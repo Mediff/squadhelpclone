@@ -29,7 +29,6 @@ module.exports = {
 
         return queryInterface.bulkInsert('Entries', [
             {
-                isRejected: false,
                 isWinner: false,
                 text: 'First Entry',
                 contestId: contest1.id,
@@ -38,7 +37,6 @@ module.exports = {
                 updatedAt: new Date()
             },
             {
-                isRejected: false,
                 isWinner: false,
                 text: 'Second Entry',
                 contestId: contest1.id,
@@ -47,7 +45,6 @@ module.exports = {
                 updatedAt: new Date()
             },
             {
-                isRejected: false,
                 isWinner: false,
                 text: 'Third Entry',
                 contestId: contest2.id,

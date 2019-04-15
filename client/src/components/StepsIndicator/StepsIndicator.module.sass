@@ -1,3 +1,12 @@
+@import '../../sass/mixins/mixins'
+
+$textLineHeight: 1.42857143
+$mainContainerPaddingDesktop: 20px 20px 20px 80px
+$mainContainerPaddingPhone: 10px 10px 20px 10px
+$titleFontSize: 28px
+$messageFontSize: 14px
+$titleContainerMarginDesktop: 20px 0 10px 0
+$titleContainerMarginPhone: 10px 0 10px 0
 
 .mainContainer
   display: flex
@@ -5,24 +14,33 @@
   width: 100%
   height: auto
   font-family: 'Montserrat', sans-serif
-  padding: 20px 20px 20px 80px
+  padding: $mainContainerPaddingDesktop
+  @include for-tablet-portrait
+    padding: $mainContainerPaddingPhone
+    text-align: center
 
   .titleContainer
     display: flex
     flex-direction: column
     justify-content: center
     width: 50%
+    @include for-tablet-portrait
+      width: 100%
 
     .title
       font-weight: 700
-      font-size: 28px
+      font-size: $titleFontSize
       text-transform: uppercase
-      margin: 20px 0 10px 0
+      margin: $titleContainerMarginDesktop
+      @include for-tablet-portrait
+        margin: $titleContainerMarginPhone
 
     .message
-      font-size: 14px
-      line-height: 1.42857143
+      font-size: $messageFontSize
+      line-height: $textLineHeight
 
   .progressContainer
     display: flex
     justify-content: center
+    @include for-tablet-portrait
+      display: none

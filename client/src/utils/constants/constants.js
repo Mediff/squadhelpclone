@@ -1,12 +1,5 @@
-import monvelli from '../../images/monvelli.jpg';
-import avanti from '../../images/avanti.jpg';
-import pepper from '../../images/pepper.jpg';
-import westgate from '../../images/westgate.jpg';
-import stow from '../../images/stow.jpg';
-import kreo from '../../images/kreo.jpg';
-import highjump from '../../images/highjump.jpg';
-import petesNuts from '../../images/petesNuts.jpg';
-import property from '../../images/property.jpg';
+
+import {imagesURL} from '../../api/baseURL';
 
 export const loginPlaceholders = ['Email', 'Password'];
 
@@ -51,7 +44,7 @@ export const createContestPaymentHeaders = ['Card number', '* Expires', '* Secur
 
 export const createContestPaymentPlaceholders = ['Card number', 'MM / YY', 'cvc', '100$'];
 
-export const stepsIndicatorTitle = ['Start a Contest'];
+export const stepsIndicatorTitle = ['Start a Contest', 'Checkout'];
 
 export const stepsIndicatorMessage = ['Launching a contest on Squadhelp is very simple. Select the type of contest you ' +
 'would like to launch from the list below. Provide a detailed brief and select a pricing package. Begin receiving submissions instantly!',
@@ -65,9 +58,16 @@ export const startPageAnimationListItems = ['a Brand', 'a Company', 'a Startup',
 export const startPageText = ['Launch a naming contest to engage hundreds of naming experts as you’re guided through our ' +
 'agency-level naming process. ', 'Or, explore our hand-picked collection of premium names available for immediate purchase'];
 
-export const getImagesArray = [[monvelli, avanti, pepper, monvelli, avanti, pepper, monvelli, avanti, pepper],
-    [petesNuts, property, westgate, petesNuts, property, westgate, petesNuts, property, westgate],
-    [stow, kreo, highjump, stow, kreo, highjump, stow, kreo, highjump]];
+export const getImagesArray = [[`${imagesURL}/mainPageCarousel/monvelli.jpg`, `${imagesURL}/mainPageCarousel/avanti.jpg`,
+    `${imagesURL}/mainPageCarousel/pepper.jpg`, `${imagesURL}/mainPageCarousel/monvelli.jpg`,
+    `${imagesURL}/mainPageCarousel/avanti.jpg`, `${imagesURL}/mainPageCarousel/pepper.jpg`, `${imagesURL}/mainPageCarousel/monvelli.jpg`,
+    `${imagesURL}/mainPageCarousel/avanti.jpg`, `${imagesURL}/mainPageCarousel/pepper.jpg`],
+    [`${imagesURL}/mainPageCarousel/petesNuts.jpg`, `${imagesURL}/mainPageCarousel/property.jpg`, `${imagesURL}/mainPageCarousel/westgate.jpg`,
+        `${imagesURL}/mainPageCarousel/petesNuts.jpg`, `${imagesURL}/mainPageCarousel/property.jpg`, `${imagesURL}/mainPageCarousel/westgate.jpg`,
+        `${imagesURL}/mainPageCarousel/petesNuts.jpg`, `${imagesURL}/mainPageCarousel/property.jpg`, `${imagesURL}/mainPageCarousel/westgate.jpg`],
+    [`${imagesURL}/mainPageCarousel/stow.jpg`, `${imagesURL}/mainPageCarousel/kreo.jpg`, `${imagesURL}/mainPageCarousel/highjump.jpg`,
+        `${imagesURL}/mainPageCarousel/stow.jpg`, `${imagesURL}/mainPageCarousel/kreo.jpg`, `${imagesURL}/mainPageCarousel/highjump.jpg`,
+        `${imagesURL}/mainPageCarousel/stow.jpg`, `${imagesURL}/mainPageCarousel/kreo.jpg`, `${imagesURL}/mainPageCarousel/highjump.jpg`,]];
 
 export const userLinks = [{link: '/register' , title: 'Signup'}, {link: '/login', title: 'Login'}];
 

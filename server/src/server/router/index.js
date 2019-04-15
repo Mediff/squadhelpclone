@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import express from 'express';
 import {createUser, getUserById, loginUser} from './controllers/userControllers/userController';
 import {createContest, getContests, getActiveContests, getContestById,
-    getContestsByType, getContestsByStyle, getUserContests, proceedPay, updateContest} from './controllers/contestControllers/contestControllers';
+    getContestsByType, getContestsByStyle, getUserContests, proceedPay, updateContest, validateAuthor} from './controllers/contestControllers/contestControllers';
 import {getContestTypes, getNameTypes, getIndustries, getStylesByContestType, getStyles, getCombinedTypes}
     from './controllers/contestTypeControllers/contestTypesController';
 import {getFilePath, upload} from './controllers/filesController/filesController';
@@ -23,7 +23,7 @@ router.get('/contests/user', validateToken, getUserContests);
 router.get('/contests/style', getContestsByStyle);
 router.get('/contests/:id', getContestById);
 router.get('/contests', getContests);
-router.post('/contests', validateToken, validateContest, createContest);
+router.post('/contests', validateToken, validateContest, validateAuthor, createContest);
 router.put('/contests/pay', validateToken, proceedPay);
 router.put('/contests', validateToken, validateContest, updateContest);
 

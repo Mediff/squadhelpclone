@@ -5,7 +5,7 @@ import {
     updateContest, getCombinedTypes
 }
     from '../api/rest/restContoller';
-import {setTypeId, getContest} from '../utils/localStorage/localStorage';
+import {setTypeId, getContest, setContest, clearContests, clearTypeId} from '../utils/localStorage/localStorage';
 
 export function* getUserContestsSaga() {
     yield put({type: ACTION.GET_USER_CONTESTS_REQUEST});
@@ -60,7 +60,7 @@ export function* getNameTypesSaga() {
 export function* createContestSaga({payload}) {
     yield put({type: ACTION.CREATE_CONTEST_REQUEST});
     try {
-        const {contest, contestTypes} = payload;
+        const {contest, contestTypes, history} = payload;
         if (contest.file) {
             const response = yield uploadFile(contest.file);
             contest.file = response.data;
@@ -69,6 +69,8 @@ export function* createContestSaga({payload}) {
         const selectedTypes = contestTypes;
         selectedTypes && selectedTypes.shift();
         setTypeId(selectedTypes);
+        setContest(data);
+        selectedTypes.length === 0 && history.push('/payment');
         yield put({type: ACTION.CREATE_CONTEST_RESPONSE, payload: selectedTypes});
         yield put({type: ACTION.SET_SAVED_CONTEST, payload: data});
     } catch (e) {
@@ -79,7 +81,11 @@ export function* createContestSaga({payload}) {
 export function* proceedPaySaga({payload}) {
     yield put({type: ACTION.PROCEED_PAY_REQUEST});
     try {
-        const {data} = yield proceedPay(payload);
+        const {payment, history} = payload;
+        const {data} = yield proceedPay(payment);
+        clearContests();
+        clearTypeId();
+        history.push('/dashboard');
         yield put({type: ACTION.PROCEED_PAY_RESPONSE, payload: data});
     } catch (e) {
         yield put({type: ACTION.PROCEED_PAY_ERROR, error: e});
