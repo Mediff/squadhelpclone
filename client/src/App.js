@@ -5,7 +5,7 @@ import Registration from './pages/Registration/Registration';
 import ContestType from './pages/ContestType/ContestType';
 import CreateContest from './pages/CreateContest/CreateContest';
 import ContestPay from './pages/ContestPay/ContestPay';
-import {DashboardRouter} from './pages/DashboardRouter/DashboardRouter';
+import DashboardRouter from './pages/DashboardRouter/DashboardRouter';
 import {Router, Route, Switch} from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import {AuthRequired} from './components/HOCs/AuthRequired/AuthRequired';
